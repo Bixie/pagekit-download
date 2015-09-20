@@ -42,29 +42,38 @@
 			<tr>
 				<th class="pk-table-width-minimum"><input type="checkbox" v-check-all="selected: input[name=id]" number></th>
 				<th class="pk-table-min-width-200" v-order="title: config.filter.order">{{ 'Title' | trans }}</th>
-				<th class="pk-table-width-100" v-order="client: config.filter.order">{{ 'Client' | trans }}</th>
+				<th class="pk-table-width-100 uk-text-center">
+					<input-filter title="{{ 'Status' | trans }}" value="{{@ config.filter.status}}" options="{{ statusOptions }}"></input-filter>
+				</th>
 				<th class="pk-table-width-100" v-order="date: config.filter.order">{{ 'Date' | trans }}</th>
-				<th class="pk-table-width-200 pk-table-min-width-200">{{ 'Tags' | trans }}</th>
-				<th class="pk-table-width-200 pk-table-min-width-200">{{ 'URL' | trans }}</th>
+				<th class="pk-table-min-width-100">{{ 'Tags' | trans }}</th>
+				<th class="pk-table-width-200">{{ 'URL' | trans }}</th>
+				<th class="pk-table-width-200">{{ 'File' | trans }}</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr class="check-item" v-repeat="file: files" v-class="uk-active: active(file)">
 				<td><input type="checkbox" name="id" value="{{ file.id }}"></td>
 				<td>
-					<a v-attr="href: $url.route('admin/portfolio/file/file', { id: file.id })">{{ file.title }}</a>
+					<a v-attr="href: $url.route('admin/download/file/edit', { id: file.id })">{{ file.title }}</a>
 				</td>
-				<td>
-					{{ file.client }}
+				<td class="uk-text-center">
+					<a title="{{ getStatusText(file) }}" v-class="
+                                pk-icon-circle-danger: file.status == 0,
+                                pk-icon-circle-success: file.status == 1
+                            " v-on="click: toggleStatus(file)"></a>
 				</td>
 				<td>
 					{{ file.date | date }}
 				</td>
 				<td>
-					{{ file.tags }}
+					{{ file.tags.join(', ') }}
 				</td>
 				<td class="pk-table-text-break">
 					<a v-attr="href: $url.route(file.url)" target="_blank">{{ file.url }}</a>
+				</td>
+				<td class="pk-table-text-break">
+					<a v-attr="href: $url.route(file.download)" download="{{ file.fileName }}">{{ file.fileName }}</a>
 				</td>
 			</tr>
 			</tbody>

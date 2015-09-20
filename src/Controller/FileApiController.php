@@ -18,7 +18,7 @@ class FileApiController
     public function indexAction($filter = [], $page = 0)
     {
         $query  = File::query();
-        $filter = array_merge(array_fill_keys(['search', 'order', 'limit'], ''), $filter);
+        $filter = array_merge(array_fill_keys(['status', 'search', 'order', 'limit'], ''), $filter);
 
         extract($filter, EXTR_SKIP);
 
@@ -28,8 +28,11 @@ class FileApiController
             });
         }
 
+		if (is_numeric($status)) {
+			$query->where(['status' => (int) $status]);
+		}
 
-        if (!preg_match('/^(date|title)\s(asc|desc)$/i', $order, $order)) {
+		if (!preg_match('/^(date|title)\s(asc|desc)$/i', $order, $order)) {
             $order = [1 => 'date', 2 => 'desc'];
         }
 

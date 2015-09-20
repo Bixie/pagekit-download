@@ -31,7 +31,8 @@ return [
 		'/download' => [
 			'name' => '@download',
 			'controller' => [
-				'Bixie\\Download\\Controller\\DownloadController'
+				'Bixie\\Download\\Controller\\DownloadController',
+				'Bixie\\Download\\Controller\\FileController'
 			]
 		],
 		'/api/download' => [
@@ -92,6 +93,46 @@ return [
 	'settings' => '@download/settings',
 
 	'config' => [
+		'mainpage_title' => '',
+		'mainpage_text' => '',
+		'mainpage_image' => '',
+		'mainpage_image_align' => '',
+		'columns' => 1,
+		'columns_small' => 2,
+		'columns_medium' => '',
+		'columns_large' => 4,
+		'columns_xlarge' => 6,
+		'columns_gutter' => 20,
+		'filter_tags' => true,
+		'teaser' => [
+			'show_title' => true,
+			'show_image' => true,
+			'show_tags' => true,
+			'show_date' => true,
+			'show_readmore' => true,
+			'show_download' => true,
+			'panel_style' => 'uk-panel-box',
+			'content_align' => 'left',
+			'tags_align' => 'uk-flex-center',
+			'title_size' => 'uk-h3',
+			'title_color' => '',
+			'download' => 'Download',
+			'download_style' => 'uk-button',
+			'download_align' => 'uk-text-center',
+			'read_more' => 'Details',
+			'read_more_style' => 'uk-button',
+			'readmore_align' => 'uk-text-center'
+		],
+		'file' => [
+			'image_align' => 'left',
+			'metadata_position' => 'content-top',
+			'tags_align' => 'uk-flex-center',
+			'tags_position' => 'sidebar',
+			'show_navigation' => 'bottom',
+			'download' => 'Download',
+			'download_style' => 'uk-button',
+			'download_align' => 'uk-text-center'
+		],
 		'files_per_page' => 20,
 		'markdown_enabled' => false,
 		'date_format' => 'd F Y',

@@ -11,7 +11,19 @@ module.exports = {
 
     created: function () {
         this.resource = this.$resource('api/download/file/:id');
-        this.config.filter = _.extend({ search: '', order: 'title asc', limit: this.config.files_per_page}, this.config.filter);
+        this.config.filter = _.extend({ status: '', search: '', order: 'title asc', limit: this.config.files_per_page}, this.config.filter);
+    },
+
+    computed: {
+
+        statusOptions: function () {
+
+            var options = _.map(this.statuses, function (status, id) {
+                return { text: status, value: id };
+            });
+
+            return [{ label: this.$trans('Filter by'), options: options }];
+        }
     },
 
     methods: {
@@ -33,9 +45,35 @@ module.exports = {
             });
         },
 
+        save: function (file) {
+            this.resource.save({ id: file.id }, { file: file }, function (data) {
+                this.load();
+                this.$notify('File saved.');
+            });
+        },
+
+        status: function (status) {
+
+            var files = this.getSelected();
+
+            files.forEach(function (file) {
+                file.status = status;
+            });
+
+            this.resource.save({ id: 'bulk' }, { files: files }, function (data) {
+                this.load();
+                this.$notify('Files saved.');
+            });
+        },
+
+        toggleStatus: function (file) {
+            file.status = file.status === 0 ? 1 : 0;
+            this.save(file);
+        },
+
         getSelected: function () {
-            return this.projects.filter(function (project) {
-                return this.selected.indexOf(project.id) !== -1;
+            return this.files.filter(function (file) {
+                return this.selected.indexOf(file.id) !== -1;
             }, this);
         },
 
@@ -45,6 +83,10 @@ module.exports = {
                 this.load();
                 this.$notify('File(s) deleted.');
             });
+        },
+
+        getStatusText: function(file) {
+            return this.statuses[file.status];
         }
 
     },

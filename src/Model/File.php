@@ -4,28 +4,38 @@ namespace Bixie\Download\Model;
 
 use Pagekit\Application as App;
 use Pagekit\System\Model\DataModelTrait;
+use Pagekit\User\Model\AccessModelTrait;
 
 /**
  * @Entity(tableClass="@download_file")
  */
 class File implements \JsonSerializable
 {
-    use  DataModelTrait, FileModelTrait;
+	use  DataModelTrait, FileModelTrait, AccessModelTrait;
 
-    /** @Column(type="integer") @Id */
-    public $id;
+	/* File published. */
+	const STATUS_PUBLISHED = 1;
 
-    /** @Column(type="string") */
-    public $slug;
+	/* File unpublished. */
+	const STATUS_UNPUBLISHED = 0;
 
-    /** @Column(type="string") */
-    public $title;
+	/** @Column(type="integer") @Id */
+	public $id;
 
-    /** @Column(type="string") */
-    public $path;
+	/** @Column(type="integer") */
+	public $status;
+
+	/** @Column(type="string") */
+	public $slug;
+
+	/** @Column(type="string") */
+	public $title;
+
+	/** @Column(type="string") */
+	public $path;
 
 	/** @Column(type="text") */
-    public $content = '';
+	public $content = '';
 
 	/** @Column(type="datetime") */
 	public $date;
@@ -49,22 +59,41 @@ class File implements \JsonSerializable
 		return $tags;
 	}
 
+	public static function getStatuses () {
+		return [
+			self::STATUS_PUBLISHED => __('Published'),
+			self::STATUS_UNPUBLISHED => __('Unpublished')
+		];
+	}
+
+	public function getStatusText () {
+		$statuses = self::getStatuses();
+
+		return isset($statuses[$this->status]) ? $statuses[$this->status] : __('Unknown');
+	}
+
 	public static function getPrevious ($file) {
-		return self::where(['date > ?'], [$file->date])->orderBy('date', 'ASC')->first();
+		return self::where(['title > ?', 'status = ?'], [$file->title, '1'])->where(function ($query) {
+			return $query->where('roles IS NULL')->whereInSet('roles', App::user()->roles, false, 'OR');
+		})->orderBy('title', 'ASC')->first();
 	}
 
 	public static function getNext ($file) {
-		return self::where(['date < ?'], [$file->date])->orderBy('date', 'DESC')->first();
+		return self::where(['title < ?', 'status = ?'], [$file->title, '1'])->where(function ($query) {
+			return $query->where('roles IS NULL')->whereInSet('roles', App::user()->roles, false, 'OR');
+		})->orderBy('title', 'DESC')->first();
 	}
-    /**
-     * {@inheritdoc}
-     */
-    public function jsonSerialize()
-    {
-        $data = [
-            'url' => App::url('@download/id', ['id' => $this->id ?: 0], 'base')
-        ];
 
-        return $this->toArray($data);
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function jsonSerialize () {
+		$data = [
+			'fileName' => basename($this->path),
+			'download' => App::url('@download/file/id', ['id' => $this->id ?: 0], 'base'),
+			'url' => App::url('@download/id', ['id' => $this->id ?: 0], 'base')
+		];
+
+		return $this->toArray($data);
+	}
 }

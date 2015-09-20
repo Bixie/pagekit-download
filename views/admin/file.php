@@ -1,6 +1,6 @@
 <?php  $view->style('codemirror'); $view->script('admin-file', 'bixie/download:app/bundle/admin-file.js', ['vue', 'editor']); ?>
 
-<form id="file-edit" class="uk-form" name="form" v-on="submit: save | validate" v-cloak>
+<form id="file-edit" class="uk-form" name="form" v-on="submit: save | valid" v-cloak>
 
 	<div class="uk-margin uk-flex uk-flex-space-between uk-flex-wrap" data-uk-margin>
 		<div data-uk-margin>
@@ -16,7 +16,7 @@
 		</div>
 		<div data-uk-margin>
 
-			<a class="uk-button uk-margin-small-right" v-attr="href: $url.route('admin/download/file')">{{ file.id ?
+			<a class="uk-button uk-margin-small-right" v-attr="href: $url.route('admin/download/download')">{{ file.id ?
 				'Close' :
 				'Cancel' | trans }}</a>
 			<button class="uk-button uk-button-primary" type="submit">{{ 'Save' | trans }}</button>
@@ -41,8 +41,8 @@
 									<input id="form-title" class="uk-width-1-1 uk-form-large" type="text" name="title"
 										   v-model="file.title" v-valid="required">
 								</div>
-								<p class="uk-form-help-block uk-text-danger" v-show="form.title.invalid">{{ 'Please enter a
-									title' | trans }}</p>
+								<p class="uk-form-help-block uk-text-danger" v-show="form.title.invalid">
+									{{ 'Please enter a title' | trans }}</p>
 							</div>
 
 						</div>
@@ -63,6 +63,24 @@
 					<div class="pk-width-sidebar pk-width-sidebar-large uk-form-stacked">
 
 						<div class="uk-form-row">
+							<label class="uk-form-label">{{ 'File' | trans }}</label>
+
+							<div class="uk-form-controls">
+								<input-file file="{{@ file.path }}" ext="{{ ['zip', 'rar', 'tar.gz'] }}"></input-file>
+								<input type="hidden" name="path" v-model="file.path" v-valid="required">
+							</div>
+							<p class="uk-form-help-block uk-text-danger" v-show="form.path.invalid">
+								{{ 'Please select a file' | trans }}</p>
+						</div>
+
+						<div class="uk-form-row">
+							<label class="uk-form-label">{{ 'Image' | trans }}</label>
+							<div class="uk-form-controls">
+								<input-image-meta image="{{@ file.image }}" class="pk-image-max-height"></input-image-meta>
+							</div>
+						</div>
+
+						<div class="uk-form-row">
 							<label for="form-slug" class="uk-form-label">{{ 'Slug' | trans }}</label>
 
 							<div class="uk-form-controls">
@@ -70,12 +88,10 @@
 							</div>
 						</div>
 
-
 						<div class="uk-form-row">
-							<label class="uk-form-label">{{ 'File' | trans }}</label>
-
+							<label for="form-status" class="uk-form-label">{{ 'Status' | trans }}</label>
 							<div class="uk-form-controls">
-								<input-file file="{{@ file.path }}" ext="{{ ['zip', 'rar', 'tar.gz'] }}"></input-file>
+								<select id="form-status" class="uk-width-1-1" v-model="file.status" options="statusOptions"></select>
 							</div>
 						</div>
 
@@ -90,6 +106,15 @@
 							<span class="uk-form-label">{{ 'Tags' | trans }}</span>
 							<div class="uk-form-controls">
 								<input-tags tags="{{@ file.tags}}" existing="{{ tags }}"></input-tags>
+							</div>
+						</div>
+
+						<div class="uk-form-row">
+							<span class="uk-form-label">{{ 'Restrict Access' | trans }}</span>
+							<div class="uk-form-controls uk-form-controls-text">
+								<p v-repeat="role: roles" class="uk-form-controls-condensed">
+									<label><input type="checkbox" value="{{ role.id }}" v-checkbox="file.roles" number> {{ role.name }}</label>
+								</p>
 							</div>
 						</div>
 

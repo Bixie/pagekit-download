@@ -10,6 +10,8 @@ return [
 		if ($util->tableExists('@download_file') === false) {
 			$util->createTable('@download_file', function ($table) {
 				$table->addColumn('id', 'integer', ['unsigned' => true, 'length' => 10, 'autoincrement' => true]);
+				$table->addColumn('status', 'smallint');
+				$table->addColumn('roles', 'simple_array', ['notnull' => false]);
 				$table->addColumn('title', 'string', ['length' => 255]);
 				$table->addColumn('slug', 'string', ['length' => 255]);
 				$table->addColumn('path', 'text');

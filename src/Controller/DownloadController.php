@@ -4,6 +4,7 @@ namespace Bixie\Download\Controller;
 
 use Pagekit\Application as App;
 use Bixie\Download\Model\File;
+use Pagekit\User\Model\Role;
 
 /**
  * @Access(admin=true)
@@ -22,7 +23,8 @@ class DownloadController
                 'name'  => 'bixie/download:views/admin/download.php'
             ],
             '$data' => [
-                'config'   => [
+				'statuses' => File::getStatuses(),
+				'config'   => [
                     'filter' => $filter,
                     'page'   => $page
                 ]
@@ -48,6 +50,7 @@ class DownloadController
 				$module = App::module('bixie/download');
 
 				$file = File::create([
+					'status' => 1,
 					'slug' => '',
 					'data' => [],
 					'tags' => [],
@@ -65,6 +68,8 @@ class DownloadController
                     'name'  => 'bixie/download:views/admin/file.php'
                 ],
                 '$data' => [
+					'statuses' => File::getStatuses(),
+					'roles'    => array_values(Role::findAll()),
 					'config' => App::module('bixie/download')->config(),
                 	'file'  => $file,
                     'tags'     => File::allTags()

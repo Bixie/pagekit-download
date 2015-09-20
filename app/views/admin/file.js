@@ -18,6 +18,14 @@ module.exports = Vue.extend({
         this.tab = UIkit.tab(this.$$.tab, {connect: this.$$.content});
     },
 
+    computed: {
+
+        statusOptions: function () {
+            return _.map(this.statuses, function (status, id) { return { text: status, value: id }; });
+        }
+
+    },
+
     methods: {
 
         save: function (e) {

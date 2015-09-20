@@ -30,61 +30,58 @@ class SiteController
             App::abort(403, __('Insufficient User Rights.'));
         }
 
-        $query = File::where(['date < ?'], [new \DateTime])->orderBy('date', 'DESC');
+        $query = File::where(['status = ?'], ['1'])->where(function ($query) {
+			return $query->where('roles IS NULL')->whereInSet('roles', App::user()->roles, false, 'OR');
+		})->orderBy('title', 'ASC');
 
-		$portfolio_text = '';
-		if ($this->download->config('portfolio_text')) {
-			$portfolio_text = App::content()->applyPlugins($this->portfolio->config('portfolio_text'), ['markdown' => $this->portfolio->config('markdown_enabled')]);;
+		$mainpage_text = '';
+		if ($this->download->config('mainpage_text')) {
+			$mainpage_text = App::content()->applyPlugins($this->download->config('mainpage_text'), ['markdown' => $this->download->config('markdown_enabled')]);;
 		}
 
-		foreach ($projects = $query->get() as $project) {
-			$project->intro = App::content()->applyPlugins($project->intro, ['project' => $project, 'markdown' => $project->get('markdown')]);
-			$project->content = App::content()->applyPlugins($project->content, ['project' => $project, 'markdown' => $project->get('markdown'), 'readmore' => true]);
+		foreach ($files = $query->get() as $file) {
+			$file->content = App::content()->applyPlugins($file->content, ['file' => $file, 'markdown' => $file->get('markdown')]);
         }
 
         return [
             '$view' => [
-                'title' => $this->download->config('portfolio_title') ?: App::node()->title,
-                'name' => 'portfolio/portfolio.php'
+                'title' => $this->download->config('download_title') ?: App::node()->title,
+                'name' => 'bixie/download:views/download.php'
             ],
-			'tags' => Project::allTags(),
+			'tags' => File::allTags(),
       		'download' => $this->download,
 			'config' => $this->download->config(),
-			'portfolio_text' => $portfolio_text,
-            'projects' => $projects
+			'mainpage_text' => $mainpage_text,
+            'files' => $files
         ];
     }
 
     /**
      * @Route("/{id}", name="id")
      */
-    public function projectAction($id = 0)
+    public function fileAction($id = 0)
     {
-        if (!$project = File::where(['id = ?', 'date < ?'], [$id, new \DateTime])->first()) {
-            App::abort(404, __('Project not found.'));
+        if (!$file = File::where(['id = ?', 'status = ?'], [$id, '1'])->where(function ($query) {
+			return $query->where('roles IS NULL')->whereInSet('roles', App::user()->roles, false, 'OR');
+		})->first()) {
+            App::abort(404, __('File not found.'));
         }
 
-        $project->intro = App::content()->applyPlugins($project->intro, ['project' => $project, 'markdown' => $project->get('markdown')]);
-        $project->content = App::content()->applyPlugins($project->content, ['project' => $project, 'markdown' => $project->get('markdown')]);
+		$file->content = App::content()->applyPlugins($file->content, ['file' => $file, 'markdown' => $file->get('markdown')]);
 
-		$portfolio_text = '';
-		if ($this->portfolio->config('portfolio_text')) {
-			$portfolio_text = App::content()->applyPlugins($this->portfolio->config('portfolio_text'), ['markdown' => $project->get('markdown')]);;
-		}
-
-		$previous = File::getPrevious($project);
-		$next = File::getNext($project);
+		$previous = File::getPrevious($file);
+		$next = File::getNext($file);
 
         return [
             '$view' => [
-                'title' => __($project->title),
-                'name' => 'download/project.php'
+                'title' => __($file->title),
+                'name' => 'bixie/download:views/file.php'
             ],
-            'portfolio' => $this->portfolio,
-			'config' => $this->portfolio->config(),
+            'portfolio' => $this->download,
+			'config' => $this->download->config(),
 			'previous' => $previous,
 			'next' => $next,
-			'project' => $project
+			'file' => $file
         ];
     }
 }
