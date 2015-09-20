@@ -45,6 +45,15 @@
 									{{ 'Please enter a title' | trans }}</p>
 							</div>
 
+							<div class="uk-form-row">
+								<label for="form-subtitle" class="uk-form-label">{{ 'Subitle' | trans }}</label>
+
+								<div class="uk-form-controls">
+									<input id="form-subtitle" class="uk-width-1-1" type="text" name="subtitle"
+										   v-model="file.subtitle">
+								</div>
+							</div>
+
 						</div>
 
 
@@ -76,7 +85,14 @@
 						<div class="uk-form-row">
 							<label class="uk-form-label">{{ 'Image' | trans }}</label>
 							<div class="uk-form-controls">
-								<input-image-meta image="{{@ file.image }}" class="pk-image-max-height"></input-image-meta>
+								<input-image-meta image="{{@ file.image.main }}" class="pk-image-max-height"></input-image-meta>
+							</div>
+						</div>
+
+						<div class="uk-form-row">
+							<label class="uk-form-label">{{ 'Icon' | trans }}</label>
+							<div class="uk-form-controls">
+								<input-image-meta image="{{@ file.image.icon }}" class="pk-image-max-height"></input-image-meta>
 							</div>
 						</div>
 

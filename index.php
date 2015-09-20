@@ -108,6 +108,7 @@ return [
 		'filter_tags' => true,
 		'teaser' => [
 			'show_title' => true,
+			'show_subtitle' => true,
 			'show_image' => true,
 			'show_tags' => true,
 			'show_date' => true,
@@ -116,14 +117,14 @@ return [
 			'panel_style' => 'uk-panel-box',
 			'content_align' => 'left',
 			'tags_align' => 'uk-flex-center',
+			'button_align' => 'uk-flex-space-around',
 			'title_size' => 'uk-h3',
+			'subtitle_size' => 'uk-h4',
 			'title_color' => '',
 			'download' => 'Download',
-			'download_style' => 'uk-button',
-			'download_align' => 'uk-text-center',
+			'download_style' => 'uk-button uk-button-success',
 			'read_more' => 'Details',
-			'read_more_style' => 'uk-button',
-			'readmore_align' => 'uk-text-center'
+			'read_more_style' => 'uk-button'
 		],
 		'file' => [
 			'image_align' => 'left',

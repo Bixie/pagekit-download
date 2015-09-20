@@ -8,16 +8,20 @@
 <div data-uk-filter="<?= implode(',', $file->tags) ?>">
 	<div class="uk-panel <?= $config['teaser']['panel_style'] ?> uk-text-<?= $config['teaser']['content_align'] ?>">
 
-		<?php if ($config['teaser']['show_image'] && !empty($file->image['src'])) : ?>
+		<?php if ($config['teaser']['show_image'] && !empty($file->image['main']['src'])) : ?>
 			<div class="uk-panel-teaser">
-				<img src="<?= $file->image['src'] ?>" alt="<?= $file->image['alt'] ?>">
+				<img src="<?= $file->image['main']['src'] ?>" alt="<?= $file->image['main']['alt'] ?>">
 			</div>
 		<?php endif; ?>
 
 		<?php if ($config['teaser']['show_title']) : ?>
 			<h3 class="<?= $config['teaser']['title_size'] ?>"><a class="uk-link-reset <?= $config['teaser']['title_color'] ?>"
-																  href="<?= $app->url('@portfolio/id', ['id' => $file->id]) ?>">
+																  href="<?= $app->url('@download/id', ['id' => $file->id]) ?>">
 					<?= $file->title ?></a></h3>
+		<?php endif; ?>
+
+		<?php if ($config['teaser']['show_subtitle']) : ?>
+			<p class="uk-article-lead <?= $config['teaser']['subtitle_size'] ?>"><?= $file->subtitle ?></p>
 		<?php endif; ?>
 
 		<?php if ($config['teaser']['show_date']) : ?>
@@ -36,19 +40,19 @@
 			</div>
 		<?php endif; ?>
 
-		<?php if ($config['teaser']['show_readmore']) : ?>
-			<div class="<?= $config['teaser']['readmore_align']; ?> uk-margin">
+		<?php if ($config['teaser']['show_readmore'] || $config['teaser']['show_download']) : ?>
+			<div class="uk-flex uk-flex-wrap <?= $config['teaser']['button_align']; ?> uk-margin" data-uk-margin="">
+			<?php if ($config['teaser']['show_readmore']) : ?>
 				<a class="<?= $config['teaser']['read_more_style'] ?>"
 				   href="<?= $app->url('@download/id', ['id' => $file->id]) ?>">
 					<?= $config['teaser']['read_more'] ?></a>
-			</div>
-		<?php endif; ?>
+			<?php endif; ?>
 
-		<?php if ($config['teaser']['show_download']) : ?>
-			<div class="<?= $config['teaser']['download_align']; ?> uk-margin">
-				<a class="<?= $config['teaser']['download_style'] ?>"
+			<?php if ($config['teaser']['show_download']) : ?>
+				<a class="<?= $config['teaser']['download_style'] ?><?= $config['teaser']['show_readmore'] && $config['teaser']['download_style'] != 'uk-flex-space-around' ? ' uk-margin-left' : '' ?>"
 				   href="<?= $app->url($file->getDownloadLink()) ?>">
 					<?= $config['teaser']['download'] ?></a>
+			<?php endif; ?>
 			</div>
 		<?php endif; ?>
 

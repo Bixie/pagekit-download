@@ -43,9 +43,9 @@ $config['file_image_class'] = in_array($config['file']['image_align'], ['right',
 
 		<div class="uk-clearfix">
 
-			<?php if (!empty($file->image['src'])): ?>
+			<?php if (!empty($file->image['main']['src'])): ?>
 				<div class="<?= $config['file_image_class'] ?>">
-					<img src="<?= $file->image['src'] ?>" alt="<?= $file->image['alt'] ?>">
+					<img src="<?= $file->image['main']['src'] ?>" alt="<?= $file->image['main']['alt'] ?>">
 				</div>
 			<?php endif; ?>
 
@@ -86,6 +86,10 @@ $config['file_image_class'] = in_array($config['file']['image_align'], ['right',
 				<div class="<?= $config['file']['download_align']; ?> uk-margin">
 					<a class="<?= $config['file']['download_style'] ?>"
 					   href="<?= $app->url($file->getDownloadLink()) ?>">
+						<?php if (!empty($file->image['icon']['src'])): ?>
+							<img src="<?= $file->image['icon']['src'] ?>" class="uk-margin-small-right" width="30" alt="<?= $file->image['icon']['alt'] ?>">
+						<?php endif; ?>
+
 						<?= $config['file']['download'] ?></a>
 				</div>
 

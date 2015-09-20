@@ -32,6 +32,9 @@ class File implements \JsonSerializable
 	public $title;
 
 	/** @Column(type="string") */
+	public $subtitle;
+
+	/** @Column(type="string") */
 	public $path;
 
 	/** @Column(type="text") */
