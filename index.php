@@ -8,6 +8,8 @@ return [
 
 	'type' => 'extension',
 
+	'main' => 'Bixie\\Download\\DownloadModule',
+
 	'autoload' => [
 
 		'Bixie\\Download\\' => 'src'
@@ -96,7 +98,7 @@ return [
 		'mainpage_title' => '',
 		'mainpage_text' => '',
 		'mainpage_image' => '',
-		'mainpage_image_align' => '',
+		'mainpage_image_align' => 'left',
 		'columns' => 1,
 		'columns_small' => 2,
 		'columns_medium' => '',
@@ -133,6 +135,8 @@ return [
 			'download_style' => 'uk-button',
 			'download_align' => 'uk-text-center'
 		],
+		'ordering' => 'title',
+		'ordering_dir' => 'asc',
 		'files_per_page' => 20,
 		'markdown_enabled' => false,
 		'date_format' => 'd F Y',

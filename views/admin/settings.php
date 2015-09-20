@@ -57,127 +57,129 @@
 						</div>
 					</div>
 
+					<div class="uk-form-horizontal">
 
-					<div class="uk-form-row">
-						<label class="uk-form-label">{{ 'Image' | trans }}</label>
-						<div class="uk-form-controls">
-							<input-image source="{{@ config.mainpage_image }}" class="pk-image-max-height"></input-image>
+						<div class="uk-form-row">
+							<label class="uk-form-label">{{ 'Image' | trans }}</label>
+							<div class="uk-form-controls">
+								<input-image source="{{@ config.mainpage_image }}" class="pk-image-max-height"></input-image>
+							</div>
 						</div>
-					</div>
 
-					<div class="uk-form-row">
-						<label for="form-mainpage_image_align" class="uk-form-label">{{ 'Image align' | trans }}</label>
+						<div class="uk-form-row">
+							<label for="form-mainpage_image_align" class="uk-form-label">{{ 'Image align' | trans }}</label>
 
-						<div class="uk-form-controls">
-							<select name="mainpage_image_align" id="form-mainpage_image_align" class="uk-form-width-small"
-									v-model="config.mainpage_image_align">
-								<option value="left">{{ 'Left' | trans }}</option>
-								<option value="right">{{ 'Right' | trans }}</option>
-								<option value="center">{{ 'Center' | trans }}</option>
-							</select>
+							<div class="uk-form-controls">
+								<select name="mainpage_image_align" id="form-mainpage_image_align" class="uk-form-width-small"
+										v-model="config.mainpage_image_align">
+									<option value="left">{{ 'Left' | trans }}</option>
+									<option value="right">{{ 'Right' | trans }}</option>
+									<option value="center">{{ 'Center' | trans }}</option>
+								</select>
+							</div>
 						</div>
-					</div>
 
-					<div class="uk-form-row">
-						<span class="uk-form-label">{{ 'Grid filter' | trans }}</span>
+						<div class="uk-form-row">
+							<span class="uk-form-label">{{ 'Grid filter' | trans }}</span>
 
-						<div class="uk-form-controls uk-form-controls-text">
-							<p class="uk-form-controls-condensed">
-								<label><input type="checkbox" v-model="config.filter_tags"> {{ 'Filter by tags' | trans }}</label>
-							</p>
+							<div class="uk-form-controls uk-form-controls-text">
+								<p class="uk-form-controls-condensed">
+									<label><input type="checkbox" v-model="config.filter_tags"> {{ 'Filter by tags' | trans }}</label>
+								</p>
+							</div>
 						</div>
-					</div>
 
-					<h3>{{ 'Files columns' | trans }}</h3>
-					<div class="uk-form-row">
-						<label for="form-cols" class="uk-form-label">{{ 'Phone Portrait' | trans }}</label>
+						<h3>{{ 'Files columns' | trans }}</h3>
+						<div class="uk-form-row">
+							<label for="form-cols" class="uk-form-label">{{ 'Phone Portrait' | trans }}</label>
 
-						<div class="uk-form-controls">
-							<select name="cols" id="form-cols" class="uk-form-width-small" v-model="config.columns">
-								<option value="1">{{ '1' | trans }}</option>
-								<option value="2">{{ '2' | trans }}</option>
-								<option value="3">{{ '3' | trans }}</option>
-								<option value="4">{{ '4' | trans }}</option>
-								<option value="5">{{ '5' | trans }}</option>
-								<option value="6">{{ '6' | trans }}</option>
-							</select>
+							<div class="uk-form-controls">
+								<select name="cols" id="form-cols" class="uk-form-width-small" v-model="config.columns">
+									<option value="1">{{ '1' | trans }}</option>
+									<option value="2">{{ '2' | trans }}</option>
+									<option value="3">{{ '3' | trans }}</option>
+									<option value="4">{{ '4' | trans }}</option>
+									<option value="5">{{ '5' | trans }}</option>
+									<option value="6">{{ '6' | trans }}</option>
+								</select>
+							</div>
 						</div>
-					</div>
 
-					<div class="uk-form-row">
-						<label for="form-cols_small" class="uk-form-label">{{ 'Phone Landscape' | trans }}</label>
+						<div class="uk-form-row">
+							<label for="form-cols_small" class="uk-form-label">{{ 'Phone Landscape' | trans }}</label>
 
-						<div class="uk-form-controls">
-							<select name="cols_small" id="form-cols_small" class="uk-form-width-small" v-model="config.columns_small">
-								<option value="">{{ 'Inherit' | trans }}</option>
-								<option value="1">{{ '1' | trans }}</option>
-								<option value="2">{{ '2' | trans }}</option>
-								<option value="3">{{ '3' | trans }}</option>
-								<option value="4">{{ '4' | trans }}</option>
-								<option value="5">{{ '5' | trans }}</option>
-								<option value="6">{{ '6' | trans }}</option>
-							</select>
+							<div class="uk-form-controls">
+								<select name="cols_small" id="form-cols_small" class="uk-form-width-small" v-model="config.columns_small">
+									<option value="">{{ 'Inherit' | trans }}</option>
+									<option value="1">{{ '1' | trans }}</option>
+									<option value="2">{{ '2' | trans }}</option>
+									<option value="3">{{ '3' | trans }}</option>
+									<option value="4">{{ '4' | trans }}</option>
+									<option value="5">{{ '5' | trans }}</option>
+									<option value="6">{{ '6' | trans }}</option>
+								</select>
+							</div>
 						</div>
-					</div>
 
-					<div class="uk-form-row">
-						<label for="form-cols_medium" class="uk-form-label">{{ 'Tablet' | trans }}</label>
+						<div class="uk-form-row">
+							<label for="form-cols_medium" class="uk-form-label">{{ 'Tablet' | trans }}</label>
 
-						<div class="uk-form-controls">
-							<select name="cols_small" id="form-cols_medium" class="uk-form-width-small" v-model="config.columns_medium">
-								<option value="">{{ 'Inherit' | trans }}</option>
-								<option value="1">{{ '1' | trans }}</option>
-								<option value="2">{{ '2' | trans }}</option>
-								<option value="3">{{ '3' | trans }}</option>
-								<option value="4">{{ '4' | trans }}</option>
-								<option value="5">{{ '5' | trans }}</option>
-								<option value="6">{{ '6' | trans }}</option>
-							</select>
+							<div class="uk-form-controls">
+								<select name="cols_small" id="form-cols_medium" class="uk-form-width-small" v-model="config.columns_medium">
+									<option value="">{{ 'Inherit' | trans }}</option>
+									<option value="1">{{ '1' | trans }}</option>
+									<option value="2">{{ '2' | trans }}</option>
+									<option value="3">{{ '3' | trans }}</option>
+									<option value="4">{{ '4' | trans }}</option>
+									<option value="5">{{ '5' | trans }}</option>
+									<option value="6">{{ '6' | trans }}</option>
+								</select>
+							</div>
 						</div>
-					</div>
 
-					<div class="uk-form-row">
-						<label for="form-cols_large" class="uk-form-label">{{ 'Desktop' | trans }}</label>
+						<div class="uk-form-row">
+							<label for="form-cols_large" class="uk-form-label">{{ 'Desktop' | trans }}</label>
 
-						<div class="uk-form-controls">
-							<select name="cols_large" id="form-cols_large" class="uk-form-width-small" v-model="config.columns_large">
-								<option value="">{{ 'Inherit' | trans }}</option>
-								<option value="1">{{ '1' | trans }}</option>
-								<option value="2">{{ '2' | trans }}</option>
-								<option value="3">{{ '3' | trans }}</option>
-								<option value="4">{{ '4' | trans }}</option>
-								<option value="5">{{ '5' | trans }}</option>
-								<option value="6">{{ '6' | trans }}</option>
-							</select>
+							<div class="uk-form-controls">
+								<select name="cols_large" id="form-cols_large" class="uk-form-width-small" v-model="config.columns_large">
+									<option value="">{{ 'Inherit' | trans }}</option>
+									<option value="1">{{ '1' | trans }}</option>
+									<option value="2">{{ '2' | trans }}</option>
+									<option value="3">{{ '3' | trans }}</option>
+									<option value="4">{{ '4' | trans }}</option>
+									<option value="5">{{ '5' | trans }}</option>
+									<option value="6">{{ '6' | trans }}</option>
+								</select>
+							</div>
 						</div>
-					</div>
 
-					<div class="uk-form-row">
-						<label for="form-cols_xlarge" class="uk-form-label">{{ 'Large screens' | trans }}</label>
+						<div class="uk-form-row">
+							<label for="form-cols_xlarge" class="uk-form-label">{{ 'Large screens' | trans }}</label>
 
-						<div class="uk-form-controls">
-							<select name="cols_xlarge" id="form-cols_xlarge" class="uk-form-width-small" v-model="config.columns_xlarge">
-								<option value="">{{ 'Inherit' | trans }}</option>
-								<option value="1">{{ '1' | trans }}</option>
-								<option value="2">{{ '2' | trans }}</option>
-								<option value="3">{{ '3' | trans }}</option>
-								<option value="4">{{ '4' | trans }}</option>
-								<option value="5">{{ '5' | trans }}</option>
-								<option value="6">{{ '6' | trans }}</option>
-							</select>
+							<div class="uk-form-controls">
+								<select name="cols_xlarge" id="form-cols_xlarge" class="uk-form-width-small" v-model="config.columns_xlarge">
+									<option value="">{{ 'Inherit' | trans }}</option>
+									<option value="1">{{ '1' | trans }}</option>
+									<option value="2">{{ '2' | trans }}</option>
+									<option value="3">{{ '3' | trans }}</option>
+									<option value="4">{{ '4' | trans }}</option>
+									<option value="5">{{ '5' | trans }}</option>
+									<option value="6">{{ '6' | trans }}</option>
+								</select>
+							</div>
 						</div>
-					</div>
 
-					<div class="uk-form-row">
-						<label for="form-cols_gutter" class="uk-form-label">{{ 'Gutter width' | trans }}</label>
+						<div class="uk-form-row">
+							<label for="form-cols_gutter" class="uk-form-label">{{ 'Gutter width' | trans }}</label>
 
-						<div class="uk-form-controls">
-							<select name="columns_gutter" id="form-cols_gutter" class="uk-form-width-small" v-model="config.columns_gutter">
-								<option value="0">{{ '0 px' | trans }}</option>
-								<option value="10">{{ '10 px' | trans }}</option>
-								<option value="20">{{ '20 px' | trans }}</option>
-								<option value="30">{{ '30 px' | trans }}</option>
-							</select>
+							<div class="uk-form-controls">
+								<select name="columns_gutter" id="form-cols_gutter" class="uk-form-width-small" v-model="config.columns_gutter">
+									<option value="0">{{ '0 px' | trans }}</option>
+									<option value="10">{{ '10 px' | trans }}</option>
+									<option value="20">{{ '20 px' | trans }}</option>
+									<option value="30">{{ '30 px' | trans }}</option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</li>
@@ -198,12 +200,36 @@
 
 					<div class="uk-form-horizontal">
 						<div class="uk-form-row">
-							<label class="uk-form-label">{{ 'Projects per page' | trans }}</label>
+							<label class="uk-form-label">{{ 'Files per page' | trans }}</label>
 
 							<div class="uk-form-controls uk-form-controls-text">
 								<p class="uk-form-controls-condensed">
 									<input type="number" v-model="config.files_per_page" class="uk-form-width-small">
 								</p>
+							</div>
+						</div>
+
+						<div class="uk-form-row">
+							<label for="form-ordering" class="uk-form-label">{{ 'Ordering' | trans }}</label>
+
+							<div class="uk-form-controls">
+								<select name="ordering" id="form-ordering" class="uk-form-width-small"
+										v-model="config.ordering">
+									<option value="title">{{ 'Title' | trans }}</option>
+									<option value="date">{{ 'Date' | trans }}</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="uk-form-row">
+							<label for="form-ordering_dir" class="uk-form-label">{{ 'Ordering direction' | trans }}</label>
+
+							<div class="uk-form-controls">
+								<select name="ordering_dir" id="form-ordering_dir" class="uk-form-width-small"
+										v-model="config.ordering_dir">
+									<option value="asc">{{ 'Ascending' | trans }}</option>
+									<option value="desc">{{ 'Descending' | trans }}</option>
+								</select>
 							</div>
 						</div>
 

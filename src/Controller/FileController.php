@@ -3,8 +3,9 @@
 namespace Bixie\Download\Controller;
 
 use Pagekit\Application as App;
-use Pagekit\Module\Module;
 use Bixie\Download\Model\File;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * @Route("file", name="file")
@@ -12,7 +13,7 @@ use Bixie\Download\Model\File;
 class FileController
 {
     /**
-     * @var Module
+     * @var \Bixie\Download\DownloadModule
      */
     protected $download;
 
@@ -26,8 +27,9 @@ class FileController
 
     /**
      * @Route("/{id}", name="id")
-     */
-    public function downloadAction($id = 0)
+	 * @Request({"id": "integer", "key": "string"})
+	 */
+    public function downloadAction($id, $key)
     {
         if (!$file = File::where(['id = ?', 'status = ?'], [$id, 1])->first()) {
             App::abort(404, __('File not found.'));
@@ -37,9 +39,18 @@ class FileController
 			App::abort(403, __('Insufficient User Rights.'));
 		}
 
+		if (!$this->download->checkDownloadKey($file, $key)) {
+			App::abort(403, __('Key not valid.'));
+		}
 
+		// Generate response
+		$response = new BinaryFileResponse($file->path);
+		$response->headers->set('Content-Disposition', $response->headers->makeDisposition(
+			ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+			basename($file->path)
+		));
 
-		return [$file->path];
+		return $response;
 
     }
 }

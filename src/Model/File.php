@@ -48,7 +48,7 @@ class File implements \JsonSerializable
 
 	public static function allTags () {
 		//todo cache this
-		$tags = [];
+		$tags = App::module('bixie/download')->config('tags');
 		foreach (self::findAll() as $file) {
 			if (is_array($file->tags)) {
 				$tags = array_merge($tags, $file->tags);
@@ -57,6 +57,13 @@ class File implements \JsonSerializable
 		$tags = array_unique($tags);
 		natsort($tags);
 		return $tags;
+	}
+
+	public function getDownloadLink () {
+		if (!$this->id) {
+			return false;
+		}
+		return App::url('@download/file/id', ['id' => $this->id, 'key' => App::module('bixie/download')->getDownloadKey($this)], 'base');
 	}
 
 	public static function getStatuses () {
@@ -73,15 +80,17 @@ class File implements \JsonSerializable
 	}
 
 	public static function getPrevious ($file) {
+		$module = App::module('bixie/download');
 		return self::where(['title > ?', 'status = ?'], [$file->title, '1'])->where(function ($query) {
 			return $query->where('roles IS NULL')->whereInSet('roles', App::user()->roles, false, 'OR');
-		})->orderBy('title', 'ASC')->first();
+		})->orderBy($module->config('ordering'), $module->config('ordering_dir'))->first();
 	}
 
 	public static function getNext ($file) {
+		$module = App::module('bixie/download');
 		return self::where(['title < ?', 'status = ?'], [$file->title, '1'])->where(function ($query) {
 			return $query->where('roles IS NULL')->whereInSet('roles', App::user()->roles, false, 'OR');
-		})->orderBy('title', 'DESC')->first();
+		})->orderBy($module->config('ordering'), $module->config('ordering_dir'))->first();
 	}
 
 	/**
@@ -90,7 +99,7 @@ class File implements \JsonSerializable
 	public function jsonSerialize () {
 		$data = [
 			'fileName' => basename($this->path),
-			'download' => App::url('@download/file/id', ['id' => $this->id ?: 0], 'base'),
+			'download' => $this->getDownloadLink(),
 			'url' => App::url('@download/id', ['id' => $this->id ?: 0], 'base')
 		];
 

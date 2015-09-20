@@ -3,13 +3,12 @@
 namespace Bixie\Download\Controller;
 
 use Pagekit\Application as App;
-use Pagekit\Module\Module;
 use Bixie\Download\Model\File;
 
 class SiteController
 {
     /**
-     * @var Module
+     * @var \Bixie\Download\DownloadModule
      */
     protected $download;
 
@@ -32,7 +31,7 @@ class SiteController
 
         $query = File::where(['status = ?'], ['1'])->where(function ($query) {
 			return $query->where('roles IS NULL')->whereInSet('roles', App::user()->roles, false, 'OR');
-		})->orderBy('title', 'ASC');
+		})->orderBy($this->download->config('ordering'), $this->download->config('ordering_dir'));
 
 		$mainpage_text = '';
 		if ($this->download->config('mainpage_text')) {

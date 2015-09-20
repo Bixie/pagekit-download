@@ -57,7 +57,12 @@
 
 	    created: function () {
 	        this.resource = this.$resource('api/download/file/:id');
-	        this.config.filter = _.extend({ status: '', search: '', order: 'title asc', limit: this.config.files_per_page}, this.config.filter);
+	        this.config.filter = _.extend({
+	            status: '',
+	            search: '',
+	            order: this.config.ordering + ' ' + this.config.ordering_dir,
+	            limit: this.config.files_per_page
+	        }, this.config.filter);
 	    },
 
 	    computed: {

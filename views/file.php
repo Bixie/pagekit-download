@@ -85,7 +85,7 @@ $config['file_image_class'] = in_array($config['file']['image_align'], ['right',
 
 				<div class="<?= $config['file']['download_align']; ?> uk-margin">
 					<a class="<?= $config['file']['download_style'] ?>"
-					   href="<?= $app->url('@download/file/id', ['id' => $file->id]) ?>">
+					   href="<?= $app->url($file->getDownloadLink()) ?>">
 						<?= $config['file']['download'] ?></a>
 				</div>
 

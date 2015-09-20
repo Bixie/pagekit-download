@@ -3,7 +3,7 @@
 namespace Bixie\Download\Event;
 
 use Pagekit\Application as App;
-use Pagekit\Portfolio\UrlResolver;
+use Bixie\Download\UrlResolver;
 use Pagekit\Event\EventSubscriberInterface;
 
 class RouteListener implements EventSubscriberInterface
@@ -14,8 +14,11 @@ class RouteListener implements EventSubscriberInterface
      */
     public function onConfigureRoute($event, $route)
     {
-        if ($route->getName() == '@portfolio/id') {
-            App::routes()->alias(dirname($route->getPath()).'/{slug}', '@portfolio/id', ['_resolver' => 'Pagekit\Portfolio\UrlResolver']);
+        if ($route->getName() == '@download/id') {
+            App::routes()->alias(dirname($route->getPath()).'/{slug}', '@download/id', ['_resolver' => 'Bixie\Download\UrlResolver']);
+        }
+        if ($route->getName() == '@download/file/id') {
+            App::routes()->alias(dirname($route->getPath()).'/{slug}', '@download/file/id', ['_resolver' => 'Bixie\Download\UrlResolver']);
         }
     }
 

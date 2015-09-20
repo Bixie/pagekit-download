@@ -11,7 +11,20 @@ use Pagekit\User\Model\Role;
  */
 class DownloadController
 {
-    /**
+	/**
+	 * @var \Bixie\Download\DownloadModule
+	 */
+	protected $download;
+
+	/**
+	 * Constructor.
+	 */
+	public function __construct()
+	{
+		$this->download = App::module('bixie/download');
+	}
+
+	/**
      * @Access("download: manage downloads")
      * @Request({"filter": "array", "page":"int"})
      */
@@ -25,6 +38,8 @@ class DownloadController
             '$data' => [
 				'statuses' => File::getStatuses(),
 				'config'   => [
+                    'ordering' => $this->download->config('ordering'),
+                    'ordering_dir' => $this->download->config('ordering_dir'),
                     'filter' => $filter,
                     'page'   => $page
                 ]
@@ -47,7 +62,6 @@ class DownloadController
                     App::abort(404, __('Invalid file id.'));
                 }
 
-				$module = App::module('bixie/download');
 
 				$file = File::create([
 					'status' => 1,
@@ -57,7 +71,7 @@ class DownloadController
 					'date' => new \DateTime()
 				]);
 
-				$file->set('markdown', $module->config('markdown'));
+				$file->set('markdown', $this->download->config('markdown'));
 
 			}
 
@@ -70,7 +84,7 @@ class DownloadController
                 '$data' => [
 					'statuses' => File::getStatuses(),
 					'roles'    => array_values(Role::findAll()),
-					'config' => App::module('bixie/download')->config(),
+					'config' => $this->download->config(),
                 	'file'  => $file,
                     'tags'     => File::allTags()
                 ],

@@ -47,7 +47,7 @@
 		<?php if ($config['teaser']['show_download']) : ?>
 			<div class="<?= $config['teaser']['download_align']; ?> uk-margin">
 				<a class="<?= $config['teaser']['download_style'] ?>"
-				   href="<?= $app->url('@download/file/id', ['id' => $file->id]) ?>">
+				   href="<?= $app->url($file->getDownloadLink()) ?>">
 					<?= $config['teaser']['download'] ?></a>
 			</div>
 		<?php endif; ?>

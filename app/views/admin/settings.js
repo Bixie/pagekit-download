@@ -7,7 +7,7 @@ module.exports = Vue.extend({
     methods: {
 
         save: function () {
-            this.$http.post('admin/system/settings/config', { name: 'download', config: this.config }, function () {
+            this.$http.post('admin/system/settings/config', { name: 'bixie/download', config: this.config }, function () {
                 this.$notify('Settings saved.');
             }).error(function (data) {
                 this.$notify(data, 'danger');
