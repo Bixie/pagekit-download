@@ -1,0 +1,19 @@
+{
+  "name": "bixie/download",
+  "type": "pagekit-extension",
+  "version": "0.5.0",
+  "title": "Download manager",
+  "description": "Enables you to serve downloadable packages to your users.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Bixie",
+      "email": "info@bixie.org",
+      "homepage": "http://download.bixie.org"
+    }
+  ],
+  "extra": {
+    "icon": "icon.svg",
+    "scripts": "scripts.php"
+  }
+}
