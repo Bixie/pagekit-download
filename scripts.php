@@ -1,5 +1,4 @@
 <?php
-use Pagekit\Site\Model\Node;
 
 return [
 
@@ -24,29 +23,6 @@ return [
 				$table->setPrimaryKey(['id']);
 				$table->addUniqueIndex(['slug'], 'DOWNLOAD_FILE_SLUG');
 			});
-		}
-		//temp fix trigger install node
-		$nodes = [
-
-			'download' => [
-				'name' => '@download',
-				'label' => 'Download',
-				'controller' => 'Bixie\\Download\\Controller\\SiteController',
-				'protected' => true,
-				'frontpage' => true
-			]
-
-		];
-		foreach ($nodes as $type => $route) {
-			if (isset($route['protected']) and $route['protected'] and !Node::where(['type = ?'], [$type])->first()) {
-				Node::create([
-					'title' => $route['label'],
-					'slug' => $app->filter($route['label'], 'slugify'),
-					'type' => $type,
-					'status' => 1,
-					'link' => $route['name']
-				])->save();
-			}
 		}
 
     },
