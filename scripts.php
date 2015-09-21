@@ -13,7 +13,7 @@ return [
 				$table->addColumn('status', 'smallint');
 				$table->addColumn('roles', 'simple_array', ['notnull' => false]);
 				$table->addColumn('title', 'string', ['length' => 255]);
-				$table->addColumn('subtitle', 'string', ['length' => 255]);
+				$table->addColumn('subtitle', 'string', ['length' => 255, 'notnull' => false]);
 				$table->addColumn('slug', 'string', ['length' => 255]);
 				$table->addColumn('path', 'text');
 				$table->addColumn('content', 'text', ['notnull' => false]);
@@ -60,7 +60,7 @@ return [
         }
 
 		// remove the config
-		$app['config']->remove('download');
+		$app['config']->remove('bixie/download');
 
 	}
 
