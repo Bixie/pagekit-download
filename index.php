@@ -160,7 +160,7 @@ return [
 
 			$scripts->register('uikit-grid', 'app/assets/uikit/js/components/grid.min.js', 'uikit');
 			$scripts->register('uikit-lightbox', 'app/assets/uikit/js/components/lightbox.min.js', 'uikit');
-			$scripts->register('node-download', 'download:app/bundle/node-download.js', '~site-edit');
+			$scripts->register('node-download', 'bixie/download:app/bundle/node-download.js', '~site-edit');
 		},
 
 		'console.init' => function ($event, $console) {
