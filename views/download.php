@@ -55,7 +55,7 @@ $config['mainpage_image_class'] = in_array($config['mainpage_image_align'], ['ri
 
 		<?php foreach ($files as $file) : ?>
 
-			<?= $view->render('bixie/download:views/templates/file_panel.php', ['config' => $config, 'file' => $file]) ?>
+			<?= $view->render('bixie/download/templates/file_panel.php', ['config' => $config, 'file' => $file]) ?>
 
 		<?php endforeach; ?>
 

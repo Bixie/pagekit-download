@@ -45,7 +45,7 @@ class SiteController
         return [
             '$view' => [
                 'title' => $this->download->config('download_title') ?: App::node()->title,
-                'name' => 'bixie/download:views/download.php'
+                'name' => 'bixie/download/download.php'
             ],
 			'tags' => File::allTags(),
       		'download' => $this->download,
@@ -74,7 +74,7 @@ class SiteController
         return [
             '$view' => [
                 'title' => __($file->title),
-                'name' => 'bixie/download:views/file.php'
+                'name' => 'bixie/download/file.php'
             ],
             'portfolio' => $this->download,
 			'config' => $this->download->config(),

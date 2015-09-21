@@ -33,7 +33,7 @@ class DownloadController
         return [
             '$view' => [
                 'title' => __('Downloads'),
-                'name'  => 'bixie/download:views/admin/download.php'
+                'name'  => 'bixie/download/admin/download.php'
             ],
             '$data' => [
 				'statuses' => File::getStatuses(),
@@ -79,7 +79,7 @@ class DownloadController
             return [
                 '$view' => [
                     'title' => $id ? __('Edit download') : __('Add download'),
-                    'name'  => 'bixie/download:views/admin/file.php'
+                    'name'  => 'bixie/download/admin/file.php'
                 ],
                 '$data' => [
 					'statuses' => File::getStatuses(),
@@ -107,7 +107,7 @@ class DownloadController
         return [
             '$view' => [
                 'title' => __('Download Settings'),
-                'name'  => 'bixie/download:views/admin/settings.php'
+                'name'  => 'bixie/download/admin/settings.php'
             ],
             '$data' => [
                 'config' => App::module('bixie/download')->config(),
