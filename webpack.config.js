@@ -2,8 +2,6 @@ module.exports = [
 
     {
         entry: {
-            /*pagekit addons*/
-            "node-download": "./app/components/node-download.vue",
             /*frontpage views*/
             "download": "./app/views/download.js",
             /*admin views*/
