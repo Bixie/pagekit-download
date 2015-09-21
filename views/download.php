@@ -4,8 +4,8 @@
  * @var array $tags
  * @var array $config
  * @var string $mainpage_text
- * @var Pagekit\Module\Module $download
- * @var Pagekit\Portfolio\Model\Project[] $files
+ * @var Bixie\Download\DownloadModule $download
+ * @var Bixie\Download\Model\File[] $files
  */
 $view->script('download', 'bixie/download:app/bundle/download.js', ['uikit-grid']);
 
