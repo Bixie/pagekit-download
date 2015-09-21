@@ -1,5 +1,6 @@
 {
   "name": "bixie/download",
+  "module": "bixie/download",
   "type": "pagekit-extension",
   "version": "0.5.0",
   "title": "Download manager",

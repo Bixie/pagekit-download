@@ -5,7 +5,7 @@ use Bixie\Download\Event\RouteListener;
 return [
 
 	'name' => 'bixie/download',
-
+//todo https://github.com/pagekit/pagekit/blob/a236467dcf994816b36c100e6475f7a828199893/app/installer/src/Package/PackageFactory.php#L91
 	'type' => 'extension',
 
 	'main' => 'Bixie\\Download\\DownloadModule',
