@@ -12,7 +12,7 @@
 
 $config['file_image_class'] = in_array($config['file']['image_align'], ['right', 'left']) ? 'uk-align-' . $config['file']['image_align'] : 'uk-text-center'
 ?>
-<article class="bixie-addtocartv" id="download-file">
+<article class="bixie-addtocart" id="download-file">
 
 	<?php if (in_array($config['file']['show_navigation'], ['both', 'top']) && ($next || $previous)) : ?>
 		<ul class="uk-pagination">
