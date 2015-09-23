@@ -19,7 +19,7 @@ $grid .= $config['columns_xlarge'] ? ' uk-grid-width-xlarge-1-'.$config['columns
 $config['mainpage_image_class'] = in_array($config['mainpage_image_align'], ['right', 'left']) ? 'uk-align-' . $config['mainpage_image_align'] : 'uk-text-center'
 ?>
 
-<article id="portfolio-projects">
+<article class="bixie-addtocart" id="download-files">
 
 	<?php if ($config['mainpage_title']) : ?>
 	    <h1 class="uk-article-title"><?= $config['mainpage_title'] ?></h1>

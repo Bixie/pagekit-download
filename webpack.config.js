@@ -2,6 +2,7 @@ module.exports = [
 
     {
         entry: {
+            "downloads": "./app/downloads.js",
             /*frontpage views*/
             "download": "./app/views/download.js",
             /*admin views*/

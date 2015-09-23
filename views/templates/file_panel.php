@@ -4,6 +4,9 @@
  * @var array $config
  * @var Bixie\Download\Model\File $file
  */
+
+$config['show_download'] = $config['teaser']['show_download'] && !$file->get('cart_active');
+
 ?>
 <div data-uk-filter="<?= implode(',', $file->tags) ?>">
 	<div class="uk-panel <?= $config['teaser']['panel_style'] ?> uk-text-<?= $config['teaser']['content_align'] ?>">
@@ -40,7 +43,13 @@
 			</div>
 		<?php endif; ?>
 
-		<?php if ($config['teaser']['show_readmore'] || $config['teaser']['show_download']) : ?>
+		<?php if (isset($file->product) && $file->get('cart_active')) : ?>
+
+			<addtocart product="{{ products[<?= $file->id ?>] }}" item_id="<?= $file->id ?>"></addtocart>
+
+		<?php endif; ?>
+
+		<?php if ($config['teaser']['show_readmore'] || $config['show_download']) : ?>
 			<div class="uk-flex uk-flex-wrap <?= $config['teaser']['button_align']; ?> uk-margin" data-uk-margin="">
 			<?php if ($config['teaser']['show_readmore']) : ?>
 				<a class="<?= $config['teaser']['read_more_style'] ?>"
@@ -48,7 +57,7 @@
 					<?= $config['teaser']['read_more'] ?></a>
 			<?php endif; ?>
 
-			<?php if ($config['teaser']['show_download']) : ?>
+			<?php if ($config['show_download']) : ?>
 				<a class="<?= $config['teaser']['download_style'] ?><?= $config['teaser']['show_readmore'] && $config['teaser']['download_style'] != 'uk-flex-space-around' ? ' uk-margin-left' : '' ?>"
 				   href="<?= $app->url($file->getDownloadLink()) ?>">
 					<?= $config['teaser']['download'] ?></a>

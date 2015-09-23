@@ -1,7 +1,7 @@
 
 require('../../components/input-file.vue');
 
-module.exports = Vue.extend({
+module.exports = {
 
     data: function () {
         return _.merge({
@@ -22,6 +22,24 @@ module.exports = Vue.extend({
 
         statusOptions: function () {
             return _.map(this.statuses, function (status, id) { return { text: status, value: id }; });
+        },
+
+        sections: function () {
+
+            var sections = [];
+
+            _.forIn(this.$options.components, function (component, name) {
+
+                var options = component.options || {}, section = options.section;
+
+                if (section) {
+                    section.name = name;
+                    sections.push(section);
+                }
+
+            });
+
+            return sections;
         }
 
     },
@@ -44,6 +62,8 @@ module.exports = Vue.extend({
 
                 this.$set('file', data.file);
 
+                this.$broadcast('saved', data);
+
                 this.$notify(this.$trans('Download %title% saved.', {title: this.file.title}));
 
             }, function (data) {
@@ -53,16 +73,12 @@ module.exports = Vue.extend({
 
     },
 
-    components: {
+    mixins: [window.BixieDownloads]
 
-        'input-tags': require('../../components/input-tags.vue')
-
-    }
-
-});
+};
 
 $(function () {
 
-    (new module.exports()).$mount('#file-edit');
+    new Vue(module.exports).$mount('#file-edit');
 
 });

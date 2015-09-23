@@ -47,7 +47,7 @@
 	
 	__webpack_require__(4);
 
-	module.exports = Vue.extend({
+	module.exports = {
 
 	    data: function () {
 	        return _.merge({
@@ -68,6 +68,24 @@
 
 	        statusOptions: function () {
 	            return _.map(this.statuses, function (status, id) { return { text: status, value: id }; });
+	        },
+
+	        sections: function () {
+
+	            var sections = [];
+
+	            _.forIn(this.$options.components, function (component, name) {
+
+	                var options = component.options || {}, section = options.section;
+
+	                if (section) {
+	                    section.name = name;
+	                    sections.push(section);
+	                }
+
+	            });
+
+	            return sections;
 	        }
 
 	    },
@@ -90,6 +108,8 @@
 
 	                this.$set('file', data.file);
 
+	                this.$broadcast('saved', data);
+
 	                this.$notify(this.$trans('Download %title% saved.', {title: this.file.title}));
 
 	            }, function (data) {
@@ -99,20 +119,15 @@
 
 	    },
 
-	    components: {
+	    mixins: [window.BixieDownloads]
 
-	        'input-tags': __webpack_require__(7)
-
-	    }
-
-	});
+	};
 
 	$(function () {
 
-	    (new module.exports()).$mount('#file-edit');
+	    new Vue(module.exports).$mount('#file-edit');
 
 	});
-
 
 /***/ },
 /* 1 */,
@@ -195,61 +210,6 @@
 /***/ function(module, exports) {
 
 	module.exports = "<div v-on=\"click: pick\" class=\"{{ class }}\">\r\n        <ul class=\"uk-float-right uk-subnav pk-subnav-icon\">\r\n            <li><a class=\"pk-icon-delete pk-icon-hover\" title=\"{{ 'Delete' | trans }}\" data-uk-tooltip=\"{delay: 500, 'pos': 'left'}\" v-on=\"click: remove\"></a></li>\r\n        </ul>\r\n        <a class=\"pk-icon-folder-circle uk-margin-right\"></a>\r\n        <a v-if=\"!file\" class=\"uk-text-muted\">{{ 'Select file' | trans }}</a>\r\n        <a v-if=\"file\" data-uk-tooltip=\"\" title=\"{{ file }}\">{{ fileName }}</a>\r\n    </div>\r\n\r\n    <v-modal v-ref=\"modal\" large>\r\n\r\n        <panel-finder root=\"{{ storage }}\" v-ref=\"finder\" modal=\"true\"></panel-finder>\r\n\r\n        <div class=\"uk-modal-footer uk-text-right\">\r\n            <button class=\"uk-button uk-button-link uk-modal-close\" type=\"button\">{{ 'Cancel' | trans }}</button>\r\n            <button class=\"uk-button uk-button-primary\" type=\"button\" v-attr=\"disabled: !hasSelection()\" v-on=\"click: select()\">{{ 'Select' | trans }}</button>\r\n        </div>\r\n\r\n    </v-modal>";
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(8)
-	module.exports.template = __webpack_require__(9)
-
-
-/***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-	module.exports = {
-
-	        props: ['tags', 'existing'],
-
-	        data: function () {
-	            return {
-	                'newtag': '',
-	                'tags': '',
-	                'existing': ''
-	            };
-	        },
-
-	        methods: {
-
-	            addTag: function(e, tag) {
-	                if (e) {
-	                    e.stopPropagation();
-	                    e.preventDefault();
-	                }
-	                this.tags.push(tag || this.newtag);
-	                this.$nextTick(function () {
-	                    UIkit.$html.trigger('resize'); //todo why no check.display or changed.dom???
-	                });
-	                this.newtag = '';
-	            },
-
-	            removeTag: function(e, idx) {
-	                if (e) {
-	                    e.preventDefault();
-	                }
-	                this.tags.$remove(idx)
-	            }
-
-	        }
-
-	    };
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"uk-flex uk-flex-wrap\" data-uk-margin=\"\">\r\n        <div v-repeat=\"tag: tags\" class=\"uk-badge uk-margin-small-right\">\r\n            <a class=\"uk-float-right uk-close\" v-on=\"click: removeTag($event, $index)\"></a>\r\n            {{ tag }}\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"uk-flex uk-flex-middle uk-margin\">\r\n        <div>\r\n            <div class=\"uk-position-relative\" data-uk-dropdown=\"\">\r\n                <button type=\"button\" class=\"uk-button uk-button-small\">{{ 'Existing' | trans }}</button>\r\n\r\n                <div class=\"uk-dropdown uk-dropdown-small\">\r\n                    <ul class=\"uk-nav uk-nav-dropdown\">\r\n                        <li v-repeat=\"tag: existing\"><a\r\n                                v-on=\"click: addTag($event, tag)\">{{ tag }}</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <div class=\"uk-flex-item-1 uk-margin-small-left\">\r\n            <div class=\"uk-form-password\">\r\n                <input type=\"text\" class=\"uk-width-1-1\" v-model=\"newtag\" v-on=\"keyup:addTag | key 'enter'\">\r\n                <a class=\"uk-form-password-toggle\" v-on=\"click: addTag()\"><i class=\"uk-icon-check uk-icon-hover\"></i></a>\r\n            </div>\r\n        </div>\r\n\r\n    </div>";
 
 /***/ }
 /******/ ]);

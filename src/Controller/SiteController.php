@@ -39,6 +39,7 @@ class SiteController
 		}
 
 		foreach ($files = $query->get() as $file) {
+			App::trigger('bixie.prepare.file', [$file, App::view()]);
 			$file->content = App::content()->applyPlugins($file->content, ['file' => $file, 'markdown' => $file->get('markdown')]);
         }
 
@@ -66,6 +67,7 @@ class SiteController
             App::abort(404, __('File not found.'));
         }
 
+		App::trigger('bixie.prepare.file', [$file, App::view()]);
 		$file->content = App::content()->applyPlugins($file->content, ['file' => $file, 'markdown' => $file->get('markdown')]);
 
 		$previous = File::getPrevious($file);

@@ -55,7 +55,7 @@ return [
 	'menu' => [
 
 		'download' => [
-			'label' => 'Download manager',
+			'label' => 'Downloads',
 			'icon' => 'bixie/download:icon.svg',
 			'url' => '@download/download',
 			'access' => 'download: manage downloads',
@@ -158,6 +158,7 @@ return [
 
 		'view.scripts' => function ($event, $scripts) use ($app) {
 
+			$scripts->register('bixie-downloads', 'bixie/download:app/bundle/downloads.js');
 			$scripts->register('uikit-grid', 'app/assets/uikit/js/components/grid.min.js', 'uikit');
 			$scripts->register('uikit-lightbox', 'app/assets/uikit/js/components/lightbox.min.js', 'uikit');
 		},

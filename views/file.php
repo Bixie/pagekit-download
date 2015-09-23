@@ -12,7 +12,7 @@
 
 $config['file_image_class'] = in_array($config['file']['image_align'], ['right', 'left']) ? 'uk-align-' . $config['file']['image_align'] : 'uk-text-center'
 ?>
-<article id="download-file">
+<article class="bixie-addtocartv" id="download-file">
 
 	<?php if (in_array($config['file']['show_navigation'], ['both', 'top']) && ($next || $previous)) : ?>
 		<ul class="uk-pagination">
@@ -83,6 +83,12 @@ $config['file_image_class'] = in_array($config['file']['image_align'], ['right',
 					</div>
 				<?php endif; ?>
 
+				<?php if (isset($file->product) && $file->get('cart_active')) : ?>
+					<div class="uk-margin">
+						<addtocart product="{{ products[<?= $file->id ?>] }}" item_id="<?= $file->id ?>"></addtocart>
+					</div>
+				<?php endif; ?>
+
 				<div class="<?= $config['file']['download_align']; ?> uk-margin">
 					<a class="<?= $config['file']['download_style'] ?>"
 					   href="<?= $app->url($file->getDownloadLink()) ?>">
@@ -92,6 +98,8 @@ $config['file_image_class'] = in_array($config['file']['image_align'], ['right',
 
 						<?= $config['file']['download'] ?></a>
 				</div>
+				<pre>{{$data|json}}</pre>
+
 
 			</div>
 		</div>
