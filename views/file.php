@@ -29,6 +29,10 @@ $config['file_image_class'] = in_array($config['file']['image_align'], ['right',
 
 	<h1 class="uk-article-title"><?= $file->title ?></h1>
 
+	<?php if ($file->subtitle) : ?>
+	    <p class="uk-article-lead"><?= $file->subtitle ?></p>
+	<?php endif; ?>
+
 	<div class="uk-grid" data-uk-grid-margin="">
 		<div class="uk-width-medium-3-4">
 
