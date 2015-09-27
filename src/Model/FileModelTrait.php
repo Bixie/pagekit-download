@@ -26,10 +26,6 @@ trait FileModelTrait
         })->first()) {
 			$project->slug = preg_replace('/-\d+$/', '', $project->slug).'-'.$i++;
         }
-		//prio
-		if (!$project->id) {
-			$project->priority = 1 + self::getConnection()->fetchColumn('SELECT MAX(priority) FROM @portfolio_project');
-		}
 
     }
 
