@@ -3,6 +3,7 @@
 namespace Bixie\Download\Model;
 
 use Pagekit\Application as App;
+use Pagekit\Routing\Generator\UrlGenerator;
 use Pagekit\System\Model\DataModelTrait;
 use Pagekit\User\Model\AccessModelTrait;
 
@@ -62,11 +63,19 @@ class File implements \JsonSerializable
 		return $tags;
 	}
 
-	public function getDownloadLink () {
+	/**
+	 * @param string $purchaseKey optional
+	 * @return bool
+	 */
+	public function getDownloadLink ($purchaseKey = '') {
 		if (!$this->id) {
 			return false;
 		}
-		return App::url('@download/file/id', ['id' => $this->id, 'key' => App::module('bixie/download')->getDownloadKey($this)], 'base');
+		return App::url('@download/file/id', [
+			'id' => $this->id,
+			'key' => App::module('bixie/download')->getDownloadKey($this, $purchaseKey),
+			'pkey' => $purchaseKey
+		], UrlGenerator::ABSOLUTE_URL);
 	}
 
 	public static function getStatuses () {
@@ -74,6 +83,10 @@ class File implements \JsonSerializable
 			self::STATUS_PUBLISHED => __('Published'),
 			self::STATUS_UNPUBLISHED => __('Unpublished')
 		];
+	}
+
+	public function getFileName () {
+		return basename($this->path);
 	}
 
 	public function getStatusText () {
@@ -101,7 +114,7 @@ class File implements \JsonSerializable
 	 */
 	public function jsonSerialize () {
 		$data = [
-			'fileName' => basename($this->path),
+			'fileName' => $this->getFileName(),
 			'download' => $this->getDownloadLink(),
 			'url' => App::url('@download/id', ['id' => $this->id ?: 0], 'base')
 		];

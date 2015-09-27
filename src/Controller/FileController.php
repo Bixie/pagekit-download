@@ -25,11 +25,15 @@ class FileController
         $this->download = App::module('bixie/download');
     }
 
-    /**
-     * @Route("/{id}", name="id")
-	 * @Request({"id": "integer", "key": "string"})
+	/**
+	 * @Route("/{id}", name="id")
+	 * @Request({"id": "integer", "key": "string", "pkey": "string"})
+	 * @param integer $id File id
+	 * @param string $key session key
+	 * @param string $purchaseKey optional purchase key
+	 * @return BinaryFileResponse
 	 */
-    public function downloadAction($id, $key)
+    public function downloadAction($id, $key, $purchaseKey)
     {
         if (!$file = File::where(['id = ?', 'status = ?'], [$id, 1])->first()) {
             App::abort(404, __('File not found.'));
@@ -39,7 +43,7 @@ class FileController
 			App::abort(403, __('Insufficient User Rights.'));
 		}
 
-		if (!$this->download->checkDownloadKey($file, $key)) {
+		if (!$this->download->checkDownloadKey($file, $key, $purchaseKey)) {
 			App::abort(403, __('Key not valid.'));
 		}
 

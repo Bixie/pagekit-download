@@ -59,7 +59,7 @@ $config['show_download'] = $config['teaser']['show_download'] && !$file->get('ca
 
 			<?php if ($config['show_download']) : ?>
 				<a class="<?= $config['teaser']['download_style'] ?><?= $config['teaser']['show_readmore'] && $config['teaser']['download_style'] != 'uk-flex-space-around' ? ' uk-margin-left' : '' ?>"
-				   href="<?= $app->url($file->getDownloadLink()) ?>">
+				   href="<?= $file->getDownloadLink() ?>">
 					<?= $config['teaser']['download'] ?></a>
 			<?php endif; ?>
 			</div>

@@ -44,7 +44,7 @@
                 <label class="uk-form-label">{{ 'File' | trans }}</label>
 
                 <div class="uk-form-controls">
-                    <input-file file="{{@ file.path }}" ext="{{ ['zip', 'rar', 'tar.gz'] }}"></input-file>
+                    <input-file file="{{@ file.path }}" ext="{{ config.file_extensions }}"></input-file>
                     <input type="hidden" name="path" v-model="file.path" v-valid="required">
                 </div>
                 <p class="uk-form-help-block uk-text-danger" v-show="form.path.invalid">
