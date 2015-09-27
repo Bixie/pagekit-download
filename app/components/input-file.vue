@@ -13,6 +13,8 @@
 
         <panel-finder root="{{ storage }}" v-ref="finder" modal="true"></panel-finder>
 
+        <div v-show="!hasSelection()" class="uk-alert">{{ 'Select one file of the following types' | trans }}: {{ this.ext.join(', ') }}</div>
+
         <div class="uk-modal-footer uk-text-right">
             <button class="uk-button uk-button-link uk-modal-close" type="button">{{ 'Cancel' | trans }}</button>
             <button class="uk-button uk-button-primary" type="button" v-attr="disabled: !hasSelection()" v-on="click: select()">{{ 'Select' | trans }}</button>

@@ -6,7 +6,8 @@ module.exports = {
     data: function () {
         return _.merge({
             tags: [],
-            file: {}
+            file: {},
+            config: {}
         }, window.$data);
     },
 

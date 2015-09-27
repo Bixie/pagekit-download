@@ -245,6 +245,14 @@
 						</div>
 
 						<div class="uk-form-row">
+							<span class="uk-form-label">{{ 'File extensions' | trans }}</span>
+							<div class="uk-form-controls">
+								<input-tags tags="{{@ config.file_extensions}}"
+											existing="{{ ['zip', 'rar', 'tar.gz', 'exe', 'jp?g', 'png'] }}"></input-tags>
+							</div>
+						</div>
+
+						<div class="uk-form-row">
 							<label for="form-date_format" class="uk-form-label">{{ 'Date format' | trans }}</label>
 
 							<div class="uk-form-controls">
