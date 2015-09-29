@@ -102,8 +102,6 @@ $config['file_image_class'] = in_array($config['file']['image_align'], ['right',
 
 						<?= $config['file']['download'] ?></a>
 				</div>
-				<pre>{{$data|json}}</pre>
-
 
 			</div>
 		</div>
