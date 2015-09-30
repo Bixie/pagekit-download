@@ -52,7 +52,8 @@ class SiteController
       		'download' => $this->download,
 			'config' => $this->download->config(),
 			'mainpage_text' => $mainpage_text,
-            'files' => $files
+            'files' => $files,
+			'node' => App::node()
         ];
     }
 
@@ -82,7 +83,8 @@ class SiteController
 			'config' => $this->download->config(),
 			'previous' => $previous,
 			'next' => $next,
-			'file' => $file
+			'file' => $file,
+			'node' => App::node()
         ];
     }
 }
