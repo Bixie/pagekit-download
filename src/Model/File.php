@@ -75,7 +75,7 @@ class File implements \JsonSerializable
 			'id' => $this->id,
 			'key' => App::module('bixie/download')->getDownloadKey($this, $purchaseKey),
 			'pkey' => $purchaseKey
-		], UrlGenerator::ABSOLUTE_URL);
+		], true);
 	}
 
 	public static function getStatuses () {
