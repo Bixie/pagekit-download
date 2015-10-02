@@ -149,6 +149,7 @@ return [
 
 		'boot' => function ($event, $app) {
 			$app->subscribe(
+				new Bixie\Download\Cart\FileListener,
 				new RouteListener
 			);
 //			$app->extend('view', function ($view) use ($app) {

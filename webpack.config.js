@@ -3,6 +3,8 @@ module.exports = [
     {
         entry: {
             "downloads": "./app/downloads.js",
+            /*cart*/
+            "download-section-cart": "./app/components/download-section-cart.vue",
             /*frontpage views*/
             "download": "./app/views/download.js",
             /*admin views*/
