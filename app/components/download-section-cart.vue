@@ -55,6 +55,15 @@
                 </div>
             </div>
 
+            <div class="uk-form-row">
+                <label for="form-cart-product_identifier" class="uk-form-label">{{ 'Package name' | trans }}</label>
+
+                <div class="uk-form-controls">
+                    <input type="text" v-model="product.data.product_identifier"
+                          id="form-cart-product_identifier" class="uk-form-width-medium">
+                </div>
+            </div>
+
 
         </div>
     </div>
@@ -82,7 +91,8 @@
                     currency: window.$cart.config.currency,
                     vat: window.$cart.config.vat,
                     data: {
-                        validity_period: ''
+                        validity_period: '',
+                        package_name: ''
                     }
                 },
                 config: {}

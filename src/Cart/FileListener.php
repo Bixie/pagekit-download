@@ -109,8 +109,8 @@ class FileListener implements EventSubscriberInterface, ProductListenerInterface
 			$orderValid = $this->validateOrder($order, $cartItem, $file);
 
 			$event->addParameters([
-				'bixie.admin.order' => App::view('bixie/cart/templates/file_admin.php', compact('order', 'cartItem', 'file', 'orderValid')),
-				'bixie.cart.order_item' => App::view('bixie/cart/templates/file_cart_order_item.php', compact('order', 'cartItem', 'file', 'orderValid'))
+				'bixie.admin.order' => App::view('bixie/download/templates/file_admin.php', compact('order', 'cartItem', 'file', 'orderValid')),
+				'bixie.cart.order_item' => App::view('bixie/download/templates/file_cart_order_item.php', compact('order', 'cartItem', 'file', 'orderValid'))
 			]);
 
 		}
