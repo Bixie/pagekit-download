@@ -35,7 +35,8 @@ class FileController
 	 */
     public function downloadAction($id, $key, $purchaseKey)
     {
-        if (!$file = File::where(['id = ?', 'status = ?'], [$id, 1])->first()) {
+		//todo return proper errors
+		if (!$file = File::where(['id = ?', 'status = ?'], [$id, 1])->first()) {
             App::abort(404, __('File not found.'));
         }
 
@@ -44,7 +45,7 @@ class FileController
 		}
 
 		if (!$this->download->checkDownloadKey($file, $key, $purchaseKey)) {
-			App::abort(403, __('Key not valid.'));
+			App::abort(400, __('Key not valid.'));
 		}
 
 		// Generate response
