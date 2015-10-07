@@ -37,12 +37,18 @@ $config['file_image_class'] = in_array($config['file']['image_align'], ['right',
 		<div class="uk-width-medium-3-4">
 
 
-		<?php if ($config['file']['metadata_position'] == 'content-top' && !empty($file->date)) : ?>
+		<?php if ($config['file']['metadata_position'] == 'content-top' && (!empty($file->date) || $file->get('version'))) : ?>
 			<p class="uk-file-meta">
 				<?php if (!empty($file->date)) : ?>
 					<?= $file->date->format($config['date_format']) ?>
 				<?php endif; ?>
 			</p>
+		<?php endif; ?>
+		<?php if ($file->get('version')) : ?>
+			<dl class="uk-description-list uk-description-list-horizontal">
+				<dt><?= __('Version') ?></dt>
+				<dd><?= $file->get('version') ?></dd>
+			</dl>
 		<?php endif; ?>
 
 		<div class="uk-clearfix">
@@ -70,20 +76,32 @@ $config['file_image_class'] = in_array($config['file']['image_align'], ['right',
 		<div class="uk-width-medium-1-4">
 			<div class="uk-panel uk-panel-box">
 
-				<?php if ($config['file']['metadata_position'] == 'sidebar' && !empty($file->date)) : ?>
+				<?php if ($config['file']['metadata_position'] == 'sidebar' && (!empty($file->date) || $file->get('version'))) : ?>
+						<dl class="uk-description-list">
 						<?php if (!empty($file->date)) : ?>
-							<dl class="uk-description-list">
 								<dt><?= __('Date') ?></dt>
 								<dd><?= $file->date->format($config['date_format']) ?></dd>
-							</dl>
 						<?php endif; ?>
+						<?php if ($file->get('version')) : ?>
+							<dt><?= __('Version') ?></dt>
+							<dd><?= $file->get('version') ?></dd>
+						<?php endif; ?>
+						</dl>
 				<?php endif; ?>
+
 
 				<?php if ($config['file']['tags_position'] == 'sidebar' && count($file->tags)) : ?>
 					<div class="uk-flex uk-flex-wrap uk-margin <?= $config['file']['tags_align'] ?>" data-uk-margin="">
 						<?php foreach ($file->tags as $tag) : ?>
 							<div class="uk-badge uk-margin-small-right"><?= $tag ?></div>
 						<?php endforeach; ?>
+					</div>
+				<?php endif; ?>
+
+				<?php if ($file->get('demo_url')) : ?>
+					<div class="uk-margin">
+						<a class="uk-button uk-button-primary uk-width-1-1" target="_blank" href="<?= $file->get('demo_url') ?>">
+							<i class="uk-icon-cog uk-margin-small-right"></i><?= __('Demo') ?></a>
 					</div>
 				<?php endif; ?>
 

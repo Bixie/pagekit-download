@@ -217,6 +217,7 @@
 										v-model="config.ordering">
 									<option value="title">{{ 'Title' | trans }}</option>
 									<option value="date">{{ 'Date' | trans }}</option>
+									<option value="tags">{{ 'Tags (first tag of item)' | trans }}</option>
 								</select>
 							</div>
 						</div>

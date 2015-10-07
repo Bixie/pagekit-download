@@ -95,6 +95,22 @@
             </div>
 
             <div class="uk-form-row">
+                <label for="form-demo_url" class="uk-form-label">{{ 'Demo url' | trans }}</label>
+
+                <div class="uk-form-controls">
+                    <input id="form-demo_url" class="uk-width-1-1" type="text" v-model="file.data.demo_url">
+                </div>
+            </div>
+
+            <div class="uk-form-row">
+                <label for="form-version" class="uk-form-label">{{ 'Version' | trans }}</label>
+
+                <div class="uk-form-controls">
+                    <input id="form-version" class="uk-width-1-1" type="text" v-model="file.data.version">
+                </div>
+            </div>
+
+            <div class="uk-form-row">
                 <span class="uk-form-label">{{ 'Restrict Access' | trans }}</span>
                 <div class="uk-form-controls uk-form-controls-text">
                     <p v-repeat="role: roles" class="uk-form-controls-condensed">
