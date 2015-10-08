@@ -22,6 +22,7 @@ return [
 				$table->addColumn('data', 'json_array', ['notnull' => false]);
 				$table->setPrimaryKey(['id']);
 				$table->addUniqueIndex(['slug'], 'DOWNLOAD_FILE_SLUG');
+				$table->addIndex(['status'], 'DOWNLOAD_FILE_STATUS');
 			});
 		}
 
