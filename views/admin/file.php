@@ -1,6 +1,6 @@
 <?php  $view->style('codemirror'); $view->script('admin-file', 'bixie/download:app/bundle/admin-file.js', ['vue', 'editor', 'bixie-downloads']); ?>
 
-<form id="file-edit" class="uk-form" name="form" v-on="submit: save | valid" v-cloak>
+<form id="file-edit" class="uk-form" name="form" v-validator="form" v-on="submit: save | valid" v-cloak>
 
 	<div class="uk-margin uk-flex uk-flex-space-between uk-flex-wrap" data-uk-margin>
 		<div data-uk-margin>
