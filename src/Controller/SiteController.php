@@ -33,6 +33,10 @@ class SiteController
 			return $query->where('roles IS NULL')->whereInSet('roles', App::user()->roles, false, 'OR');
 		})->orderBy($this->download->config('ordering'), $this->download->config('ordering_dir'));
 
+		if ($this->download->config('ordering') == 'tags') {
+			$query->orderBy('title', $this->download->config('ordering_dir'));
+		}
+
 		$mainpage_text = '';
 		if ($this->download->config('mainpage_text')) {
 			$mainpage_text = App::content()->applyPlugins($this->download->config('mainpage_text'), ['markdown' => $this->download->config('markdown_enabled')]);;
