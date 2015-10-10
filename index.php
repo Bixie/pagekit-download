@@ -127,6 +127,7 @@ return [
 			'show_date' => true,
 			'show_readmore' => true,
 			'show_download' => true,
+			'show_demo' => true,
 			'panel_style' => 'uk-panel-box',
 			'content_align' => 'left',
 			'tags_align' => 'uk-flex-center',
@@ -137,7 +138,9 @@ return [
 			'download' => 'Download',
 			'download_style' => 'uk-button uk-button-success',
 			'read_more' => 'Details',
-			'read_more_style' => 'uk-button'
+			'read_more_style' => 'uk-button',
+			'demo' => 'Demo',
+			'demo_more_style' => 'uk-button uk-button-primary'
 		],
 		'file' => [
 			'image_align' => 'left',
