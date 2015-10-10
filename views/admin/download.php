@@ -48,16 +48,21 @@
 					<input-filter title="{{ 'Status' | trans }}" value="{{@ config.filter.status}}" options="{{ statusOptions }}"></input-filter>
 				</th>
 				<th class="pk-table-width-100" v-order="date: config.filter.order">{{ 'Date' | trans }}</th>
+				<th class="pk-table-min-width-100">
+					<input-filter title="{{ 'Categories' | trans }}" value="{{@ config.filter.category_id}}" options="{{ categoryOptions }}"></input-filter>
+				</th>
 				<th class="pk-table-min-width-100">{{ 'Tags' | trans }}</th>
 				<th class="pk-table-width-200">{{ 'URL' | trans }}</th>
-				<th class="pk-table-width-200">{{ 'File' | trans }}</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr class="check-item" v-repeat="file: files" v-class="uk-active: active(file)">
 				<td><input type="checkbox" name="id" value="{{ file.id }}"></td>
 				<td>
-					<a v-attr="href: $url.route('admin/download/file/edit', { id: file.id })">{{ file.title }}</a>
+					<a v-attr="href: $url.route('admin/download/file/edit', { id: file.id })">{{ file.title }}</a><br>
+					<small>
+						{{ 'File' | trans }}: <a v-attr="href: $url.route(file.download)" download="{{ file.fileName }}">{{ file.fileName }}</a>
+					</small>
 				</td>
 				<td class="uk-text-center">
 					<a title="{{ getStatusText(file) }}" v-class="
@@ -69,13 +74,13 @@
 					{{ file.date | date }}
 				</td>
 				<td>
+					{{ file.category_titles.join(', ') }}
+				</td>
+				<td>
 					{{ file.tags.join(', ') }}
 				</td>
 				<td class="pk-table-text-break">
 					<a v-attr="href: $url.route(file.url)" target="_blank">{{ file.url }}</a>
-				</td>
-				<td class="pk-table-text-break">
-					<a v-attr="href: $url.route(file.download)" download="{{ file.fileName }}">{{ file.fileName }}</a>
 				</td>
 			</tr>
 			</tbody>

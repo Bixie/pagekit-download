@@ -3,7 +3,6 @@
 namespace Bixie\Download\Model;
 
 use Pagekit\Application as App;
-use Pagekit\Routing\Generator\UrlGenerator;
 use Pagekit\System\Model\DataModelTrait;
 use Pagekit\User\Model\AccessModelTrait;
 
@@ -12,7 +11,7 @@ use Pagekit\User\Model\AccessModelTrait;
  */
 class File implements \JsonSerializable
 {
-	use  DataModelTrait, FileModelTrait, AccessModelTrait;
+	use FileModelTrait, AccessModelTrait, DataModelTrait, CategoriesTrait;
 
 	/* File published. */
 	const STATUS_PUBLISHED = 1;
@@ -116,6 +115,8 @@ class File implements \JsonSerializable
 		$data = [
 			'fileName' => $this->getFileName(),
 			'download' => $this->getDownloadLink(),
+			'category_titles' => $this->getCategoryTitles(),
+			'category_ids' => $this->getCategoryIds(),
 			'url' => App::url('@download/id', ['id' => $this->id ?: 0], 'base')
 		];
 

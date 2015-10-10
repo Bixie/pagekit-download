@@ -81,6 +81,13 @@
             </div>
 
             <div class="uk-form-row">
+                <span class="uk-form-label">{{ 'Categories' | trans }}</span>
+                <div class="uk-form-controls">
+                    <input-category values="{{@ file.category_ids}}" categories="{{ categories }}"></input-category>
+                </div>
+            </div>
+
+            <div class="uk-form-row">
                 <span class="uk-form-label">{{ 'Date' | trans }}</span>
                 <div class="uk-form-controls">
                     <input-date datetime="{{@ file.date}}"></input-date>

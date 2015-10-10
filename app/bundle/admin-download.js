@@ -59,6 +59,7 @@
 	        this.resource = this.$resource('api/download/file/:id');
 	        this.config.filter = _.extend({
 	            status: '',
+	            category_id: '',
 	            search: '',
 	            order: this.config.ordering + ' ' + this.config.ordering_dir,
 	            limit: this.config.files_per_page
@@ -71,6 +72,14 @@
 
 	            var options = _.map(this.statuses, function (status, id) {
 	                return { text: status, value: id };
+	            });
+
+	            return [{ label: this.$trans('Filter by'), options: options }];
+	        },
+
+	        categoryOptions: function () {
+	            var options = _.map(this.categories, function (category) {
+	                return { text: category.title, value: category.id };
 	            });
 
 	            return [{ label: this.$trans('Filter by'), options: options }];

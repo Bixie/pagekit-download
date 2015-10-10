@@ -17,8 +17,8 @@ class FileApiController
      */
     public function indexAction($filter = [], $page = 0)
     {
-        $query  = File::query();
-        $filter = array_merge(array_fill_keys(['status', 'search', 'order', 'limit'], ''), $filter);
+        $query  = File::query()->select('f.*')->from('@download_file f');
+        $filter = array_merge(array_fill_keys(['status', 'category_id', 'search', 'order', 'limit'], ''), $filter);
 
         extract($filter, EXTR_SKIP);
 
@@ -32,6 +32,12 @@ class FileApiController
 			$query->where(['status' => (int) $status]);
 		}
 
+		if (is_numeric($category_id)) {
+			$query->select('x.catordering')
+				->innerJoin('@download_files_categories x', 'x.file_id = f.id')
+				->where(['x.category_id' => (int) $category_id]);
+		}
+
 		if (!preg_match('/^(date|title)\s(asc|desc)$/i', $order, $order)) {
             $order = [1 => 'date', 2 => 'desc'];
         }
@@ -41,7 +47,7 @@ class FileApiController
         $pages = ceil($count / $limit);
         $page  = max(0, min($pages - 1, $page));
 
-        $files = array_values($query->offset($page * $limit)->limit($limit)->orderBy($order[1], $order[2])->get());
+        $files = array_values($query->related('categories')->offset($page * $limit)->limit($limit)->orderBy($order[1], $order[2])->get());
 
         return compact('files', 'pages', 'count');
     }
@@ -61,10 +67,10 @@ class FileApiController
      */
     public function saveAction($data, $id = 0)
     {
-        if (!$id || !$file = File::find($id)) {
+        if (!$id || !$file = File::where(compact('id'))->related('categories')->first()) {
 
             if ($id) {
-                App::abort(404, __('Post not found.'));
+                App::abort(404, __('File not found.'));
             }
 
 			$file = File::create();
@@ -74,6 +80,7 @@ class FileApiController
             App::abort(400, __('Invalid slug.'));
         }
 
+		$file->saveCategories($data['category_ids']);
 
 		$file->save($data);
 

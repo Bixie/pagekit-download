@@ -33,6 +33,7 @@
 			<component is="{{ section.name }}"></component>
 		</div>
 	</div>
+	<pre>{{$data|json}}</pre>
 
 </form>
 

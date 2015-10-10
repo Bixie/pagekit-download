@@ -40,7 +40,8 @@ return [
 		'/api/download' => [
 			'name' => '@download/api',
 			'controller' => [
-				'Bixie\\Download\\Controller\\FileApiController'
+				'Bixie\\Download\\Controller\\FileApiController',
+				'Bixie\\Download\\Controller\\CategoryApiController'
 			]
 		]
 
@@ -70,6 +71,14 @@ return [
 			'active' => '@download/file*'
 		],
 
+		'download: categories' => [
+			'label' => 'Categories',
+			'parent' => 'download',
+			'url' => '@download/categories',
+			'access' => 'download: manage categories',
+			'active' => '@download/categor*'
+		],
+
 		'download: settings' => [
 			'label' => 'Settings',
 			'parent' => 'download',
@@ -84,6 +93,10 @@ return [
 
 		'download: manage download' => [
 			'title' => 'Manage downloads'
+		],
+
+		'download: manage categories' => [
+			'title' => 'Manage categories'
 		],
 
 		'download: manage settings' => [
@@ -158,11 +171,16 @@ return [
 			//todo event to clear cache?
 		},
 
+		'view.styles' => function ($event, $styles) use ($app) {
+			$styles->register('uikit-sortable', 'app/assets/uikit/css/components/sortable.min.css');
+		},
+
 		'view.scripts' => function ($event, $scripts) use ($app) {
 
 			$scripts->register('bixie-downloads', 'bixie/download:app/bundle/downloads.js');
 			$scripts->register('uikit-grid', 'app/assets/uikit/js/components/grid.min.js', 'uikit');
 			$scripts->register('uikit-lightbox', 'app/assets/uikit/js/components/lightbox.min.js', 'uikit');
+			$scripts->register('uikit-sortable', 'app/assets/uikit/js/components/sortable.min.js', 'uikit');
 		},
 
 		'console.init' => function ($event, $console) {

@@ -2,6 +2,7 @@
 
 namespace Bixie\Download\Controller;
 
+use Bixie\Download\Model\Category;
 use Pagekit\Application as App;
 use Bixie\Download\Model\File;
 use Pagekit\User\Model\Role;
@@ -36,6 +37,7 @@ class DownloadController
                 'name'  => 'bixie/download/admin/download.php'
             ],
             '$data' => [
+				'categories' => Category::findAll(),
 				'statuses' => File::getStatuses(),
 				'config'   => [
                     'ordering' => $this->download->config('ordering'),
@@ -56,7 +58,7 @@ class DownloadController
     {
         try {
 
-            if (!$file = File::where(compact('id'))->first()) {
+            if (!$file = File::where(compact('id'))->related('categories')->first()) {
 
                 if ($id) {
                     App::abort(404, __('Invalid file id.'));
@@ -82,6 +84,7 @@ class DownloadController
                     'name'  => 'bixie/download/admin/file.php'
                 ],
                 '$data' => [
+					'categories' => Category::findAll(),
 					'statuses' => File::getStatuses(),
 					'roles'    => array_values(Role::findAll()),
 					'config' => $this->download->config(),
@@ -99,7 +102,65 @@ class DownloadController
         }
     }
 
-    /**
+	/**
+	 * @Route("categories", name="categories")
+	 * @Access("download: manage categories")
+	 */
+	public function categoriesAction()
+	{
+
+		if ($test = Category::fixOrphanedCategories()) {
+			return App::redirect('@download/categories');
+		}
+
+		return [
+			'$view' => [
+				'title' => __('Categories'),
+				'name'  => 'bixie/download/admin/categories.php'
+			],
+			'$data' => []
+		];
+	}
+
+	/**
+	 * @Route("category/edit", name="category/edit")
+	 * @Access("download: manage categories")
+	 * @Request({"id": "int"})
+	 */
+	public function editCategoryAction($id = 0)
+	{
+
+		if (!$category = Category::where(compact('id'))->related('files')->first()) {
+
+			if ($id) {
+				App::abort(404, __('Invalid file id.'));
+			}
+
+			$category = Category::create([
+				'status' => 1,
+				'slug' => ''
+			]);
+
+			$category->set('markdown', $this->download->config('markdown'));
+
+		}
+
+
+		return [
+			'$view' => [
+				'title' => $id ? __('Edit category') : __('Add category'),
+				'name'  => 'bixie/download/admin/category.php'
+			],
+			'$data' => [
+				'roles'    => array_values(Role::findAll()),
+				'category'  => $category
+			],
+			'category' => $category
+		];
+
+	}
+
+	/**
      * @Access("system: manage settings")
      */
     public function settingsAction()

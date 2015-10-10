@@ -9,22 +9,21 @@ trait FileModelTrait
 {
     use ModelTrait;
 
-
     /**
      * @Saving
      */
-    public static function saving($event, File $project)
+    public static function saving($event, File $file)
     {
 		//slug
         $i  = 2;
-        $id = $project->id;
+        $id = $file->id;
 
-        while (self::where('slug = ?', [$project->slug])->where(function ($query) use ($id) {
+        while (self::where('slug = ?', [$file->slug])->where(function ($query) use ($id) {
             if ($id) {
                 $query->where('id <> ?', [$id]);
             }
         })->first()) {
-			$project->slug = preg_replace('/-\d+$/', '', $project->slug).'-'.$i++;
+			$file->slug = preg_replace('/-\d+$/', '', $file->slug).'-'.$i++;
         }
 
     }
