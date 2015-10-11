@@ -67,6 +67,6 @@ module.exports = {
         'Panel box primary': 'uk-panel-box uk-panel-box-primary',
         'Panel box secondary': 'uk-panel-box uk-panel-box-secondary',
         'Panel space': 'uk-panel-space'
-    },
+    }
 
 };
