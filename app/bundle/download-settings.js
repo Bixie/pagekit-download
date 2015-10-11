@@ -71,10 +71,6 @@
 
 	});
 
-	Vue.field.templates.formrow = __webpack_require__(16);
-	Vue.field.types.checkbox = '<p class="uk-form-controls-condensed"><label><input type="checkbox" v-attr="attrs" v-model="value"> {{ optionlabel | trans }}</label></p>';
-	Vue.field.types.number = '<input type="number" v-attr="attrs" v-model="value" number>';
-
 	$(function () {
 
 	    (new module.exports()).$mount('#download-settings');
@@ -99,8 +95,21 @@
 	
 	var options = __webpack_require__(12);
 
+	Vue.field.templates.formrow = __webpack_require__(16);
+	Vue.field.templates.raw = __webpack_require__(23);
+	Vue.field.types.checkbox = '<p class="uk-form-controls-condensed"><label><input type="checkbox" v-attr="attrs" v-model="value"> {{ optionlabel | trans }}</label></p>';
+	Vue.field.types.number = '<input type="number" v-attr="attrs" v-model="value" number>';
+	Vue.field.types.title = '<h3 v-attr="attrs">{{ title | trans }}</h3>';
+
 	module.exports = {
 	    portfolio: {
+	        'title1': {
+	            raw: true,
+	            type: 'title',
+	            label: '',
+	            title: 'Grid settings',
+	            attrs: {'class': 'uk-margin-top'}
+	        },
 	        'filter_tags': {
 	            type: 'checkbox',
 	            label: 'Grid filter',
@@ -143,7 +152,7 @@
 	            attrs: {'class': 'uk-form-width-small'}
 	        }
 	    },
-	    teaser: {
+	    teaser_show: {
 	        'teaser.show_title': {
 	            type: 'checkbox',
 	            label: 'Show content',
@@ -176,7 +185,9 @@
 	        'teaser.show_demo': {
 	            type: 'checkbox',
 	            optionlabel: 'Show demo link'
-	        },
+	        }
+	    },
+	    teaser: {
 	        'teaser.panel_style': {
 	            type: 'select',
 	            label: 'Panel style',
@@ -427,7 +438,19 @@
 /* 16 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"uk-form-row\" v-repeat=\"field in fields\">\r\n    <label class=\"uk-form-label\">{{ field.label | trans }}</label>\r\n    <div class=\"uk-form-controls\" v-class=\"uk-form-controls-text: ['checkbox', 'radio'].indexOf(field.type)\">\r\n        <field config=\"{{ field }}\" values=\"{{@ values }}\"></field>\r\n    </div>\r\n</div>\r\n";
+	module.exports = "<div v-repeat=\"field in fields\" v-class=\"uk-form-row: !field.raw\">\r\n    <label v-if=\"field.label\" class=\"uk-form-label\">{{ field.label | trans }}</label>\r\n    <div v-if=\"!field.raw\" class=\"uk-form-controls\" v-class=\"uk-form-controls-text: ['checkbox', 'radio'].indexOf(field.type)>-1\">\r\n        <field config=\"{{ field }}\" values=\"{{@ values }}\"></field>\r\n    </div>\r\n    <field v-if=\"field.raw\" config=\"{{ field }}\" values=\"{{@ values }}\"></field>\r\n</div>\r\n";
+
+/***/ },
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */
+/***/ function(module, exports) {
+
+	module.exports = "<template v-repeat=\"field in fields\">\r\n    <field config=\"{{ field }}\" values=\"{{@ values }}\"></field>\r\n</template>\r\n";
 
 /***/ }
 /******/ ]);

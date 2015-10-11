@@ -1,8 +1,21 @@
 
 var options = require('./options');
 
+Vue.field.templates.formrow = require('../templates/formrow.html');
+Vue.field.templates.raw = require('../templates/raw.html');
+Vue.field.types.checkbox = '<p class="uk-form-controls-condensed"><label><input type="checkbox" v-attr="attrs" v-model="value"> {{ optionlabel | trans }}</label></p>';
+Vue.field.types.number = '<input type="number" v-attr="attrs" v-model="value" number>';
+Vue.field.types.title = '<h3 v-attr="attrs">{{ title | trans }}</h3>';
+
 module.exports = {
     portfolio: {
+        'title1': {
+            raw: true,
+            type: 'title',
+            label: '',
+            title: 'Grid settings',
+            attrs: {'class': 'uk-margin-top'}
+        },
         'filter_tags': {
             type: 'checkbox',
             label: 'Grid filter',
@@ -45,7 +58,7 @@ module.exports = {
             attrs: {'class': 'uk-form-width-small'}
         }
     },
-    teaser: {
+    teaser_show: {
         'teaser.show_title': {
             type: 'checkbox',
             label: 'Show content',
@@ -78,7 +91,9 @@ module.exports = {
         'teaser.show_demo': {
             type: 'checkbox',
             optionlabel: 'Show demo link'
-        },
+        }
+    },
+    teaser: {
         'teaser.panel_style': {
             type: 'select',
             label: 'Panel style',

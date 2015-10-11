@@ -105,12 +105,22 @@
 					</div>
 					<div class="uk-grid uk-grid-width-large-1-2 uk-form-horizontal" data-uk-grid-margin="">
 						<div>
-							<h3>{{ 'Grid settings' | trans }}</h3>
+
 							<fields config="{{ $options.fields.portfolio }}" model="{{@ config }}"
 									template="formrow"></fields>
 						</div>
 						<div>
 							<h3>{{ 'Teaser settings' | trans }}</h3>
+							<div class="uk-form-row">
+								<span class="uk-form-label">{{ 'Show content' | trans }}</span>
+
+								<div class="uk-form-controls uk-form-controls-text">
+
+									<fields config="{{ $options.fields.teaser_show }}" model="{{@ config }}" template="raw"></fields>
+
+								</div>
+							</div>
+
 							<fields config="{{ $options.fields.teaser }}" model="{{@ config }}"
 									template="formrow"></fields>
 						</div>
