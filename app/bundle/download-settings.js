@@ -50,7 +50,7 @@
 	        return window.$data;
 	    },
 
-	    fields: __webpack_require__(21),
+	    fields: __webpack_require__(11),
 
 	    methods: {
 
@@ -65,14 +65,14 @@
 
 	    components: {
 
-	        'input-tags': __webpack_require__(12)
+	        'input-tags': __webpack_require__(13)
 
 	    }
 
 	});
 
-	Vue.field.templates.formrow = __webpack_require__(11);
-	Vue.field.types.checkbox = '<label><input type="checkbox" v-attr="attrs" v-model="value"> {{ optionlabel | trans }}</label>';
+	Vue.field.templates.formrow = __webpack_require__(16);
+	Vue.field.types.checkbox = '<p class="uk-form-controls-condensed"><label><input type="checkbox" v-attr="attrs" v-model="value"> {{ optionlabel | trans }}</label></p>';
 	Vue.field.types.number = '<input type="number" v-attr="attrs" v-model="value" number>';
 
 	$(function () {
@@ -94,77 +94,10 @@
 /* 9 */,
 /* 10 */,
 /* 11 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"uk-form-row\" v-repeat=\"field in fields\">\r\n    <label class=\"uk-form-label\">{{ field.label | trans }}</label>\r\n    <div class=\"uk-form-controls\">\r\n        <field config=\"{{ field }}\" values=\"{{@ values }}\"></field>\r\n    </div>\r\n</div>\r\n";
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(13)
-	module.exports.template = __webpack_require__(14)
-
-
-/***/ },
-/* 13 */
-/***/ function(module, exports) {
-
-	module.exports = {
-
-	        props: ['tags', 'existing'],
-
-	        data: function () {
-	            return {
-	                'newtag': '',
-	                'tags': '',
-	                'existing': ''
-	            };
-	        },
-
-	        methods: {
-
-	            addTag: function(e, tag) {
-	                if (e) {
-	                    e.stopPropagation();
-	                    e.preventDefault();
-	                }
-	                this.tags.push(tag || this.newtag);
-	                this.$nextTick(function () {
-	                    UIkit.$html.trigger('resize'); //todo why no check.display or changed.dom???
-	                });
-	                this.newtag = '';
-	            },
-
-	            removeTag: function(e, idx) {
-	                if (e) {
-	                    e.preventDefault();
-	                }
-	                this.tags.$remove(idx)
-	            }
-
-	        }
-
-	    };
-
-/***/ },
-/* 14 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"uk-flex uk-flex-wrap\" data-uk-margin=\"\">\r\n        <div v-repeat=\"tag: tags\" class=\"uk-badge uk-margin-small-right\">\r\n            <a class=\"uk-float-right uk-close\" v-on=\"click: removeTag($event, $index)\"></a>\r\n            {{ tag }}\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"uk-flex uk-flex-middle uk-margin\">\r\n        <div>\r\n            <div class=\"uk-position-relative\" data-uk-dropdown=\"\">\r\n                <button type=\"button\" class=\"uk-button uk-button-small\">{{ 'Existing' | trans }}</button>\r\n\r\n                <div class=\"uk-dropdown uk-dropdown-small\">\r\n                    <ul class=\"uk-nav uk-nav-dropdown\">\r\n                        <li v-repeat=\"tag: existing\"><a\r\n                                v-on=\"click: addTag($event, tag)\">{{ tag }}</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <div class=\"uk-flex-item-1 uk-margin-small-left\">\r\n            <div class=\"uk-form-password\">\r\n                <input type=\"text\" class=\"uk-width-1-1\" v-model=\"newtag\" v-on=\"keyup:addTag | key 'enter'\">\r\n                <a class=\"uk-form-password-toggle\" v-on=\"click: addTag()\"><i class=\"uk-icon-check uk-icon-hover\"></i></a>\r\n            </div>\r\n        </div>\r\n\r\n    </div>";
-
-/***/ },
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	var options = __webpack_require__(22);
+	var options = __webpack_require__(12);
 
 	module.exports = {
 	    portfolio: {
@@ -213,7 +146,7 @@
 	    teaser: {
 	        'teaser.show_title': {
 	            type: 'checkbox',
-	            label: 'View settings',
+	            label: 'Show content',
 	            optionlabel: 'Show title'
 	        },
 	        'teaser.show_subtitle': {
@@ -359,7 +292,7 @@
 	};
 
 /***/ },
-/* 22 */
+/* 12 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -434,6 +367,67 @@
 	    },
 
 	};
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(14)
+	module.exports.template = __webpack_require__(15)
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	module.exports = {
+
+	        props: ['tags', 'existing'],
+
+	        data: function () {
+	            return {
+	                'newtag': '',
+	                'tags': '',
+	                'existing': ''
+	            };
+	        },
+
+	        methods: {
+
+	            addTag: function(e, tag) {
+	                if (e) {
+	                    e.stopPropagation();
+	                    e.preventDefault();
+	                }
+	                this.tags.push(tag || this.newtag);
+	                this.$nextTick(function () {
+	                    UIkit.$html.trigger('resize'); //todo why no check.display or changed.dom???
+	                });
+	                this.newtag = '';
+	            },
+
+	            removeTag: function(e, idx) {
+	                if (e) {
+	                    e.preventDefault();
+	                }
+	                this.tags.$remove(idx)
+	            }
+
+	        }
+
+	    };
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"uk-flex uk-flex-wrap\" data-uk-margin=\"\">\r\n        <div v-repeat=\"tag: tags\" class=\"uk-badge uk-margin-small-right\">\r\n            <a class=\"uk-float-right uk-close\" v-on=\"click: removeTag($event, $index)\"></a>\r\n            {{ tag }}\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"uk-flex uk-flex-middle uk-margin\">\r\n        <div>\r\n            <div class=\"uk-position-relative\" data-uk-dropdown=\"\">\r\n                <button type=\"button\" class=\"uk-button uk-button-small\">{{ 'Existing' | trans }}</button>\r\n\r\n                <div class=\"uk-dropdown uk-dropdown-small\">\r\n                    <ul class=\"uk-nav uk-nav-dropdown\">\r\n                        <li v-repeat=\"tag: existing\"><a\r\n                                v-on=\"click: addTag($event, tag)\">{{ tag }}</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <div class=\"uk-flex-item-1 uk-margin-small-left\">\r\n            <div class=\"uk-form-password\">\r\n                <input type=\"text\" class=\"uk-width-1-1\" v-model=\"newtag\" v-on=\"keyup:addTag | key 'enter'\">\r\n                <a class=\"uk-form-password-toggle\" v-on=\"click: addTag()\"><i class=\"uk-icon-check uk-icon-hover\"></i></a>\r\n            </div>\r\n        </div>\r\n\r\n    </div>";
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"uk-form-row\" v-repeat=\"field in fields\">\r\n    <label class=\"uk-form-label\">{{ field.label | trans }}</label>\r\n    <div class=\"uk-form-controls\" v-class=\"uk-form-controls-text: ['checkbox', 'radio'].indexOf(field.type)\">\r\n        <field config=\"{{ field }}\" values=\"{{@ values }}\"></field>\r\n    </div>\r\n</div>\r\n";
 
 /***/ }
 /******/ ]);

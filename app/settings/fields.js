@@ -48,7 +48,7 @@ module.exports = {
     teaser: {
         'teaser.show_title': {
             type: 'checkbox',
-            label: 'View settings',
+            label: 'Show content',
             optionlabel: 'Show title'
         },
         'teaser.show_subtitle': {

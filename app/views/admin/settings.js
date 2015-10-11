@@ -26,7 +26,7 @@ module.exports = Vue.extend({
 });
 
 Vue.field.templates.formrow = require('../../templates/formrow.html');
-Vue.field.types.checkbox = '<label><input type="checkbox" v-attr="attrs" v-model="value"> {{ optionlabel | trans }}</label>';
+Vue.field.types.checkbox = '<p class="uk-form-controls-condensed"><label><input type="checkbox" v-attr="attrs" v-model="value"> {{ optionlabel | trans }}</label></p>';
 Vue.field.types.number = '<input type="number" v-attr="attrs" v-model="value" number>';
 
 $(function () {
