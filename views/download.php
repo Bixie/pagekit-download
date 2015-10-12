@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $view
- * @var array $tags
+ * @var array $filters
  * @var array $config
  * @var string $mainpage_text
  * @var Bixie\Download\DownloadModule $download
@@ -17,6 +17,7 @@ $grid .= $config['columns_large'] ? ' uk-grid-width-large-1-'.$config['columns_l
 $grid .= $config['columns_xlarge'] ? ' uk-grid-width-xlarge-1-'.$config['columns_xlarge'] : '';
 
 $config['mainpage_image_class'] = in_array($config['mainpage_image_align'], ['right', 'left']) ? 'uk-align-' . $config['mainpage_image_align'] : 'uk-text-center'
+
 ?>
 
 <article class="bixie-addtocart" id="download-files">
@@ -39,23 +40,23 @@ $config['mainpage_image_class'] = in_array($config['mainpage_image_align'], ['ri
 
 	</div>
 
-	<?php if ($config['filter_tags'] && count($tags)) : ?>
+	<?php if ($config['filter_items'] && count($filters)) : ?>
 	<div class="uk-tab-center uk-margin">
 			<ul id="portfolio-filter" class="uk-tab">
 			<li class="uk-active" data-uk-filter=""><a href=""><?= __('All') ?></a></li>
-			<?php foreach ($tags as $tag) : ?>
-				<li data-uk-filter="<?= $tag ?>"><a href=""><?= __($tag) ?></a></li>
+			<?php foreach ($filters as $filter) : ?>
+				<li data-uk-filter="<?= $filter ?>"><a href=""><?= __($filter) ?></a></li>
 			<?php endforeach; ?>
 
 		</ul>
 	</div>
 	<?php endif; ?>
 	
-	<div class="uk-grid <?= $grid ?>" data-uk-grid="{gutter: <?= $config['columns_gutter'] ?>, controls: '<?= $config['filter_tags'] ? '#portfolio-filter': ''; ?>'}">
+	<div class="uk-grid <?= $grid ?>" data-uk-grid="{gutter: <?= $config['columns_gutter'] ?>, controls: '<?= $config['filter_items'] ? '#portfolio-filter': ''; ?>'}">
 
 		<?php foreach ($files as $file) : ?>
 
-			<div data-uk-filter="<?= implode(',', $file->tags) ?>">
+			<div data-uk-filter="<?= implode(',', $file->getFilters($config['filter_items'])) ?>">
 				<?= $view->render('bixie/download/templates/file_panel.php', ['config' => $config, 'file' => $file]) ?>
 			</div>
 

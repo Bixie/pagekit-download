@@ -110,10 +110,15 @@
 	            title: 'Grid settings',
 	            attrs: {'class': 'uk-margin-top'}
 	        },
-	        'filter_tags': {
-	            type: 'checkbox',
-	            label: 'Grid filter',
-	            optionlabel: 'Filter by tags'
+	        'filter_items': {
+	            type: 'select',
+	            label: 'Filter items',
+	            options: {
+	                'Don\'t filter': '',
+	                'Categories': 'category',
+	                'Tags': 'tag'
+	            },
+	            attrs: {'class': 'uk-form-width-medium'}
 	        },
 	        'columns': {
 	            type: 'select',
@@ -173,6 +178,14 @@
 	        'teaser.show_date': {
 	            type: 'checkbox',
 	            optionlabel: 'Show date'
+	        },
+	        'teaser.show_version': {
+	            type: 'checkbox',
+	            optionlabel: 'Show version'
+	        },
+	        'teaser.show_category': {
+	            type: 'checkbox',
+	            optionlabel: 'Show category'
 	        },
 	        'teaser.show_readmore': {
 	            type: 'checkbox',

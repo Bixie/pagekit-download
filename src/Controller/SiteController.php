@@ -42,17 +42,22 @@ class SiteController
 			$mainpage_text = App::content()->applyPlugins($this->download->config('mainpage_text'), ['markdown' => $this->download->config('markdown_enabled')]);;
 		}
 
-		foreach ($files = $query->get() as $file) {
+		$filters = [];
+		foreach ($files = $query->related('categories')->get() as $file) {
 			App::trigger('bixie.prepare.file', [$file, App::view()]);
 			$file->content = App::content()->applyPlugins($file->content, ['file' => $file, 'markdown' => $file->get('markdown')]);
+
+			$filters = array_merge($filters, $file->getFilters($this->download->config('filter_items')));
         }
+		$filters = array_unique($filters);
+		natsort($filters);
 
         return [
             '$view' => [
                 'title' => $this->download->config('download_title') ?: App::node()->title,
                 'name' => 'bixie/download/download.php'
             ],
-			'tags' => File::allTags(),
+			'filters' => $filters,
       		'download' => $this->download,
 			'config' => $this->download->config(),
 			'mainpage_text' => $mainpage_text,

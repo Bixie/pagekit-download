@@ -88,6 +88,22 @@ class File implements \JsonSerializable
 		return basename($this->path);
 	}
 
+	public function getFilters ($filter_type = null) {
+		$filter_type = $filter_type == null ? $filter_type : App::module('bixie/download')->config('filter_items');
+		if ($filter_type == 'category') {
+			return $this->getCategoryNames();
+		} elseif ($filter_type == 'tag') {
+			return $this->tags;
+		}
+		return [];
+	}
+
+	public function getCategoryNames () {
+		return array_values(array_map(function ($category) {
+			return $category->title;
+		}, $this->categories));
+	}
+
 	public function getStatusText () {
 		$statuses = self::getStatuses();
 
@@ -113,6 +129,7 @@ class File implements \JsonSerializable
 	 */
 	public function jsonSerialize () {
 		$data = [
+			'filters' => $this->getFilters(),
 			'fileName' => $this->getFileName(),
 			'download' => $this->getDownloadLink(),
 			'category_titles' => $this->getCategoryTitles(),

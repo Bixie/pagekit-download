@@ -6,6 +6,16 @@
  */
 
 $config['show_download'] = $config['teaser']['show_download'] && !$file->get('cart_active');
+$metaData = [];
+if ($config['teaser']['show_date']) {
+	$metaData[] = '<li>' . $file->date->format($config['date_format']) . '</li>';
+}
+if ($config['teaser']['show_category'] && count($file->getCategoryNames())) {
+	$metaData[] = '<li>' . implode(', ', $file->getCategoryNames()) . '</li>';
+}
+if ($config['teaser']['show_version'] && $file->get('version')) {
+	$metaData[] = '<li>' . $file->get('version') . '</li>';
+}
 
 ?>
 <div class="uk-panel <?= $config['teaser']['panel_style'] ?> uk-text-<?= $config['teaser']['content_align'] ?>">
@@ -26,12 +36,10 @@ $config['show_download'] = $config['teaser']['show_download'] && !$file->get('ca
 		<p class="uk-article-lead <?= $config['teaser']['subtitle_size'] ?>"><?= $file->subtitle ?></p>
 	<?php endif; ?>
 
-	<?php if ($config['teaser']['show_date']) : ?>
-		<p class="uk-article-meta">
-			<?php if ($config['teaser']['show_date']) : ?>
-				<?= $file->date->format($config['date_format']) ?>
-			<?php endif; ?>
-		</p>
+	<?php if (count($metaData)) : ?>
+		<ul class="uk-subnav uk-subnav-line">
+			<?= implode($metaData) ?>
+		</ul>
 	<?php endif; ?>
 
 	<?php if ($config['teaser']['show_tags']) : ?>
