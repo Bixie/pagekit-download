@@ -1,11 +1,23 @@
 <template>
 
-    <div class="uk-flex uk-flex-wrap" data-uk-margin="">
-        <div v-repeat="values" class="uk-badge uk-margin-small-right">
-            <a class="uk-float-right uk-close" v-on="click: removeCategory($index)"></a>
-            {{ getText($value) }}
-        </div>
-    </div>
+    <ul class="uk-list">
+        <li v-repeat="values">
+            <div class="uk-nestable-panel uk-visible-hover uk-flex uk-flex-middle">
+                <div class="uk-flex-item-1">
+                    {{ getText($value) }}
+                </div>
+                <div class="">
+                    <ul class="uk-subnav pk-subnav-icon">
+                        <li><a class="pk-icon-star"
+                               data-uk-tooltip="{delay: 300}" title="{{ 'Make primary category' | trans }}"
+                               v-class="uk-invisible: primary !== $value"
+                               v-on="click: primary = $value"></a></li>
+                        <li><a class="pk-icon-delete pk-icon-hover uk-invisible" v-on="click: removeCategory($index)"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ul>
 
     <div id="select-category" class="uk-flex uk-flex-middle uk-margin">
         <div>
@@ -21,18 +33,19 @@
 
         </div>
     </div>
-    <pre>{{$data|json}}</pre>
+
 </template>
 
 <script>
 
     module.exports = {
 
-        props: ['values', 'categories'],
+        props: ['values', 'primary', 'categories'],
 
         data: function () {
             return {
                 'tree': {},
+                'primary': '',
                 'values': [],
                 'categories': {}
             };
@@ -57,14 +70,13 @@
             addCategory: function(value) {
                 if (!this.isSelected(value)) {
                     this.values.push(value);
-                    this.$nextTick(function () {
-                        UIkit.$html.trigger('resize'); //todo why no check.display or changed.dom???
-                    });
+                    this.checkPrimary();
                 }
             },
 
             removeCategory: function(idx) {
                 this.values.$remove(idx);
+                this.checkPrimary();
             },
 
             isSelected: function (value) {
@@ -73,6 +85,12 @@
 
             getText: function (value) {
                 return _.find(this.categories, 'id', value).title;
+            },
+
+            checkPrimary: function () {
+                if (this.values.length && this.values.indexOf(this.primary) == -1) {
+                    this.primary = this.values[0];
+                }
             }
 
         },

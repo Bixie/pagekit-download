@@ -34,6 +34,33 @@
                         <v-editor id="form-content" value="{{@ file.content }}"
                                   options="{{ {markdown : file.data.markdown} }}"></v-editor>
                     </div>
+                    <p class="uk-form-controls-condensed">
+                        <label><input type="checkbox" v-model="file.data.markdown"> {{ 'Enable
+                            Markdown' | trans }}</label>
+                    </p>
+                </div>
+             </div>
+
+            <div class="uk-grid uk-margin uk-grid-width-medium-1-2 uk-form-stacked" data-uk-grid-margin="">
+                <div>
+
+                    <div class="uk-form-row">
+                        <label class="uk-form-label">{{ 'Image' | trans }}</label>
+                        <div class="uk-form-controls">
+                            <input-image-meta image="{{@ file.image.main }}" class="pk-image-max-height"></input-image-meta>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+
+                    <div class="uk-form-row">
+                        <label class="uk-form-label">{{ 'Icon' | trans }}</label>
+                        <div class="uk-form-controls">
+                            <input-image-meta image="{{@ file.image.icon }}" class="pk-image-max-height"></input-image-meta>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -52,20 +79,6 @@
             </div>
 
             <div class="uk-form-row">
-                <label class="uk-form-label">{{ 'Image' | trans }}</label>
-                <div class="uk-form-controls">
-                    <input-image-meta image="{{@ file.image.main }}" class="pk-image-max-height"></input-image-meta>
-                </div>
-            </div>
-
-            <div class="uk-form-row">
-                <label class="uk-form-label">{{ 'Icon' | trans }}</label>
-                <div class="uk-form-controls">
-                    <input-image-meta image="{{@ file.image.icon }}" class="pk-image-max-height"></input-image-meta>
-                </div>
-            </div>
-
-            <div class="uk-form-row">
                 <label for="form-slug" class="uk-form-label">{{ 'Slug' | trans }}</label>
 
                 <div class="uk-form-controls">
@@ -81,16 +94,18 @@
             </div>
 
             <div class="uk-form-row">
-                <span class="uk-form-label">{{ 'Categories' | trans }}</span>
-                <div class="uk-form-controls">
-                    <input-category values="{{@ file.category_ids}}" categories="{{ categories }}"></input-category>
+                <span class="uk-form-label">{{ 'Restrict Access' | trans }}</span>
+                <div class="uk-form-controls uk-form-controls-text">
+                    <p v-repeat="role: roles" class="uk-form-controls-condensed">
+                        <label><input type="checkbox" value="{{ role.id }}" v-checkbox="file.roles" number> {{ role.name }}</label>
+                    </p>
                 </div>
             </div>
 
             <div class="uk-form-row">
-                <span class="uk-form-label">{{ 'Date' | trans }}</span>
+                <span class="uk-form-label">{{ 'Categories' | trans }}</span>
                 <div class="uk-form-controls">
-                    <input-date datetime="{{@ file.date}}"></input-date>
+                    <input-category values="{{@ file.category_ids}}" primary="{{@ file.data.primary_category}}" categories="{{ categories }}"></input-category>
                 </div>
             </div>
 
@@ -101,39 +116,6 @@
                 </div>
             </div>
 
-            <div class="uk-form-row">
-                <label for="form-demo_url" class="uk-form-label">{{ 'Demo url' | trans }}</label>
-
-                <div class="uk-form-controls">
-                    <input id="form-demo_url" class="uk-width-1-1" type="text" v-model="file.data.demo_url">
-                </div>
-            </div>
-
-            <div class="uk-form-row">
-                <label for="form-version" class="uk-form-label">{{ 'Version' | trans }}</label>
-
-                <div class="uk-form-controls">
-                    <input id="form-version" class="uk-width-1-1" type="text" v-model="file.data.version">
-                </div>
-            </div>
-
-            <div class="uk-form-row">
-                <span class="uk-form-label">{{ 'Restrict Access' | trans }}</span>
-                <div class="uk-form-controls uk-form-controls-text">
-                    <p v-repeat="role: roles" class="uk-form-controls-condensed">
-                        <label><input type="checkbox" value="{{ role.id }}" v-checkbox="file.roles" number> {{ role.name }}</label>
-                    </p>
-                </div>
-            </div>
-
-            <div class="uk-form-row">
-                <span class="uk-form-label">{{ 'Options' | trans }}</span>
-                <div class="uk-form-controls uk-form-controls-text">
-                    <label>
-                        <input type="checkbox" value="markdown" v-model="file.data.markdown"> {{ 'Enable Markdown' |
-                        trans }}</label>
-                </div>
-            </div>
         </div>
     </div>
 

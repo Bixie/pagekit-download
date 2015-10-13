@@ -58,7 +58,7 @@
 
 	        section: {
 	            label: 'Cart',
-	            priority: 10
+	            priority: 99
 
 	        },
 
