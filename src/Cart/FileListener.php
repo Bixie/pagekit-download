@@ -139,8 +139,8 @@ class FileListener implements EventSubscriberInterface, ProductListenerInterface
 	 */
 	public function onCalculateOrder (Event $event, Order $order, CartItem $cartItem) {
 		if ($validity_period = $cartItem->get('validity_period')) {
-			$date = (new \DateTime($order->created->format(\DateTime::ISO8601)))->add(new \DateInterval($validity_period));
-			$cartItem->set('valid_until', $date->format(\DateTime::ISO8601));
+			$date = (new \DateTime($order->created->format(\DateTime::ATOM)))->add(new \DateInterval($validity_period));
+			$cartItem->set('valid_until', $date->format(\DateTime::ATOM));
 			$cartItem->set('validity_text', self::$periods[$validity_period]);
 		} else {
 			$cartItem->set('validity_text', 'No end date');
