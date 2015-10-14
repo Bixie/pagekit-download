@@ -22,7 +22,7 @@ class SiteController
 
     /**
      * @Route("/")
-     */
+	 */
     public function indexAction()
     {
         if (!App::node()->hasAccess(App::user())) {
@@ -68,14 +68,19 @@ class SiteController
 
     /**
      * @Route("/{id}", name="id")
-     */
-    public function fileAction($id = 0)
+	 * @Request({"id":"int", "category_id":"int"})
+	 */
+    public function fileAction($id = 0, $category_id = 0)
     {
-        if (!$file = File::where(['id = ?', 'status = ?'], [$id, '1'])->where(function ($query) {
+
+		/** @var File $file */
+		if (!$file = File::where(['id = ?', 'status = ?'], [$id, '1'])->where(function ($query) {
 			return $query->where('roles IS NULL')->whereInSet('roles', App::user()->roles, false, 'OR');
 		})->first()) {
             App::abort(404, __('File not found.'));
         }
+
+		$file->setActiveCategory($category_id);
 
 		App::trigger('bixie.prepare.file', [$file, App::view()]);
 		$file->content = App::content()->applyPlugins($file->content, ['file' => $file, 'markdown' => $file->get('markdown')]);

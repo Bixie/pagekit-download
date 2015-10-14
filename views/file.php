@@ -17,11 +17,11 @@ $config['file_image_class'] = in_array($config['file']['image_align'], ['right',
 	<?php if (in_array($config['file']['show_navigation'], ['both', 'top']) && ($next || $previous)) : ?>
 		<ul class="uk-pagination">
 			<?php if ($previous) : ?>
-				<li class="uk-pagination-previous"><a href="<?= $app->url('@download/id', ['id' => $previous->id]) ?>">
+				<li class="uk-pagination-previous"><a href="<?= $previous->getUrl() ?>">
 						<i class="uk-icon-arrow-left uk-margin-small-right"></i><?= $previous->title ?></a></li>
 			<?php endif; ?>
 			<?php if ($next) : ?>
-				<li class="uk-pagination-next"><a href="<?= $app->url('@download/id', ['id' => $next->id]) ?>">
+				<li class="uk-pagination-next"><a href="<?= $next->getUrl() ?>">
 						<?= $next->title ?><i class="uk-icon-arrow-right uk-margin-small-left"></i></a></li>
 			<?php endif; ?>
 		</ul>
@@ -128,11 +128,11 @@ $config['file_image_class'] = in_array($config['file']['image_align'], ['right',
 	<?php if (in_array($config['file']['show_navigation'], ['both', 'bottom']) && ($next || $previous)) : ?>
 		<ul class="uk-pagination">
 		<?php if ($previous) : ?>
-			<li class="uk-pagination-previous"><a href="<?= $app->url('@download/id', ['id' => $previous->id]) ?>">
+			<li class="uk-pagination-previous"><a href="<?= $previous->getUrl() ?>">
 					<i class="uk-icon-arrow-left uk-margin-small-right"></i><?= $previous->title ?></a></li>
 		<?php endif; ?>
 			<?php if ($next) : ?>
-			<li class="uk-pagination-next"><a href="<?= $app->url('@download/id', ['id' => $next->id]) ?>">
+			<li class="uk-pagination-next"><a href="<?= $next->getUrl() ?>">
 					<?= $next->title ?><i class="uk-icon-arrow-right uk-margin-small-left"></i></a></li>
 		<?php endif; ?>
 		</ul>

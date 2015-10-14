@@ -16,6 +16,19 @@ trait CategoriesTrait
 	 */
 	public $categories;
 
+	protected $activeCategoryId;
+
+	public function setActiveCategory ($category_id) {
+		$this->activeCategoryId = $category_id;
+	}
+
+	public function getActiveCategory () {
+		if (!$this->categories || !isset($this->categories[$this->activeCategoryId ? : $this->get('primary_category', 0)])) {
+			return null;
+		}
+		return $this->categories[$this->activeCategoryId ? : $this->get('primary_category', 0)];
+	}
+
 	public function getCategoryIds () {
 		if ($this->categories) {
 			return array_values(array_map(function ($category) {

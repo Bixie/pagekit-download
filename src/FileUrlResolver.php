@@ -7,9 +7,9 @@ use Bixie\Download\Model\File;
 use Pagekit\Routing\ParamsResolverInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
-class UrlResolver implements ParamsResolverInterface
+class FileUrlResolver implements ParamsResolverInterface
 {
-	const CACHE_KEY = 'download.routing';
+	const CACHE_KEY = 'download.routing.file';
 
 	/**
 	 * @var bool
@@ -71,6 +71,7 @@ class UrlResolver implements ParamsResolverInterface
 	public function generate(array $parameters = [])
 	{
 		$id = $parameters['id'];
+		if (isset($parameters['category_id'])) unset($parameters['category_id']);
 
 		if (!isset($this->cacheEntries[$id])) {
 
@@ -100,13 +101,7 @@ class UrlResolver implements ParamsResolverInterface
 	{
 		$this->cacheEntries[$file->id] = [
 			'id'     => $file->id,
-			'slug'   => $file->slug,
-			'year'   => $file->date->format('Y'),
-			'month'  => $file->date->format('m'),
-			'day'    => $file->date->format('d'),
-			'hour'   => $file->date->format('H'),
-			'minute' => $file->date->format('i'),
-			'second' => $file->date->format('s'),
+			'slug'   => $file->slug
 		];
 
 		$this->cacheDirty = true;

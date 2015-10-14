@@ -1,6 +1,8 @@
 <?php
 
 use Bixie\Download\Event\RouteListener;
+use Bixie\Download\Event\FileCategoryListener;
+use Bixie\Download\Event\FileListener;
 
 return [
 
@@ -74,9 +76,9 @@ return [
 		'download: categories' => [
 			'label' => 'Categories',
 			'parent' => 'download',
-			'url' => '@download/categories',
+			'url' => '@download/admin/categories',
 			'access' => 'download: manage categories',
-			'active' => '@download/categor*'
+			'active' => '@download/admin/categor*'
 		],
 
 		'download: settings' => [
@@ -154,6 +156,7 @@ return [
 			'download_style' => 'uk-button',
 			'download_align' => 'uk-text-center'
 		],
+		'routing' => 'category',
 		'ordering' => 'title',
 		'ordering_dir' => 'asc',
 		'files_per_page' => 20,
@@ -168,7 +171,9 @@ return [
 		'boot' => function ($event, $app) {
 			$app->subscribe(
 				new Bixie\Download\Cart\FileListener,
-				new RouteListener
+				new RouteListener,
+				new FileCategoryListener,
+				new FileListener
 			);
 //			$app->extend('view', function ($view) use ($app) {
 //				return $view->addHelper(new DownloadImageHelper($app));

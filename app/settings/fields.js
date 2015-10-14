@@ -181,6 +181,15 @@ module.exports = {
         }
     },
     general: {
+        'routing': {
+            type: 'select',
+            label: 'Routing type',
+            options: {
+                'Include category': 'category',
+                'Direct item links': 'item'
+            },
+            attrs: {'class': 'uk-form-width-medium'}
+        },
         'files_per_page': {
             type: 'number',
             label: 'Files per page',

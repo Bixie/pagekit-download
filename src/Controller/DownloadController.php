@@ -29,7 +29,7 @@ class DownloadController
      * @Access("download: manage downloads")
      * @Request({"filter": "array", "page":"int"})
      */
-    public function downloadAction($filter = null, $page = 1)
+    public function downloadAction($filter = null, $page = 0)
     {
         return [
             '$view' => [
@@ -103,7 +103,7 @@ class DownloadController
     }
 
 	/**
-	 * @Route("categories", name="categories")
+	 * @Route("categories", name="admin/categories")
 	 * @Access("download: manage categories")
 	 */
 	public function categoriesAction()
@@ -123,7 +123,7 @@ class DownloadController
 	}
 
 	/**
-	 * @Route("category/edit", name="category/edit")
+	 * @Route("category/edit", name="admin/category/edit")
 	 * @Access("download: manage categories")
 	 * @Request({"id": "int"})
 	 */

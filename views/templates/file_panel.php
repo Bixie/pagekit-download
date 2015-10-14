@@ -28,7 +28,7 @@ if ($config['teaser']['show_version'] && $file->get('version')) {
 
 	<?php if ($config['teaser']['show_title']) : ?>
 		<h3 class="<?= $config['teaser']['title_size'] ?>"><a class="uk-link-reset <?= $config['teaser']['title_color'] ?>"
-															  href="<?= $app->url('@download/id', ['id' => $file->id]) ?>">
+															  href="<?= $file->getUrl() ?>">
 				<?= $file->title ?></a></h3>
 	<?php endif; ?>
 
@@ -60,7 +60,7 @@ if ($config['teaser']['show_version'] && $file->get('version')) {
 		<div class="uk-flex uk-flex-wrap <?= $config['teaser']['button_align']; ?> uk-margin" data-uk-margin="">
 		<?php if ($config['teaser']['show_readmore']) : ?>
 			<a class="<?= $config['teaser']['read_more_style'] ?>"
-			   href="<?= $app->url('@download/id', ['id' => $file->id]) ?>">
+			   href="<?= $file->getUrl() ?>">
 				<?= $config['teaser']['read_more'] ?></a>
 		<?php endif; ?>
 

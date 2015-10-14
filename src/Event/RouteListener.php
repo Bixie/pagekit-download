@@ -3,7 +3,8 @@
 namespace Bixie\Download\Event;
 
 use Pagekit\Application as App;
-use Bixie\Download\UrlResolver;
+use Bixie\Download\FileUrlResolver;
+use Bixie\Download\CategoryUrlResolver;
 use Pagekit\Event\EventSubscriberInterface;
 
 class RouteListener implements EventSubscriberInterface
@@ -14,11 +15,18 @@ class RouteListener implements EventSubscriberInterface
      */
     public function onConfigureRoute($event, $route)
     {
-        if ($route->getName() == '@download/id') {
-            App::routes()->alias(dirname($route->getPath()).'/{slug}', '@download/id', ['_resolver' => 'Bixie\Download\UrlResolver']);
+		$name = $route->getName();
+		if ($name == '@download/id') {
+			App::routes()->alias(dirname($route->getPath()) . '/{slug}', '@download/id', ['_resolver' => 'Bixie\Download\FileUrlResolver']);
         }
-        if ($route->getName() == '@download/file/id') {
-            App::routes()->alias(dirname($route->getPath()).'/{slug}', '@download/file/id', ['_resolver' => 'Bixie\Download\UrlResolver']);
+		if ($name == '@download/category/id') {
+			App::routes()->alias(dirname($route->getPath()), '@download/category/id', ['_resolver' => 'Bixie\Download\CategoryUrlResolver']);
+		}
+		if (stripos($name, '@download/file/category/') === 0) {
+			App::routes()->alias($route->getPath().'/{slug}', $name, ['_resolver' => 'Bixie\Download\CategoryUrlResolver']);
+        }
+        if ($name == '@download/file/id') {
+            App::routes()->alias(dirname($route->getPath()).'/{slug}', '@download/file/id', ['_resolver' => 'Bixie\Download\FileUrlResolver']);
         }
     }
 
@@ -27,7 +35,8 @@ class RouteListener implements EventSubscriberInterface
      */
     public function clearCache()
     {
-        App::cache()->delete(UrlResolver::CACHE_KEY);
+		App::cache()->delete(FileUrlResolver::CACHE_KEY);
+		App::cache()->delete(CategoryUrlResolver::CACHE_KEY);
     }
 
     /**
@@ -38,7 +47,9 @@ class RouteListener implements EventSubscriberInterface
         return [
             'route.configure' => 'onConfigureRoute',
             'model.project.saved' => 'clearCache',
-            'model.project.deleted' => 'clearCache'
+            'model.project.deleted' => 'clearCache',
+            'model.category.saved' => 'clearCache',
+            'model.category.deleted' => 'clearCache'
         ];
     }
 }

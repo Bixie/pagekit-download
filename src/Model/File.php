@@ -49,6 +49,11 @@ class File implements \JsonSerializable
 	/** @Column(type="json_array") */
 	public $image;
 
+	/** @var array */
+	protected static $properties = [
+		'activeCategory' => 'getActiveCategory'
+	];
+
 	public static function allTags () {
 		//todo cache this
 		$tags = App::module('bixie/download')->config('tags');
@@ -75,6 +80,16 @@ class File implements \JsonSerializable
 			'key' => App::module('bixie/download')->getDownloadKey($this, $purchaseKey),
 			'pkey' => $purchaseKey
 		], true);
+	}
+
+	public function getUrl ($category_id = 0, $base = false) {
+		if (App::config('bixie/download')->get('routing') == 'item') {
+			return App::url('@download/id', ['id' => $this->id ?: 0], $base);
+		} else {
+			return App::url('@download/file/category/' . ($category_id ? : $this->get('primary_category', 0)), [
+				'id' => $this->id ?: 0
+			], $base);
+		}
 	}
 
 	public static function getStatuses () {
@@ -134,7 +149,7 @@ class File implements \JsonSerializable
 			'download' => $this->getDownloadLink(),
 			'category_titles' => $this->getCategoryTitles(),
 			'category_ids' => $this->getCategoryIds(),
-			'url' => App::url('@download/id', ['id' => $this->id ?: 0], 'base')
+			'url' => $this->getUrl()
 		];
 
 		return $this->toArray($data);
