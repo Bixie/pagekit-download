@@ -68,7 +68,7 @@
 				<a v-attr="href: $url.route('admin/download/download', { filter: {category_id: category.id} })">{{ category.files.length }}</a>
 			</div>
 			<div class="pk-table-width-200 pk-table-max-width-150 uk-text-break">
-				<span>{{ category.path }}</span>
+				<a v-attr="href: $url.route(category.url)" target="_blank">{{ category.url }}</a>
 			</div>
 		</div>
 
