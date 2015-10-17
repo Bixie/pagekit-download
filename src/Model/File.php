@@ -83,12 +83,11 @@ class File implements \JsonSerializable
 	}
 
 	public function getUrl ($category_id = 0, $base = false) {
-		if (App::config('bixie/download')->get('routing') == 'item') {
+		$category_id = $category_id ? : $this->get('primary_category', 0);
+		if (!$category_id || App::config('bixie/download')->get('routing') == 'item') {
 			return App::url('@download/id', ['id' => $this->id ?: 0], $base);
 		} else {
-			return App::url('@download/file/category/' . ($category_id ? : $this->get('primary_category', 0)), [
-				'id' => $this->id ?: 0
-			], $base);
+			return App::url('@download/category/file/' . $category_id, ['id' => $this->id ?: 0], $base);
 		}
 	}
 
@@ -106,17 +105,11 @@ class File implements \JsonSerializable
 	public function getFilters ($filter_type = null) {
 		$filter_type = $filter_type == null ? $filter_type : App::module('bixie/download')->config('filter_items');
 		if ($filter_type == 'category') {
-			return $this->getCategoryNames();
+			return $this->getCategoryTitles();
 		} elseif ($filter_type == 'tag') {
 			return $this->tags;
 		}
 		return [];
-	}
-
-	public function getCategoryNames () {
-		return array_values(array_map(function ($category) {
-			return $category->title;
-		}, $this->categories));
 	}
 
 	public function getStatusText () {

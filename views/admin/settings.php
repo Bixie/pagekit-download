@@ -10,7 +10,8 @@
 				<ul class="uk-nav uk-nav-side pk-nav-large" data-uk-tab="{ connect: '#tab-content' }">
 					<li><a><i class="pk-icon-large-code uk-margin-right"></i> {{ 'Main page content' | trans }}</a></li>
 					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'Front page settings' | trans }}</a></li>
-					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'Download settings' | trans }}</a></li>
+					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'Category page settings' | trans }}</a></li>
+					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'General settings' | trans }}</a></li>
 				</ul>
 
 			</div>
@@ -123,6 +124,40 @@
 
 							<fields config="{{ $options.fields.teaser }}" model="{{@ config }}"
 									template="formrow"></fields>
+						</div>
+					</div>
+				</li>
+				<li>
+
+					<div class="uk-margin uk-flex uk-flex-space-between uk-flex-wrap" data-uk-margin>
+						<div data-uk-margin>
+
+							<h2 class="uk-margin-remove">{{ 'Category page settings' | trans }}</h2>
+
+						</div>
+						<div data-uk-margin>
+
+							<button class="uk-button uk-button-primary" v-on="click: save">{{ 'Save' | trans }}</button>
+
+						</div>
+					</div>
+					<div class="uk-grid uk-grid-width-large-1-2 uk-form-horizontal" data-uk-grid-margin="">
+						<div>
+
+							<fields config="{{ $options.fields.category }}" model="{{@ config }}"
+									template="formrow"></fields>
+						</div>
+						<div>
+							<div class="uk-form-row">
+								<span class="uk-form-label">{{ 'Show content' | trans }}</span>
+
+								<div class="uk-form-controls uk-form-controls-text">
+
+									<fields config="{{ $options.fields.category_show }}" model="{{@ config }}" template="raw"></fields>
+
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</li>

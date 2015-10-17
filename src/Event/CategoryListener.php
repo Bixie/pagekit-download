@@ -7,7 +7,7 @@ use Pagekit\Event\EventSubscriberInterface;
 use Bixie\Download\Model\Category;
 use Pagekit\Site\Model\Node;
 
-class FileCategoryListener implements EventSubscriberInterface
+class CategoryListener implements EventSubscriberInterface
 {
     /**
      * Registers node routes
@@ -22,46 +22,34 @@ class FileCategoryListener implements EventSubscriberInterface
         });
 
 		$node = Node::query()->where(['link' => '@download'])->first();
-		//add root
-		App::routes()->add([
-			'name' => '@download/file/category/0',
-			'label' => 'root',
-			'defaults' => [
-				'_node' => $node->id,
-				'category_id' => 0
-			],
-			'path' => $node->path,
-			'controller' => 'Bixie\\Download\\Controller\\SiteController::fileAction'
-		]);
 
         foreach ($categories as $category) {
 
             if ($category->status !== 1) {
                 continue;
             }
-
-            $type = [
-				'name' => '@download/file/category/' . $category->id,
+			$route = [
 				'label' => $category->title,
 				'defaults' => [
 					'_node' => $node->id,
-					'category_id' => $category->id
+					'id' => $category->id
 				],
 				'path' => $node->path . $category->path,
-				'controller' => 'Bixie\\Download\\Controller\\SiteController::fileAction'
 			];
+			//category views
+			App::routes()->add(array_merge([
+				'name' => '@download/category/' . $category->id,
+				'controller' => 'Bixie\\Download\\Controller\\SiteController::categoryAction'
+			], $route));
 
-			App::routes()->add($type);
+			//file view
+			App::routes()->add(array_merge([
+				'name' => '@download/category/file/' . $category->id,
+				'controller' => 'Bixie\\Download\\Controller\\SiteController::fileAction'
+			], $route));
 
         }
 
-    }
-
-    public function onNodeInit($event, $node)
-    {
-        if ('link' === $node->type && $node->get('redirect')) {
-            $node->link = $node->path;
-        }
     }
 
     public function onRoleDelete($event, $role)
@@ -77,7 +65,6 @@ class FileCategoryListener implements EventSubscriberInterface
         return [
             'request' => ['onRequest', 120],
             'enable' => 'onEnable',
-            'model.node.init' => 'onNodeInit',
             'model.role.deleted' => 'onRoleDelete'
         ];
     }

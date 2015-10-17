@@ -10,8 +10,10 @@ $metaData = [];
 if ($config['teaser']['show_date']) {
 	$metaData[] = '<li>' . $file->date->format($config['date_format']) . '</li>';
 }
-if ($config['teaser']['show_category'] && count($file->getCategoryNames())) {
-	$metaData[] = '<li>' . implode(', ', $file->getCategoryNames()) . '</li>';
+if ($config['teaser']['show_category'] && count($file->categories)) {
+	$metaData[] = '<li>' . implode(', ', array_map(function ($category) {
+			return '<a href="' . $category->getUrl() . '">' . $category->title . '</a>';
+		}, $file->categories)) . '</li>';
 }
 if ($config['teaser']['show_version'] && $file->get('version')) {
 	$metaData[] = '<li>' . $file->get('version') . '</li>';

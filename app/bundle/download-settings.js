@@ -50,7 +50,7 @@
 	        return window.$data;
 	    },
 
-	    fields: __webpack_require__(11),
+	    fields: __webpack_require__(12),
 
 	    methods: {
 
@@ -65,7 +65,7 @@
 
 	    components: {
 
-	        'input-tags': __webpack_require__(15)
+	        'input-tags': __webpack_require__(16)
 
 	    }
 
@@ -89,20 +89,50 @@
 /* 8 */,
 /* 9 */,
 /* 10 */,
-/* 11 */
+/* 11 */,
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	var options = __webpack_require__(12);
+	var options = __webpack_require__(13);
 
-	Vue.field.templates.formrow = __webpack_require__(13);
-	Vue.field.templates.raw = __webpack_require__(14);
+	Vue.field.templates.formrow = __webpack_require__(14);
+	Vue.field.templates.raw = __webpack_require__(15);
 	Vue.field.types.checkbox = '<p class="uk-form-controls-condensed"><label><input type="checkbox" v-attr="attrs" v-model="value"> {{ optionlabel | trans }}</label></p>';
 	Vue.field.types.number = '<input type="number" v-attr="attrs" v-model="value" number>';
 	Vue.field.types.title = '<h3 v-attr="attrs">{{ title | trans }}</h3>';
 
 	module.exports = {
 	    portfolio: {
+	        'category.show_subcategories': {
+	            type: 'checkbox',
+	            label: 'Subcategories',
+	            optionlabel: 'Show subcategories'
+	        },
+	        'subcategories_columns': {
+	            type: 'select',
+	            label: 'Subcategories columns',
+	            options: options.gridcols.base,
+	            attrs: {'class': 'uk-form-width-small'}
+	        },
+	        'subcategories_panel_style': {
+	            type: 'select',
+	            label: 'Subcategories panel style',
+	            options: options.panel_style,
+	            attrs: {'class': 'uk-form-width-medium'}
+	        },
+	        'subcategories_content_align': {
+	            type: 'select',
+	            label: 'Subcategories title alignment',
+	            options: options.align.general,
+	            attrs: {'class': 'uk-form-width-medium'}
+	        },
+	        'subcategories_title_size': {
+	            type: 'select',
+	            label: 'Subcategories title size',
+	            options: options.heading_size,
+	            attrs: {'class': 'uk-form-width-medium'}
+	        },
 	        'title1': {
 	            raw: true,
 	            type: 'title',
@@ -155,6 +185,76 @@
 	            label: 'Gutter width',
 	            options: options.gutter,
 	            attrs: {'class': 'uk-form-width-small'}
+	        }
+	    },
+	    category: {
+	        'category.image_align': {
+	            type: 'select',
+	            label: 'Image alignment',
+	            options: options.align.general,
+	            attrs: {'class': 'uk-form-width-medium'}
+	        },
+	        'title1': {
+	            raw: true,
+	            type: 'title',
+	            label: '',
+	            title: 'Grid settings',
+	            attrs: {'class': 'uk-margin-top'}
+	        },
+	        'category.filter_items': {
+	            type: 'checkbox',
+	            optionlabel: 'Filter by tags'
+	        },
+	        'category.columns': {
+	            type: 'select',
+	            label: 'Phone Portrait',
+	            options: options.gridcols.base,
+	            attrs: {'class': 'uk-form-width-small'}
+	        },
+	        'category.columns_small': {
+	            type: 'select',
+	            label: 'Phone Landscape',
+	            options: options.gridcols.inherit,
+	            attrs: {'class': 'uk-form-width-small'}
+	        },
+	        'category.columns_medium': {
+	            type: 'select',
+	            label: 'Tablet',
+	            options: options.gridcols.inherit,
+	            attrs: {'class': 'uk-form-width-small'}
+	        },
+	        'category.columns_large': {
+	            type: 'select',
+	            label: 'Desktop',
+	            options: options.gridcols.inherit,
+	            attrs: {'class': 'uk-form-width-small'}
+	        },
+	        'category.columns_xlarge': {
+	            type: 'select',
+	            label: 'Large screens',
+	            options: options.gridcols.inherit,
+	            attrs: {'class': 'uk-form-width-small'}
+	        },
+	        'category.columns_gutter': {
+	            type: 'select',
+	            label: 'Gutter width',
+	            options: options.gutter,
+	            attrs: {'class': 'uk-form-width-small'}
+	        }
+	    },
+	    category_show: {
+	        'category.show_title': {
+	            type: 'checkbox',
+	            label: 'Show content',
+	            optionlabel: 'Show title'
+	        },
+	        'category.show_image': {
+	            type: 'checkbox',
+	            optionlabel: 'Show image'
+	        },
+	        'category.show_description': {
+	            type: 'checkbox',
+	            optionlabel: 'Show description'
 	        }
 	    },
 	    teaser_show: {
@@ -325,7 +425,7 @@
 	};
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -402,27 +502,27 @@
 	};
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	module.exports = "<div v-repeat=\"field in fields\" v-class=\"uk-form-row: !field.raw\">\r\n    <label v-if=\"field.label\" class=\"uk-form-label\">{{ field.label | trans }}</label>\r\n    <div v-if=\"!field.raw\" class=\"uk-form-controls\" v-class=\"uk-form-controls-text: ['checkbox', 'radio'].indexOf(field.type)>-1\">\r\n        <field config=\"{{ field }}\" values=\"{{@ values }}\"></field>\r\n    </div>\r\n    <field v-if=\"field.raw\" config=\"{{ field }}\" values=\"{{@ values }}\"></field>\r\n</div>\r\n";
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = "<template v-repeat=\"field in fields\">\r\n    <field config=\"{{ field }}\" values=\"{{@ values }}\"></field>\r\n</template>\r\n";
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(16)
-	module.exports.template = __webpack_require__(17)
+	module.exports = __webpack_require__(17)
+	module.exports.template = __webpack_require__(18)
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -463,7 +563,7 @@
 	    };
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"uk-flex uk-flex-wrap\" data-uk-margin=\"\">\r\n        <div v-repeat=\"tag: tags\" class=\"uk-badge uk-margin-small-right\">\r\n            <a class=\"uk-float-right uk-close\" v-on=\"click: removeTag($event, $index)\"></a>\r\n            {{ tag }}\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"uk-flex uk-flex-middle uk-margin\">\r\n        <div>\r\n            <div class=\"uk-position-relative\" data-uk-dropdown=\"\">\r\n                <button type=\"button\" class=\"uk-button uk-button-small\">{{ 'Existing' | trans }}</button>\r\n\r\n                <div class=\"uk-dropdown uk-dropdown-small\">\r\n                    <ul class=\"uk-nav uk-nav-dropdown\">\r\n                        <li v-repeat=\"tag: existing\"><a\r\n                                v-on=\"click: addTag($event, tag)\">{{ tag }}</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <div class=\"uk-flex-item-1 uk-margin-small-left\">\r\n            <div class=\"uk-form-password\">\r\n                <input type=\"text\" class=\"uk-width-1-1\" v-model=\"newtag\" v-on=\"keyup:addTag | key 'enter'\">\r\n                <a class=\"uk-form-password-toggle\" v-on=\"click: addTag()\"><i class=\"uk-icon-check uk-icon-hover\"></i></a>\r\n            </div>\r\n        </div>\r\n\r\n    </div>";

@@ -83,14 +83,14 @@ class Category implements NodeInterface, \JsonSerializable
 	}
 
 	/**
-     * Gets the node URL.
+     * Gets the category URL.
      *
      * @param  mixed  $referenceType
      * @return string
      */
     public function getUrl($referenceType = false)
     {
-        return App::url('@download/site/category', ['id' => $this->id], $referenceType);
+        return App::url('@download/category/' . $this->id, [], $referenceType);
     }
 
     public function isAccessible(User $user = null)
@@ -105,7 +105,7 @@ class Category implements NodeInterface, \JsonSerializable
     {
 		$data = [
 			'files' => $this->getFiles(),
-			'url' => $this->getUrl(true)
+			'url' => $this->getUrl()
 		];
 		return $this->toArray($data);
     }

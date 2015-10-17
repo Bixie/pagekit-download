@@ -9,6 +9,35 @@ Vue.field.types.title = '<h3 v-attr="attrs">{{ title | trans }}</h3>';
 
 module.exports = {
     portfolio: {
+        'category.show_subcategories': {
+            type: 'checkbox',
+            label: 'Subcategories',
+            optionlabel: 'Show subcategories'
+        },
+        'subcategories_columns': {
+            type: 'select',
+            label: 'Subcategories columns',
+            options: options.gridcols.base,
+            attrs: {'class': 'uk-form-width-small'}
+        },
+        'subcategories_panel_style': {
+            type: 'select',
+            label: 'Subcategories panel style',
+            options: options.panel_style,
+            attrs: {'class': 'uk-form-width-medium'}
+        },
+        'subcategories_content_align': {
+            type: 'select',
+            label: 'Subcategories title alignment',
+            options: options.align.general,
+            attrs: {'class': 'uk-form-width-medium'}
+        },
+        'subcategories_title_size': {
+            type: 'select',
+            label: 'Subcategories title size',
+            options: options.heading_size,
+            attrs: {'class': 'uk-form-width-medium'}
+        },
         'title1': {
             raw: true,
             type: 'title',
@@ -61,6 +90,76 @@ module.exports = {
             label: 'Gutter width',
             options: options.gutter,
             attrs: {'class': 'uk-form-width-small'}
+        }
+    },
+    category: {
+        'category.image_align': {
+            type: 'select',
+            label: 'Image alignment',
+            options: options.align.general,
+            attrs: {'class': 'uk-form-width-medium'}
+        },
+        'title1': {
+            raw: true,
+            type: 'title',
+            label: '',
+            title: 'Grid settings',
+            attrs: {'class': 'uk-margin-top'}
+        },
+        'category.filter_items': {
+            type: 'checkbox',
+            optionlabel: 'Filter by tags'
+        },
+        'category.columns': {
+            type: 'select',
+            label: 'Phone Portrait',
+            options: options.gridcols.base,
+            attrs: {'class': 'uk-form-width-small'}
+        },
+        'category.columns_small': {
+            type: 'select',
+            label: 'Phone Landscape',
+            options: options.gridcols.inherit,
+            attrs: {'class': 'uk-form-width-small'}
+        },
+        'category.columns_medium': {
+            type: 'select',
+            label: 'Tablet',
+            options: options.gridcols.inherit,
+            attrs: {'class': 'uk-form-width-small'}
+        },
+        'category.columns_large': {
+            type: 'select',
+            label: 'Desktop',
+            options: options.gridcols.inherit,
+            attrs: {'class': 'uk-form-width-small'}
+        },
+        'category.columns_xlarge': {
+            type: 'select',
+            label: 'Large screens',
+            options: options.gridcols.inherit,
+            attrs: {'class': 'uk-form-width-small'}
+        },
+        'category.columns_gutter': {
+            type: 'select',
+            label: 'Gutter width',
+            options: options.gutter,
+            attrs: {'class': 'uk-form-width-small'}
+        }
+    },
+    category_show: {
+        'category.show_title': {
+            type: 'checkbox',
+            label: 'Show content',
+            optionlabel: 'Show title'
+        },
+        'category.show_image': {
+            type: 'checkbox',
+            optionlabel: 'Show image'
+        },
+        'category.show_description': {
+            type: 'checkbox',
+            optionlabel: 'Show description'
         }
     },
     teaser_show: {

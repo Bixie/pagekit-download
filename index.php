@@ -1,7 +1,7 @@
 <?php
 
 use Bixie\Download\Event\RouteListener;
-use Bixie\Download\Event\FileCategoryListener;
+use Bixie\Download\Event\CategoryListener;
 use Bixie\Download\Event\FileListener;
 
 return [
@@ -114,6 +114,11 @@ return [
 		'mainpage_text' => '',
 		'mainpage_image' => '',
 		'mainpage_image_align' => 'left',
+		'show_subcategories' => true,
+		'subcategories_columns' => 3,
+		'subcategories_panel_style' => 'uk-panel-box uk-panel-box-secondary',
+		'subcategories_content_align' => 'left',
+		'subcategories_title_size' => 'uk-h3',
 		'columns' => 1,
 		'columns_small' => 2,
 		'columns_medium' => '',
@@ -146,6 +151,19 @@ return [
 			'demo' => 'Demo',
 			'demo_more_style' => 'uk-button uk-button-primary'
 		],
+		'category' => [
+			'show_title' => true,
+			'show_image' => true,
+			'show_description' => true,
+			'filter_items' => true,
+			'image_align' => 'left',
+			'columns' => 1,
+			'columns_small' => 2,
+			'columns_medium' => '',
+			'columns_large' => 4,
+			'columns_xlarge' => 6,
+			'columns_gutter' => 20,
+		],
 		'file' => [
 			'image_align' => 'left',
 			'metadata_position' => 'content-top',
@@ -172,7 +190,7 @@ return [
 			$app->subscribe(
 				new Bixie\Download\Cart\FileListener,
 				new RouteListener,
-				new FileCategoryListener,
+				new CategoryListener,
 				new FileListener
 			);
 //			$app->extend('view', function ($view) use ($app) {
