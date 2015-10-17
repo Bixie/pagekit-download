@@ -71,6 +71,12 @@
 
 	});
 
+	Vue.field.templates.formrow = __webpack_require__(14);
+	Vue.field.templates.raw = __webpack_require__(15);
+	Vue.field.types.checkbox = '<p class="uk-form-controls-condensed"><label><input type="checkbox" v-attr="attrs" v-model="value"> {{ optionlabel | trans }}</label></p>';
+	Vue.field.types.number = '<input type="number" v-attr="attrs" v-model="value" number>';
+	Vue.field.types.title = '<h3 v-attr="attrs">{{ title | trans }}</h3>';
+
 	$(function () {
 
 	    (new module.exports()).$mount('#download-settings');
@@ -95,12 +101,6 @@
 
 	
 	var options = __webpack_require__(13);
-
-	Vue.field.templates.formrow = __webpack_require__(14);
-	Vue.field.templates.raw = __webpack_require__(15);
-	Vue.field.types.checkbox = '<p class="uk-form-controls-condensed"><label><input type="checkbox" v-attr="attrs" v-model="value"> {{ optionlabel | trans }}</label></p>';
-	Vue.field.types.number = '<input type="number" v-attr="attrs" v-model="value" number>';
-	Vue.field.types.title = '<h3 v-attr="attrs">{{ title | trans }}</h3>';
 
 	module.exports = {
 	    portfolio: {

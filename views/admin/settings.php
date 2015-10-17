@@ -9,7 +9,7 @@
 
 				<ul class="uk-nav uk-nav-side pk-nav-large" data-uk-tab="{ connect: '#tab-content' }">
 					<li><a><i class="pk-icon-large-code uk-margin-right"></i> {{ 'Main page content' | trans }}</a></li>
-					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'Front page settings' | trans }}</a></li>
+					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'Main page settings' | trans }}</a></li>
 					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'Category page settings' | trans }}</a></li>
 					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'General settings' | trans }}</a></li>
 				</ul>
@@ -95,7 +95,7 @@
 					<div class="uk-margin uk-flex uk-flex-space-between uk-flex-wrap" data-uk-margin>
 						<div data-uk-margin>
 
-							<h2 class="uk-margin-remove">{{ 'Front page settings' | trans }}</h2>
+							<h2 class="uk-margin-remove">{{ 'Main page settings' | trans }}</h2>
 
 						</div>
 						<div data-uk-margin>

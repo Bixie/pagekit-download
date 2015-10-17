@@ -213,7 +213,7 @@ return [
 
 		'console.init' => function ($event, $console) {
 
-			//$console->add(new \Bixie\Download\Console\Commands\DownloadTranslateCommand());
+			$console->add(new \Bixie\Download\Console\Commands\TranslateCommand());
 
 		}
 	]
