@@ -3,6 +3,10 @@
 namespace Bixie\Download\Model;
 
 
+/**
+ * Class CategoriesTrait
+ * @package Bixie\Download\Model
+ */
 trait CategoriesTrait
 {
 
@@ -13,15 +17,25 @@ trait CategoriesTrait
 	 *            keyThroughFrom="file_id",
 	 *            keyThroughTo="category_id"
 	 * )
+	 * @var Category[]
 	 */
 	public $categories;
 
+	/**
+	 * @var integer
+	 */
 	protected $activeCategoryId;
 
+	/**
+	 * @param $category_id
+	 */
 	public function setActiveCategory ($category_id) {
 		$this->activeCategoryId = $category_id;
 	}
 
+	/**
+	 * @return null|Category
+	 */
 	public function getActiveCategory () {
 		if (!$this->categories || !isset($this->categories[$this->activeCategoryId ? : $this->get('primary_category', 0)])) {
 			return null;
@@ -29,6 +43,9 @@ trait CategoriesTrait
 		return $this->categories[$this->activeCategoryId ? : $this->get('primary_category', 0)];
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getCategoryIds () {
 		if ($this->categories) {
 			return array_values(array_map(function ($category) {
@@ -38,6 +55,9 @@ trait CategoriesTrait
 		return [];
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getCategoryTitles () {
 		if ($this->categories) {
 			return array_values(array_map(function ($category) {
@@ -47,14 +67,23 @@ trait CategoriesTrait
 		return [];
 	}
 
+	/**
+	 * @param Category $category
+	 */
 	public function addCategory (Category $category) {
 		$this->categories[$category->id] = $category;
 	}
 
+	/**
+	 * @param Category $category
+	 */
 	public function removeCategory (Category $category) {
 		unset($this->categories[$category->id]);
 	}
 
+	/**
+	 * @param array $category_ids
+	 */
 	public function saveCategories (array $category_ids) {
 		$remove = array_diff(array_keys($this->categories), $category_ids);
 		foreach ($remove as $category_id) {

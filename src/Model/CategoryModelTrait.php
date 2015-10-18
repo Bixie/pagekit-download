@@ -5,13 +5,20 @@ namespace Bixie\Download\Model;
 use Pagekit\Application as App;
 use Pagekit\Database\ORM\ModelTrait;
 
+/**
+ * Class CategoryModelTrait
+ * @package Bixie\Download\Model
+ */
 trait CategoryModelTrait
 {
     use ModelTrait {
         find as modelFind;
     }
 
-    protected static $categories;
+	/**
+	 * @var Category[]
+	 */
+	protected static $categories;
 
     /**
      * Retrieves an entity by its identifier.

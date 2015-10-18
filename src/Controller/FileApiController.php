@@ -67,6 +67,7 @@ class FileApiController
      */
     public function saveAction($data, $id = 0)
     {
+		/** @var File $file */
         if (!$id || !$file = File::where(compact('id'))->related('categories')->first()) {
 
             if ($id) {

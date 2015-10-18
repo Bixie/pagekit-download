@@ -54,6 +54,9 @@ class Category implements NodeInterface, \JsonSerializable
         'accessible' => 'isAccessible'
     ];
 
+	/**
+	 * @return File[]
+	 */
 	public function getFiles () {
 		if ($this->files) {
 			$catordering = FilesCategories::setCatordering($this);
@@ -64,6 +67,9 @@ class Category implements NodeInterface, \JsonSerializable
 		return [];
 	}
 
+	/**
+	 * @param $data
+	 */
 	public function updateOrdering ($data) {
 		if ($this->files) {
 			foreach ($data['files'] as $fileData) {
@@ -74,26 +80,22 @@ class Category implements NodeInterface, \JsonSerializable
 		}
 	}
 
-	public function addFile (File $file) {
-		$this->files[$file->id] = $file;
-	}
-
-	public function removeCategory (File $file) {
-		unset($this->files[$file->id]);
-	}
-
 	/**
      * Gets the category URL.
      *
      * @param  mixed  $referenceType
-     * @return string
+     * @return string|bool
      */
     public function getUrl($referenceType = false)
     {
         return App::url('@download/category/' . $this->id, [], $referenceType);
     }
 
-    public function isAccessible(User $user = null)
+	/**
+	 * @param User|null $user
+	 * @return bool
+	 */
+	public function isAccessible(User $user = null)
     {
         return $this->status && $this->hasAccess($user ?: App::user());
     }
