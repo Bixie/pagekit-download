@@ -188,11 +188,15 @@ return [
 
 		'boot' => function ($event, $app) {
 			$app->subscribe(
-				new Bixie\Download\Cart\FileListener,
 				new RouteListener,
 				new CategoryListener,
 				new FileListener
 			);
+			if (class_exists('Bixie\Cart\CartModule')) {
+				$app->subscribe(
+					new Bixie\Download\Cart\FileListener
+				);
+			}
 //			$app->extend('view', function ($view) use ($app) {
 //				return $view->addHelper(new DownloadImageHelper($app));
 //			});
