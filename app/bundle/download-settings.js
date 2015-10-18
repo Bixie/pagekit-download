@@ -367,7 +367,7 @@
 	            label: 'Demo link text',
 	            attrs: {'class': 'uk-form-width-medium'}
 	        },
-	        'teaser.demo_more_style': {
+	        'teaser.demo_style': {
 	            type: 'select',
 	            label: 'Demo link button style',
 	            options: options.button_style,

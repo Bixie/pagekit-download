@@ -67,14 +67,14 @@ if ($config['teaser']['show_version'] && $file->get('version')) {
 		<?php endif; ?>
 
 		<?php if ($config['show_download']) : ?>
-			<a class="<?= $config['teaser']['download_style'] ?><?= $config['teaser']['show_readmore'] && $config['teaser']['download_style'] != 'uk-flex-space-around' ? ' uk-margin-left' : '' ?>"
+			<a class="<?= $config['teaser']['download_style'] ?>"
 			   href="<?= $file->getDownloadLink() ?>">
 				<?= $config['teaser']['download'] ?></a>
 		<?php endif; ?>
 
 		<?php if ($config['teaser']['show_demo'] && $file->get('demo_url')) : ?>
-			<a class="uk-button uk-button-primary uk-width-1-1" target="_blank" href="<?= $file->get('demo_url') ?>">
-				<i class="uk-icon-eye uk-margin-small-right"></i>Demo</a>
+			<a class="<?= $config['teaser']['demo_style'] ?>" target="_blank" href="<?= $file->get('demo_url') ?>">
+				<i class="uk-icon-eye uk-margin-small-right"></i><?= $config['teaser']['demo'] ?></a>
 		<?php endif; ?>
 		</div>
 	<?php endif; ?>

@@ -149,7 +149,7 @@ return [
 			'read_more' => 'Details',
 			'read_more_style' => 'uk-button',
 			'demo' => 'Demo',
-			'demo_more_style' => 'uk-button uk-button-primary'
+			'demo_style' => 'uk-button uk-button-primary'
 		],
 		'category' => [
 			'show_title' => true,
