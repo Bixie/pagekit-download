@@ -10,7 +10,7 @@ return [
 			$util->createTable('@download_file', function ($table) {
 				$table->addColumn('id', 'integer', ['unsigned' => true, 'length' => 10, 'autoincrement' => true]);
 				$table->addColumn('status', 'smallint');
-				$table->addColumn('roles', 'simple_array', ['notnull' => false]);
+				$table->addColumn('downloads', 'integer', ['length' => 10]);
 				$table->addColumn('title', 'string', ['length' => 255]);
 				$table->addColumn('subtitle', 'string', ['length' => 255, 'notnull' => false]);
 				$table->addColumn('slug', 'string', ['length' => 255]);
@@ -20,6 +20,7 @@ return [
 				$table->addColumn('tags', 'simple_array', ['notnull' => false]);
 				$table->addColumn('image', 'json_array', ['notnull' => false]);
 				$table->addColumn('data', 'json_array', ['notnull' => false]);
+				$table->addColumn('roles', 'simple_array', ['notnull' => false]);
 				$table->setPrimaryKey(['id']);
 				$table->addUniqueIndex(['slug'], 'DOWNLOAD_FILE_SLUG');
 				$table->addIndex(['status'], 'DOWNLOAD_FILE_STATUS');

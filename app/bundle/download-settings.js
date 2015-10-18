@@ -399,6 +399,11 @@
 	            },
 	            attrs: {'class': 'uk-form-width-medium'}
 	        },
+	        'count_admindownloads': {
+	            type: 'checkbox',
+	            label: 'Download count',
+	            optionlabel: 'Count administrator downloads'
+	        },
 	        'markdown_enabled': {
 	            type: 'checkbox',
 	            label: 'Markdown',

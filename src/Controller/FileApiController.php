@@ -38,7 +38,7 @@ class FileApiController
 				->where(['x.category_id' => (int) $category_id]);
 		}
 
-		if (!preg_match('/^(date|title)\s(asc|desc)$/i', $order, $order)) {
+		if (!preg_match('/^(date|downloads|title)\s(asc|desc)$/i', $order, $order)) {
             $order = [1 => 'date', 2 => 'desc'];
         }
 

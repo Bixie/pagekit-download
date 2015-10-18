@@ -29,7 +29,7 @@
 	</ul>
 
 	<div class="uk-switcher uk-margin" v-el="content">
-		<div v-repeat="section: sections | active | orderBy 'priority'">
+		<div v-repeat="section: sections | orderBy 'priority'">
 			<component is="{{ section.name }}"></component>
 		</div>
 	</div>

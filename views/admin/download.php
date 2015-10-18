@@ -47,6 +47,7 @@
 				<th class="pk-table-width-100 uk-text-center">
 					<input-filter title="{{ 'Status' | trans }}" value="{{@ config.filter.status}}" options="{{ statusOptions }}"></input-filter>
 				</th>
+				<th class="pk-table-width-100" v-order="downloads: config.filter.order">{{ 'Downloads' | trans }}</th>
 				<th class="pk-table-width-100" v-order="date: config.filter.order">{{ 'Date' | trans }}</th>
 				<th class="pk-table-min-width-100">
 					<input-filter title="{{ 'Categories' | trans }}" value="{{@ config.filter.category_id}}" options="{{ categoryOptions }}"></input-filter>
@@ -69,6 +70,9 @@
                                 pk-icon-circle-danger: file.status == 0,
                                 pk-icon-circle-success: file.status == 1
                             " v-on="click: toggleStatus(file)"></a>
+				</td>
+				<td>
+					{{ file.downloads }}
 				</td>
 				<td>
 					{{ file.date | date }}

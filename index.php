@@ -178,6 +178,7 @@ return [
 		'ordering' => 'title',
 		'ordering_dir' => 'asc',
 		'files_per_page' => 20,
+		'count_admindownloads' => false,
 		'file_extensions' => ['zip', 'rar', 'tar.gz'],
 		'markdown_enabled' => false,
 		'date_format' => 'd F Y',

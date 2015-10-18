@@ -48,6 +48,8 @@ class FileController
 			App::abort(400, __('Key not valid.'));
 		}
 
+		$file->updateDownloadCount();
+
 		// Generate response
 		$response = new BinaryFileResponse($file->path);
 		$response->headers->set('Content-Disposition', $response->headers->makeDisposition(

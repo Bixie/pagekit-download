@@ -31,6 +31,9 @@ class File implements \JsonSerializable
 	/** @Column(type="integer") */
 	public $status;
 
+	/** @Column(type="integer") */
+	public $downloads = 0;
+
 	/** @Column(type="string") */
 	public $slug;
 
@@ -113,6 +116,34 @@ class File implements \JsonSerializable
 		$statuses = self::getStatuses();
 
 		return isset($statuses[$this->status]) ? $statuses[$this->status] : __('Unknown');
+	}
+
+	/**
+	 * @param string|null $filter_type
+	 * @return array|mixed
+	 */
+	public function getFilters ($filter_type = null) {
+		$filter_type = $filter_type == null ? $filter_type : App::module('bixie/download')->config('filter_items');
+		if ($filter_type == 'category') {
+			return $this->getCategoryTitles();
+		} elseif ($filter_type == 'tag') {
+			return $this->tags;
+		}
+		return [];
+	}
+
+	/**
+	 *
+	 */
+	public function updateDownloadCount() {
+		if (!App::module('bixie/download')->config('count_admindownloads', false) && App::user()->isAdministrator()) {
+			return;
+		}
+
+		self::where(['id' => $this->id])->update([
+				'downloads' => $this->downloads + 1
+			]
+		);
 	}
 
 	/**

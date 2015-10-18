@@ -94,6 +94,15 @@
             </div>
 
             <div class="uk-form-row">
+                <label for="form-status" class="uk-form-label">{{ 'Downloads' | trans }}</label>
+                <div class="uk-form-controls uk-form-controls-text uk-flex uk-flex-middle uk-flex-space-between">
+                    <strong class="uk-h4">{{ file.downloads }}</strong>
+                    <button type="button" class="uk-button uk-button-small" v-on="click: resetDownloads"
+                            v-confirm="'Reset download counter?' | trans">{{ 'Reset' | trans }}</button>
+                </div>
+            </div>
+
+            <div class="uk-form-row">
                 <span class="uk-form-label">{{ 'Restrict Access' | trans }}</span>
                 <div class="uk-form-controls uk-form-controls-text">
                     <p v-repeat="role: roles" class="uk-form-controls-condensed">

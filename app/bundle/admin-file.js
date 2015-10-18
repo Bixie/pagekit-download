@@ -95,7 +95,9 @@
 
 	        save: function (e) {
 
-	            e.preventDefault();
+	            if (e) {
+	                e.preventDefault();
+	            }
 
 	            var data = {file: this.file};
 
@@ -116,6 +118,11 @@
 	            }, function (data) {
 	                this.$notify(data, 'danger');
 	            });
+	        },
+
+	        resetDownloads: function () {
+	            this.file.downloads = 0;
+	            this.save();
 	        }
 
 	    },
