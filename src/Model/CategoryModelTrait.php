@@ -116,10 +116,10 @@ trait CategoryModelTrait
 
         $category->path = $path;
 
-        // Set catordering
+        // Set priority
         if (!$id) {
-            $category->catordering = 1 + $db->createQueryBuilder()
-                    ->select($db->getDatabasePlatform()->getMaxExpression('catordering'))
+            $category->priority = 1 + $db->createQueryBuilder()
+                    ->select($db->getDatabasePlatform()->getMaxExpression('priority'))
                     ->from(self::getMetadata()->getTable())
                     ->where(['parent_id' => $category->parent_id])
                     ->execute()
