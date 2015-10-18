@@ -59,6 +59,7 @@ trait CategoriesTrait
 		$remove = array_diff(array_keys($this->categories), $category_ids);
 		foreach ($remove as $category_id) {
 			if ($xref = FilesCategories::query(['file_id' => $this->id, 'category_id' => $category_id])->first()) {
+				$this->removeCategory($this->categories[$category_id]);
 				$xref->delete();
 			}
 		}
@@ -66,14 +67,11 @@ trait CategoriesTrait
 			if (!in_array($category_id, $remove) && !isset($this->categories[$category_id])) {
 				if ($category = Category::find($category_id)) {
 					$this->addCategory($category);
-					$category->addFile($this);
 					$xref = FilesCategories::create(['file_id' => $this->id, 'category_id' => $category->id]);
 					$xref->save();
 				}
 			}
 		}
 	}
-
-
 
 }
