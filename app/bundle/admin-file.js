@@ -148,73 +148,124 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(8)
-	module.exports.template = __webpack_require__(9)
 
+	if (module.exports.__esModule) module.exports = module.exports.default
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(9)
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\BixieProjects\\pagekit\\pagekit\\packages\\bixie\\download\\app\\components\\input-file.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+	  }
+	})()}
 
 /***/ },
 /* 8 */
 /***/ function(module, exports) {
 
+	'use strict';
+
+	// <template>
+
+	//     <div v-on="click: pick" class="{{ class }}">
+
+	//         <ul class="uk-float-right uk-subnav pk-subnav-icon">
+
+	//             <li><a class="pk-icon-delete pk-icon-hover" title="{{ 'Delete' | trans }}" data-uk-tooltip="{delay: 500, 'pos': 'left'}" v-on="click: remove"></a></li>
+
+	//         </ul>
+
+	//         <a class="pk-icon-folder-circle uk-margin-right"></a>
+
+	//         <a v-if="!file" class="uk-text-muted">{{ 'Select file' | trans }}</a>
+
+	//         <a v-if="file" data-uk-tooltip="" title="{{ file }}">{{ fileName }}</a>
+
+	//     </div>
+
+	//     <v-modal v-ref="modal" large>
+
+	//         <panel-finder root="{{ storage }}" v-ref="finder" modal="true"></panel-finder>
+
+	//         <div v-show="!hasSelection()" class="uk-alert">{{ 'Select one file of the following types' | trans }}: {{ this.ext.join(', ') }}</div>
+
+	//         <div class="uk-modal-footer uk-text-right">
+
+	//             <button class="uk-button uk-button-link uk-modal-close" type="button">{{ 'Cancel' | trans }}</button>
+
+	//             <button class="uk-button uk-button-primary" type="button" v-attr="disabled: !hasSelection()" v-on="click: select()">{{ 'Select' | trans }}</button>
+
+	//         </div>
+
+	//     </v-modal>
+
+	// </template>
+
+	// <script>
+
 	module.exports = {
 
-	        props: ['file', 'ext', 'multiple', 'class'],
+	    props: ['file', 'ext', 'multiple', 'class'],
 
-	        data: function () {
-	            return _.merge({
-	                'file': '',
-	                'ext': [],
-	                'class': '',
-	                'multile': false
-	            }, $pagekit);
+	    data: function data() {
+	        return _.merge({
+	            'file': '',
+	            'ext': [],
+	            'class': '',
+	            'multile': false
+	        }, $pagekit);
+	    },
+
+	    computed: {
+	        fileName: function fileName() {
+	            return this.file.split('/').pop();
+	        }
+	    },
+
+	    methods: {
+
+	        pick: function pick() {
+	            this.$.modal.open();
 	        },
 
-	        computed: {
-	            fileName: function () {
-	                return this.file.split('/').pop();
-	            }
+	        select: function select() {
+	            this.$set('file', this.$.finder.getSelected()[0]);
+	            this.$dispatch('file-selected', this.file);
+	            this.$.finder.removeSelection();
+	            this.$.modal.close();
 	        },
 
-	        methods: {
+	        remove: function remove(e) {
+	            e.stopPropagation();
+	            this.file = '';
+	        },
 
-	            pick: function() {
-	                this.$.modal.open();
-	            },
-
-	            select: function() {
-	                this.$set('file', this.$.finder.getSelected()[0]);
-	                this.$dispatch('file-selected', this.file);
-	                this.$.finder.removeSelection();
-	                this.$.modal.close();
-	            },
-
-	            remove: function(e) {
-	                e.stopPropagation();
-	                this.file = ''
-	            },
-
-	            hasSelection: function() {
-	                var selected = this.$.finder.getSelected();
-	                if (!this.multiple && !(selected.length === 1)) {
-	                    return false;
-	                }
-	                //todo there must be a prettier way
-	                return selected[0].match(new RegExp('\.(?:' + (this.ext || []).join('|') + ')$', 'i'));
+	        hasSelection: function hasSelection() {
+	            var selected = this.$.finder.getSelected();
+	            if (!this.multiple && !(selected.length === 1)) {
+	                return false;
 	            }
-
+	            //todo there must be a prettier way
+	            return selected[0].match(new RegExp('\.(?:' + (this.ext || []).join('|') + ')$', 'i'));
 	        }
 
-	    };
+	    }
 
-	    Vue.component('input-file', function (resolve, reject) {
-	        Vue.asset({
-	            js: [
-	                'app/assets/uikit/js/components/upload.min.js',
-	                'app/system/modules/finder/app/bundle/panel-finder.js'
-	            ]
-	        }, function () {
-	            resolve(module.exports);
-	        })
+	};
+
+	Vue.component('input-file', function (resolve, reject) {
+	    Vue.asset({
+	        js: ['app/assets/uikit/js/components/upload.min.js', 'app/system/modules/finder/app/bundle/panel-finder.js']
+	    }, function () {
+	        resolve(module.exports);
 	    });
+	});
+
+	// </script>
 
 /***/ },
 /* 9 */

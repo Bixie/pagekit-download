@@ -75,49 +75,121 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(15)
-	module.exports.template = __webpack_require__(16)
 
+	if (module.exports.__esModule) module.exports = module.exports.default
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(16)
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\BixieProjects\\pagekit\\pagekit\\packages\\bixie\\download\\app\\components\\input-tags.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+	  }
+	})()}
 
 /***/ },
 /* 15 */
 /***/ function(module, exports) {
 
+	'use strict';
+
+	// <template>
+
+	//     <div class="uk-flex uk-flex-wrap" data-uk-margin="">
+
+	//         <div v-repeat="tag: tags" class="uk-badge uk-margin-small-right">
+
+	//             <a class="uk-float-right uk-close" v-on="click: removeTag($event, $index)"></a>
+
+	//             {{ tag }}
+
+	//         </div>
+
+	//     </div>
+
+	//     <div class="uk-flex uk-flex-middle uk-margin">
+
+	//         <div>
+
+	//             <div class="uk-position-relative" data-uk-dropdown="">
+
+	//                 <button type="button" class="uk-button uk-button-small">{{ 'Existing' | trans }}</button>
+
+	//                 <div class="uk-dropdown uk-dropdown-small">
+
+	//                     <ul class="uk-nav uk-nav-dropdown">
+
+	//                         <li v-repeat="tag: existing"><a
+
+	//                                 v-on="click: addTag($event, tag)">{{ tag }}</a></li>
+
+	//                     </ul>
+
+	//                 </div>
+
+	//             </div>
+
+	//         </div>
+
+	//         <div class="uk-flex-item-1 uk-margin-small-left">
+
+	//             <div class="uk-form-password">
+
+	//                 <input type="text" class="uk-width-1-1" v-model="newtag" v-on="keyup:addTag | key 'enter'">
+
+	//                 <a class="uk-form-password-toggle" v-on="click: addTag()"><i class="uk-icon-check uk-icon-hover"></i></a>
+
+	//             </div>
+
+	//         </div>
+
+	//     </div>
+
+	// </template>
+
+	// <script>
+
 	module.exports = {
 
-	        props: ['tags', 'existing'],
+	    props: ['tags', 'existing'],
 
-	        data: function () {
-	            return {
-	                'newtag': '',
-	                'tags': '',
-	                'existing': ''
-	            };
+	    data: function data() {
+	        return {
+	            'newtag': '',
+	            'tags': '',
+	            'existing': ''
+	        };
+	    },
+
+	    methods: {
+
+	        addTag: function addTag(e, tag) {
+	            if (e) {
+	                e.stopPropagation();
+	                e.preventDefault();
+	            }
+	            this.tags.push(tag || this.newtag);
+	            this.$nextTick(function () {
+	                UIkit.$html.trigger('resize'); //todo why no check.display or changed.dom???
+	            });
+	            this.newtag = '';
 	        },
 
-	        methods: {
-
-	            addTag: function(e, tag) {
-	                if (e) {
-	                    e.stopPropagation();
-	                    e.preventDefault();
-	                }
-	                this.tags.push(tag || this.newtag);
-	                this.$nextTick(function () {
-	                    UIkit.$html.trigger('resize'); //todo why no check.display or changed.dom???
-	                });
-	                this.newtag = '';
-	            },
-
-	            removeTag: function(e, idx) {
-	                if (e) {
-	                    e.preventDefault();
-	                }
-	                this.tags.$remove(idx)
+	        removeTag: function removeTag(e, idx) {
+	            if (e) {
+	                e.preventDefault();
 	            }
-
+	            this.tags.$remove(idx);
 	        }
 
-	    };
+	    }
+
+	};
+
+	// </script>
 
 /***/ },
 /* 16 */
@@ -132,82 +204,164 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(20)
-	module.exports.template = __webpack_require__(21)
 
+	if (module.exports.__esModule) module.exports = module.exports.default
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(21)
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\BixieProjects\\pagekit\\pagekit\\packages\\bixie\\download\\app\\components\\input-category.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+	  }
+	})()}
 
 /***/ },
 /* 20 */
 /***/ function(module, exports) {
 
+	'use strict';
+
+	// <template>
+
+	//     <ul class="uk-list">
+
+	//         <li v-repeat="values">
+
+	//             <div class="uk-nestable-panel uk-visible-hover uk-flex uk-flex-middle">
+
+	//                 <div class="uk-flex-item-1">
+
+	//                     {{ getText($value) }}
+
+	//                 </div>
+
+	//                 <div class="">
+
+	//                     <ul class="uk-subnav pk-subnav-icon">
+
+	//                         <li><a class="pk-icon-star"
+
+	//                                data-uk-tooltip="{delay: 300}" title="{{ 'Make primary category' | trans }}"
+
+	//                                v-class="uk-invisible: primary !== $value"
+
+	//                                v-on="click: primary = $value"></a></li>
+
+	//                         <li><a class="pk-icon-delete pk-icon-hover uk-invisible" v-on="click: removeCategory($index)"></a></li>
+
+	//                     </ul>
+
+	//                 </div>
+
+	//             </div>
+
+	//         </li>
+
+	//     </ul>
+
+	//     <div id="select-category" class="uk-flex uk-flex-middle uk-margin">
+
+	//         <div>
+
+	//             <div class="uk-position-relative" data-uk-dropdown="{justify:'#select-category'}">
+
+	//                 <button type="button" class="uk-button uk-button-small">{{ 'Please select' | trans }}</button>
+
+	//                 <div class="uk-dropdown uk-dropdown-small">
+
+	//                     <ul class="uk-nav uk-nav-dropdown">
+
+	//                         <category-item v-repeat="category: tree[0]"></category-item>
+
+	//                     </ul>
+
+	//                 </div>
+
+	//             </div>
+
+	//         </div>
+
+	//     </div>
+
+	// </template>
+
+	// <script>
+
 	module.exports = {
 
-	        props: ['values', 'primary', 'categories'],
+	    props: ['values', 'primary', 'categories'],
 
-	        data: function () {
-	            return {
-	                'tree': {},
-	                'primary': '',
-	                'values': [],
-	                'categories': {}
-	            };
-	        },
+	    data: function data() {
+	        return {
+	            'tree': {},
+	            'primary': '',
+	            'values': [],
+	            'categories': {}
+	        };
+	    },
 
-	        created: function () {
-	            this.tree = _(this.categories).sortBy('priority').groupBy('parent_id').value();
-	        },
+	    created: function created() {
+	        this.tree = _(this.categories).sortBy('priority').groupBy('parent_id').value();
+	    },
 
-	        computed: {
-	            categorieOptions: function () {
-	                var options = [];
-	                _.forIn(this.categories, function (category) {
-	                    options.push({value: category.id, text: category.title});
-	                });
-	                return options;
-	            }
-	        },
+	    computed: {
+	        categorieOptions: function categorieOptions() {
+	            var options = [];
+	            _.forIn(this.categories, function (category) {
+	                options.push({ value: category.id, text: category.title });
+	            });
+	            return options;
+	        }
+	    },
 
-	        methods: {
+	    methods: {
 
-	            addCategory: function(value) {
-	                if (!this.isSelected(value)) {
-	                    this.values.push(value);
-	                    this.checkPrimary();
-	                }
-	            },
-
-	            removeCategory: function(idx) {
-	                this.values.$remove(idx);
+	        addCategory: function addCategory(value) {
+	            if (!this.isSelected(value)) {
+	                this.values.push(value);
 	                this.checkPrimary();
-	            },
-
-	            isSelected: function (value) {
-	                return this.values.indexOf(value) > -1;
-	            },
-
-	            getText: function (value) {
-	                return _.find(this.categories, 'id', value).title;
-	            },
-
-	            checkPrimary: function () {
-	                if (this.values.length && this.values.indexOf(this.primary) == -1) {
-	                    this.primary = this.values[0];
-	                }
 	            }
-
 	        },
 
-	        components: {
+	        removeCategory: function removeCategory(idx) {
+	            this.values.$remove(idx);
+	            this.checkPrimary();
+	        },
 
-	            categoryItem: {
+	        isSelected: function isSelected(value) {
+	            return this.values.indexOf(value) > -1;
+	        },
 
-	                template: '<li v-class="uk-parent: tree[category.id]">\n    <a v-on="click: addCategory(category.id)" v-class="uk-text-primary: isSelected(category.id)">{{ category.title }}</a>\n    <ul class="uk-nav-sub" v-if="tree[category.id]">\n        <category-item v-repeat="category: tree[category.id]"></category-item>\n    </ul>\n</li>',
+	        getText: function getText(value) {
+	            return _.find(this.categories, 'id', value).title;
+	        },
 
-	                inherit: true
+	        checkPrimary: function checkPrimary() {
+	            if (this.values.length && this.values.indexOf(this.primary) == -1) {
+	                this.primary = this.values[0];
 	            }
-
 	        }
 
-	    };
+	    },
+
+	    components: {
+
+	        categoryItem: {
+
+	            template: '<li v-class="uk-parent: tree[category.id]">\n    <a v-on="click: addCategory(category.id)" v-class="uk-text-primary: isSelected(category.id)">{{ category.title }}</a>\n    <ul class="uk-nav-sub" v-if="tree[category.id]">\n        <category-item v-repeat="category: tree[category.id]"></category-item>\n    </ul>\n</li>',
+
+	            inherit: true
+	        }
+
+	    }
+
+	};
+
+	// </script>
 
 /***/ },
 /* 21 */
@@ -220,23 +374,253 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(23)
-	module.exports.template = __webpack_require__(24)
 
+	if (module.exports.__esModule) module.exports = module.exports.default
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(24)
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\BixieProjects\\pagekit\\pagekit\\packages\\bixie\\download\\app\\components\\download-section-edit.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+	  }
+	})()}
 
 /***/ },
 /* 23 */
 /***/ function(module, exports) {
 
+	'use strict';
+
+	// <template>
+
+	//     <div class="uk-grid pk-grid-large" data-uk-grid-margin>
+
+	//         <div class="uk-flex-item-1">
+
+	//             <div class="uk-form-horizontal uk-margin">
+
+	//                 <div class="uk-form-row">
+
+	//                     <label for="form-title" class="uk-form-label">{{ 'Title' | trans }}</label>
+
+	//                     <div class="uk-form-controls">
+
+	//                         <input id="form-title" class="uk-width-1-1 uk-form-large" type="text" name="title"
+
+	//                                v-model="file.title" v-validate="required">
+
+	//                     </div>
+
+	//                     <p class="uk-form-help-block uk-text-danger" v-show="form.title.invalid">
+
+	//                         {{ 'Please enter a title' | trans }}</p>
+
+	//                 </div>
+
+	//                 <div class="uk-form-row">
+
+	//                     <label for="form-subtitle" class="uk-form-label">{{ 'Subitle' | trans }}</label>
+
+	//                     <div class="uk-form-controls">
+
+	//                         <input id="form-subtitle" class="uk-width-1-1" type="text" name="subtitle"
+
+	//                                v-model="file.subtitle">
+
+	//                     </div>
+
+	//                 </div>
+
+	//             </div>
+
+	//             <div class="uk-form-stacked uk-margin">
+
+	//                 <div class="uk-form-row">
+
+	//                     <span class="uk-form-label">{{ 'Content' | trans }}</span>
+
+	//                     <div class="uk-form-controls">
+
+	//                         <v-editor id="form-content" value="{{@ file.content }}"
+
+	//                                   options="{{ {markdown : file.data.markdown} }}"></v-editor>
+
+	//                     </div>
+
+	//                     <p class="uk-form-controls-condensed">
+
+	//                         <label><input type="checkbox" v-model="file.data.markdown"> {{ 'Enable
+
+	//                             Markdown' | trans }}</label>
+
+	//                     </p>
+
+	//                 </div>
+
+	//              </div>
+
+	//             <div class="uk-grid uk-margin uk-grid-width-medium-1-2 uk-form-stacked" data-uk-grid-margin="">
+
+	//                 <div>
+
+	//                     <div class="uk-form-row">
+
+	//                         <label class="uk-form-label">{{ 'Image' | trans }}</label>
+
+	//                         <div class="uk-form-controls">
+
+	//                             <input-image-meta image="{{@ file.image.main }}" class="pk-image-max-height"></input-image-meta>
+
+	//                         </div>
+
+	//                     </div>
+
+	//                 </div>
+
+	//                 <div>
+
+	//                     <div class="uk-form-row">
+
+	//                         <label class="uk-form-label">{{ 'Icon' | trans }}</label>
+
+	//                         <div class="uk-form-controls">
+
+	//                             <input-image-meta image="{{@ file.image.icon }}" class="pk-image-max-height"></input-image-meta>
+
+	//                         </div>
+
+	//                     </div>
+
+	//                 </div>
+
+	//             </div>
+
+	//         </div>
+
+	//         <div class="pk-width-sidebar pk-width-sidebar-large uk-form-stacked">
+
+	//             <div class="uk-form-row">
+
+	//                 <label class="uk-form-label">{{ 'File' | trans }}</label>
+
+	//                 <div class="uk-form-controls">
+
+	//                     <input-file file="{{@ file.path }}" ext="{{ config.file_extensions }}"></input-file>
+
+	//                     <input type="hidden" name="path" v-model="file.path" v-validate="required">
+
+	//                 </div>
+
+	//                 <p class="uk-form-help-block uk-text-danger" v-show="form.path.invalid">
+
+	//                     {{ 'Please select a file' | trans }}</p>
+
+	//             </div>
+
+	//             <div class="uk-form-row">
+
+	//                 <label for="form-slug" class="uk-form-label">{{ 'Slug' | trans }}</label>
+
+	//                 <div class="uk-form-controls">
+
+	//                     <input id="form-slug" class="uk-width-1-1" type="text" v-model="file.slug">
+
+	//                 </div>
+
+	//             </div>
+
+	//             <div class="uk-form-row">
+
+	//                 <label for="form-status" class="uk-form-label">{{ 'Status' | trans }}</label>
+
+	//                 <div class="uk-form-controls">
+
+	//                     <select id="form-status" class="uk-width-1-1" v-model="file.status" options="statusOptions"></select>
+
+	//                 </div>
+
+	//             </div>
+
+	//             <div class="uk-form-row">
+
+	//                 <label for="form-status" class="uk-form-label">{{ 'Downloads' | trans }}</label>
+
+	//                 <div class="uk-form-controls uk-form-controls-text uk-flex uk-flex-middle uk-flex-space-between">
+
+	//                     <strong class="uk-h4">{{ file.downloads }}</strong>
+
+	//                     <button type="button" class="uk-button uk-button-small" v-on="click: resetDownloads"
+
+	//                             v-confirm="'Reset download counter?' | trans">{{ 'Reset' | trans }}</button>
+
+	//                 </div>
+
+	//             </div>
+
+	//             <div class="uk-form-row">
+
+	//                 <span class="uk-form-label">{{ 'Restrict Access' | trans }}</span>
+
+	//                 <div class="uk-form-controls uk-form-controls-text">
+
+	//                     <p v-repeat="role: roles" class="uk-form-controls-condensed">
+
+	//                         <label><input type="checkbox" value="{{ role.id }}" v-checkbox="file.roles" number> {{ role.name }}</label>
+
+	//                     </p>
+
+	//                 </div>
+
+	//             </div>
+
+	//             <div class="uk-form-row">
+
+	//                 <span class="uk-form-label">{{ 'Categories' | trans }}</span>
+
+	//                 <div class="uk-form-controls">
+
+	//                     <input-category values="{{@ file.category_ids}}" primary="{{@ file.data.primary_category}}" categories="{{ categories }}"></input-category>
+
+	//                 </div>
+
+	//             </div>
+
+	//             <div class="uk-form-row">
+
+	//                 <span class="uk-form-label">{{ 'Tags' | trans }}</span>
+
+	//                 <div class="uk-form-controls">
+
+	//                     <input-tags tags="{{@ file.tags}}" existing="{{ tags }}"></input-tags>
+
+	//                 </div>
+
+	//             </div>
+
+	//         </div>
+
+	//     </div>
+
+	// </template>
+
+	// <script>
+
 	module.exports = {
 
-	        section: {
-	            label: 'General',
-	            priority: -99
-	        },
+	    section: {
+	        label: 'General',
+	        priority: -99
+	    },
 
-	        inherit: true
+	    inherit: true
 
-	    };
+	};
+
+	// </script>
 
 /***/ },
 /* 24 */
@@ -249,23 +633,85 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(26)
-	module.exports.template = __webpack_require__(27)
 
+	if (module.exports.__esModule) module.exports = module.exports.default
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(27)
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\BixieProjects\\pagekit\\pagekit\\packages\\bixie\\download\\app\\components\\download-section-data.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+	  }
+	})()}
 
 /***/ },
 /* 26 */
 /***/ function(module, exports) {
 
+	'use strict';
+
+	// <template>
+
+	//     <div class="uk-form-horizontal uk-margin">
+
+	//         <div class="uk-form-row">
+
+	//             <span class="uk-form-label">{{ 'Date' | trans }}</span>
+
+	//             <div class="uk-form-controls">
+
+	//                 <input-date datetime="{{@ file.date}}"></input-date>
+
+	//             </div>
+
+	//         </div>
+
+	//         <div class="uk-form-row">
+
+	//             <label for="form-demo_url" class="uk-form-label">{{ 'Demo url' | trans }}</label>
+
+	//             <div class="uk-form-controls">
+
+	//                 <input id="form-demo_url" class="uk-width-1-1" type="text" v-model="file.data.demo_url">
+
+	//             </div>
+
+	//         </div>
+
+	//         <div class="uk-form-row">
+
+	//             <label for="form-version" class="uk-form-label">{{ 'Version' | trans }}</label>
+
+	//             <div class="uk-form-controls">
+
+	//                 <input id="form-version" class="uk-width-1-1" type="text" v-model="file.data.version">
+
+	//             </div>
+
+	//         </div>
+
+	//     </div>
+
+	// </template>
+
+	// <script>
+
 	module.exports = {
 
-	        section: {
-	            label: 'Data',
-	            priority: 10
-	        },
+	    section: {
+	        label: 'Data',
+	        priority: 10
+	    },
 
-	        inherit: true
+	    inherit: true
 
-	    };
+	};
+
+	// </script>
 
 /***/ },
 /* 27 */

@@ -511,49 +511,121 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(15)
-	module.exports.template = __webpack_require__(16)
 
+	if (module.exports.__esModule) module.exports = module.exports.default
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(16)
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\BixieProjects\\pagekit\\pagekit\\packages\\bixie\\download\\app\\components\\input-tags.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+	  }
+	})()}
 
 /***/ },
 /* 15 */
 /***/ function(module, exports) {
 
+	'use strict';
+
+	// <template>
+
+	//     <div class="uk-flex uk-flex-wrap" data-uk-margin="">
+
+	//         <div v-repeat="tag: tags" class="uk-badge uk-margin-small-right">
+
+	//             <a class="uk-float-right uk-close" v-on="click: removeTag($event, $index)"></a>
+
+	//             {{ tag }}
+
+	//         </div>
+
+	//     </div>
+
+	//     <div class="uk-flex uk-flex-middle uk-margin">
+
+	//         <div>
+
+	//             <div class="uk-position-relative" data-uk-dropdown="">
+
+	//                 <button type="button" class="uk-button uk-button-small">{{ 'Existing' | trans }}</button>
+
+	//                 <div class="uk-dropdown uk-dropdown-small">
+
+	//                     <ul class="uk-nav uk-nav-dropdown">
+
+	//                         <li v-repeat="tag: existing"><a
+
+	//                                 v-on="click: addTag($event, tag)">{{ tag }}</a></li>
+
+	//                     </ul>
+
+	//                 </div>
+
+	//             </div>
+
+	//         </div>
+
+	//         <div class="uk-flex-item-1 uk-margin-small-left">
+
+	//             <div class="uk-form-password">
+
+	//                 <input type="text" class="uk-width-1-1" v-model="newtag" v-on="keyup:addTag | key 'enter'">
+
+	//                 <a class="uk-form-password-toggle" v-on="click: addTag()"><i class="uk-icon-check uk-icon-hover"></i></a>
+
+	//             </div>
+
+	//         </div>
+
+	//     </div>
+
+	// </template>
+
+	// <script>
+
 	module.exports = {
 
-	        props: ['tags', 'existing'],
+	    props: ['tags', 'existing'],
 
-	        data: function () {
-	            return {
-	                'newtag': '',
-	                'tags': '',
-	                'existing': ''
-	            };
+	    data: function data() {
+	        return {
+	            'newtag': '',
+	            'tags': '',
+	            'existing': ''
+	        };
+	    },
+
+	    methods: {
+
+	        addTag: function addTag(e, tag) {
+	            if (e) {
+	                e.stopPropagation();
+	                e.preventDefault();
+	            }
+	            this.tags.push(tag || this.newtag);
+	            this.$nextTick(function () {
+	                UIkit.$html.trigger('resize'); //todo why no check.display or changed.dom???
+	            });
+	            this.newtag = '';
 	        },
 
-	        methods: {
-
-	            addTag: function(e, tag) {
-	                if (e) {
-	                    e.stopPropagation();
-	                    e.preventDefault();
-	                }
-	                this.tags.push(tag || this.newtag);
-	                this.$nextTick(function () {
-	                    UIkit.$html.trigger('resize'); //todo why no check.display or changed.dom???
-	                });
-	                this.newtag = '';
-	            },
-
-	            removeTag: function(e, idx) {
-	                if (e) {
-	                    e.preventDefault();
-	                }
-	                this.tags.$remove(idx)
+	        removeTag: function removeTag(e, idx) {
+	            if (e) {
+	                e.preventDefault();
 	            }
-
+	            this.tags.$remove(idx);
 	        }
 
-	    };
+	    }
+
+	};
+
+	// </script>
 
 /***/ },
 /* 16 */
