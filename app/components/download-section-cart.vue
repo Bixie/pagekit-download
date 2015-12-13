@@ -38,7 +38,8 @@
                         <option value="USD">{{ 'Dollar' | trans }}</option>
                     </select>
                     <select name="file_cart_vat" class="uk-margin-small-left uk-form-width-small"
-                            v-model="product.vat" options="vatOptions">
+                            v-model="product.vat">
+                        <option v-for="option in config.vatclasses" value="$key">{{ vatclass.name }}</option>
                     </select>
                 </div>
             </div>
@@ -50,7 +51,7 @@
                     <select id="file_cart_validity_period" name="file_cart_validity_period" class="uk-form-width-small"
                             v-model="product.data.validity_period">
                         <option value="">{{ 'Infinite' | trans }}</option>
-                        <option v-repeat="periods" value="{{ $key }}">{{ $value | trans }}</option>
+                        <option v-for="period in periods" value="{{ $key }}">{{ period | trans }}</option>
                     </select>
                 </div>
             </div>
@@ -80,6 +81,8 @@
 
         },
 
+        props: ['file', 'config', 'form'],
+
         data: function () {
             return _.merge({
                 product: {
@@ -99,20 +102,18 @@
             }, window.$cart)
         },
 
-        inherit: true,
-
-        created: function () {
-            this.$on('save', function (data) {
+        events: {
+            'save': function (data) {
                 if (this.file.data.cart_active && this.product.item_id) {
                     data.product = this.product;
                 }
-            });
-            this.$on('saved', function (data) {
+            },
+            'saved': function (data) {
                 if (data.file.data.cart_active && data.file.product) {
                     this.$set('product', data.file.product);
                 }
                 this.$set('product.item_id', data.file.id);
-            });
+            }
         },
 
         computed: {
@@ -122,13 +123,6 @@
                     'USD': 'uk-icon-dollar'
                 };
                 return icons[(this.product.currency || this.config.currency)];
-            },
-            vatOptions: function () {
-                var options = [];
-                _.forIn(this.config.vatclasses, function (vatclass, value) {
-                    options.push({value: value, text: vatclass.name});
-                });
-                return options;
             }
         },
 

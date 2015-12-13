@@ -46,6 +46,8 @@
 
 	module.exports = {
 
+	    el: '#download-files',
+
 	    data: function () {
 	        return _.merge({
 	            files: false,
@@ -163,12 +165,7 @@
 
 	};
 
-	$(function () {
-
-	    new Vue(module.exports).$mount('#download-files');
-
-	});
-
+	Vue.ready(module.exports);
 
 
 /***/ }

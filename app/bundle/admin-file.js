@@ -49,27 +49,23 @@
 
 	module.exports = {
 
+	    el: '#file-edit',
+
 	    data: function () {
 	        return _.merge({
 	            tags: [],
 	            file: {},
-	            config: {}
+	            config: {},
+	            form: {}
 	        }, window.$data);
-	    },
-
-	    created: function () {
 	    },
 
 	    ready: function () {
 	        this.resource = this.$resource('api/download/file/:id');
-	        this.tab = UIkit.tab(this.$$.tab, {connect: this.$$.content});
+	        this.tab = UIkit.tab(this.$els.tab, {connect: this.$els.content});
 	    },
 
 	    computed: {
-
-	        statusOptions: function () {
-	            return _.map(this.statuses, function (status, id) { return { text: status, value: id }; });
-	        },
 
 	        sections: function () {
 
@@ -93,11 +89,7 @@
 
 	    methods: {
 
-	        save: function (e) {
-
-	            if (e) {
-	                e.preventDefault();
-	            }
+	        save: function () {
 
 	            var data = {file: this.file};
 
@@ -131,11 +123,8 @@
 
 	};
 
-	$(function () {
+	Vue.ready(module.exports);
 
-	    new Vue(module.exports).$mount('#file-edit');
-
-	});
 
 /***/ },
 /* 1 */,
@@ -171,11 +160,11 @@
 
 	// <template>
 
-	//     <div v-on="click: pick" class="{{ class }}">
+	//     <div @click=" pick" class="{{ class }}">
 
 	//         <ul class="uk-float-right uk-subnav pk-subnav-icon">
 
-	//             <li><a class="pk-icon-delete pk-icon-hover" title="{{ 'Delete' | trans }}" data-uk-tooltip="{delay: 500, 'pos': 'left'}" v-on="click: remove"></a></li>
+	//             <li><a class="pk-icon-delete pk-icon-hover" title="{{ 'Delete' | trans }}" data-uk-tooltip="{delay: 500, 'pos': 'left'}" @click.prevent="remove"></a></li>
 
 	//         </ul>
 
@@ -183,13 +172,13 @@
 
 	//         <a v-if="!file" class="uk-text-muted">{{ 'Select file' | trans }}</a>
 
-	//         <a v-if="file" data-uk-tooltip="" title="{{ file }}">{{ fileName }}</a>
+	//         <a v-else data-uk-tooltip="" title="{{ file }}">{{ fileName }}</a>
 
 	//     </div>
 
-	//     <v-modal v-ref="modal" large>
+	//     <v-modal v-ref:modal large>
 
-	//         <panel-finder root="{{ storage }}" v-ref="finder" modal="true"></panel-finder>
+	//         <panel-finder :root="storage" v-ref:finder :modal="true"></panel-finder>
 
 	//         <div v-show="!hasSelection()" class="uk-alert">{{ 'Select one file of the following types' | trans }}: {{ this.ext.join(', ') }}</div>
 
@@ -197,7 +186,7 @@
 
 	//             <button class="uk-button uk-button-link uk-modal-close" type="button">{{ 'Cancel' | trans }}</button>
 
-	//             <button class="uk-button uk-button-primary" type="button" v-attr="disabled: !hasSelection()" v-on="click: select()">{{ 'Select' | trans }}</button>
+	//             <button class="uk-button uk-button-primary" type="button" :disabled="!hasSelection()" @click="select()">{{ 'Select' | trans }}</button>
 
 	//         </div>
 
@@ -209,15 +198,14 @@
 
 	module.exports = {
 
-	    props: ['file', 'ext', 'multiple', 'class'],
+	    props: {
+	        'file': { default: '' },
+	        'ext': { type: Array, default: [] },
+	        'multiple': { type: Boolean, default: false },
+	        'class': { default: '' } },
 
 	    data: function data() {
-	        return _.merge({
-	            'file': '',
-	            'ext': [],
-	            'class': '',
-	            'multile': false
-	        }, $pagekit);
+	        return _.merge({}, $pagekit);
 	    },
 
 	    computed: {
@@ -229,14 +217,14 @@
 	    methods: {
 
 	        pick: function pick() {
-	            this.$.modal.open();
+	            this.$refs.modal.open();
 	        },
 
 	        select: function select() {
-	            this.$set('file', this.$.finder.getSelected()[0]);
+	            this.$set('file', this.$refs.finder.getSelected()[0]);
 	            this.$dispatch('file-selected', this.file);
-	            this.$.finder.removeSelection();
-	            this.$.modal.close();
+	            this.$refs.finder.removeSelection();
+	            this.$refs.modal.close();
 	        },
 
 	        remove: function remove(e) {
@@ -245,12 +233,12 @@
 	        },
 
 	        hasSelection: function hasSelection() {
-	            var selected = this.$.finder.getSelected();
+	            var selected = this.$refs.finder.getSelected();
 	            if (!this.multiple && !(selected.length === 1)) {
 	                return false;
 	            }
 	            //todo there must be a prettier way
-	            return selected[0].match(new RegExp('\.(?:' + (this.ext || []).join('|') + ')$', 'i'));
+	            return selected[0].match(new RegExp('\.(?:' + this.ext.join('|') + ')$', 'i'));
 	        }
 
 	    }
@@ -271,7 +259,7 @@
 /* 9 */
 /***/ function(module, exports) {
 
-	module.exports = "<div v-on=\"click: pick\" class=\"{{ class }}\">\r\n        <ul class=\"uk-float-right uk-subnav pk-subnav-icon\">\r\n            <li><a class=\"pk-icon-delete pk-icon-hover\" title=\"{{ 'Delete' | trans }}\" data-uk-tooltip=\"{delay: 500, 'pos': 'left'}\" v-on=\"click: remove\"></a></li>\r\n        </ul>\r\n        <a class=\"pk-icon-folder-circle uk-margin-right\"></a>\r\n        <a v-if=\"!file\" class=\"uk-text-muted\">{{ 'Select file' | trans }}</a>\r\n        <a v-if=\"file\" data-uk-tooltip=\"\" title=\"{{ file }}\">{{ fileName }}</a>\r\n    </div>\r\n\r\n    <v-modal v-ref=\"modal\" large>\r\n\r\n        <panel-finder root=\"{{ storage }}\" v-ref=\"finder\" modal=\"true\"></panel-finder>\r\n\r\n        <div v-show=\"!hasSelection()\" class=\"uk-alert\">{{ 'Select one file of the following types' | trans }}: {{ this.ext.join(', ') }}</div>\r\n\r\n        <div class=\"uk-modal-footer uk-text-right\">\r\n            <button class=\"uk-button uk-button-link uk-modal-close\" type=\"button\">{{ 'Cancel' | trans }}</button>\r\n            <button class=\"uk-button uk-button-primary\" type=\"button\" v-attr=\"disabled: !hasSelection()\" v-on=\"click: select()\">{{ 'Select' | trans }}</button>\r\n        </div>\r\n\r\n    </v-modal>";
+	module.exports = "<div @click=\" pick\" class=\"{{ class }}\">\r\n        <ul class=\"uk-float-right uk-subnav pk-subnav-icon\">\r\n            <li><a class=\"pk-icon-delete pk-icon-hover\" title=\"{{ 'Delete' | trans }}\" data-uk-tooltip=\"{delay: 500, 'pos': 'left'}\" @click.prevent=\"remove\"></a></li>\r\n        </ul>\r\n        <a class=\"pk-icon-folder-circle uk-margin-right\"></a>\r\n        <a v-if=\"!file\" class=\"uk-text-muted\">{{ 'Select file' | trans }}</a>\r\n        <a v-else data-uk-tooltip=\"\" title=\"{{ file }}\">{{ fileName }}</a>\r\n    </div>\r\n\r\n    <v-modal v-ref:modal large>\r\n\r\n        <panel-finder :root=\"storage\" v-ref:finder :modal=\"true\"></panel-finder>\r\n\r\n        <div v-show=\"!hasSelection()\" class=\"uk-alert\">{{ 'Select one file of the following types' | trans }}: {{ this.ext.join(', ') }}</div>\r\n\r\n        <div class=\"uk-modal-footer uk-text-right\">\r\n            <button class=\"uk-button uk-button-link uk-modal-close\" type=\"button\">{{ 'Cancel' | trans }}</button>\r\n            <button class=\"uk-button uk-button-primary\" type=\"button\" :disabled=\"!hasSelection()\" @click=\"select()\">{{ 'Select' | trans }}</button>\r\n        </div>\r\n\r\n    </v-modal>";
 
 /***/ }
 /******/ ]);

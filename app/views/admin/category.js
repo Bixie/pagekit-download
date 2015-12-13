@@ -3,16 +3,19 @@ require('../../components/input-file.vue');
 
 module.exports = {
 
+    el: '#category-edit',
+
     data: function () {
         return _.merge({
             category: {},
-            roles: []
+            roles: [],
+            form: {}
         }, window.$data);
     },
 
     ready: function () {
         var vm = this;
-        UIkit.sortable(this.$$.sortable, {
+        UIkit.sortable(this.$els.sortable, {
             handleClass: 'pk-icon-move'
         }).on('change.uk.sortable', function (e, sortable, el) {
             var catordering = 1;
@@ -35,9 +38,7 @@ module.exports = {
 
     methods: {
 
-        save: function (e) {
-
-            e.preventDefault();
+        save: function () {
 
             var data = {category: this.category};
 
@@ -64,8 +65,4 @@ module.exports = {
 
 };
 
-$(function () {
-
-    new Vue(module.exports).$mount('#category-edit');
-
-});
+Vue.ready(module.exports);

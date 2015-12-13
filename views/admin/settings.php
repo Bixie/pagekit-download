@@ -30,7 +30,7 @@
 						</div>
 						<div data-uk-margin>
 
-							<button class="uk-button uk-button-primary" v-on="click: save">{{ 'Save' | trans }}</button>
+							<button class="uk-button uk-button-primary" @click="save">{{ 'Save' | trans }}</button>
 
 						</div>
 					</div>
@@ -55,8 +55,8 @@
 									<span class="uk-form-label">{{ 'Main page text' | trans }}</span>
 
 									<div class="uk-form-controls">
-										<v-editor id="form-intro" value="{{@ config.mainpage_text }}"
-												  options="{{ {markdown : config.markdown_enabled, height: 250} }}"></v-editor>
+										<v-editor id="form-intro" :value.sync="config.mainpage_text"
+												  :options="{markdown : config.markdown_enabled, height: 250}"></v-editor>
 									</div>
 								</div>
 							</div>
@@ -68,7 +68,7 @@
 								<div class="uk-form-row">
 									<label class="uk-form-label">{{ 'Image' | trans }}</label>
 									<div class="uk-form-controls">
-										<input-image source="{{@ config.mainpage_image }}" class="pk-image-max-height"></input-image>
+										<input-image :source.sync="config.mainpage_image" class="pk-image-max-height"></input-image>
 									</div>
 								</div>
 
@@ -100,15 +100,14 @@
 						</div>
 						<div data-uk-margin>
 
-							<button class="uk-button uk-button-primary" v-on="click: save">{{ 'Save' | trans }}</button>
+							<button class="uk-button uk-button-primary" @click="save">{{ 'Save' | trans }}</button>
 
 						</div>
 					</div>
 					<div class="uk-grid uk-grid-width-large-1-2 uk-form-horizontal" data-uk-grid-margin="">
 						<div>
 
-							<fields config="{{ $options.fields.portfolio }}" model="{{@ config }}"
-									template="formrow"></fields>
+							<fields :config="$options.fields.portfolio" :model.sync="config" template="formrow"></fields>
 						</div>
 						<div>
 							<h3>{{ 'Teaser settings' | trans }}</h3>
@@ -117,13 +116,12 @@
 
 								<div class="uk-form-controls uk-form-controls-text">
 
-									<fields config="{{ $options.fields.teaser_show }}" model="{{@ config }}" template="raw"></fields>
+									<fields :config="$options.fields.teaser_show" :model.sync="config" template="raw"></fields>
 
 								</div>
 							</div>
 
-							<fields config="{{ $options.fields.teaser }}" model="{{@ config }}"
-									template="formrow"></fields>
+							<fields :config="$options.fields.teaser" :model.sync="config" template="formrow"></fields>
 						</div>
 					</div>
 				</li>
@@ -137,15 +135,14 @@
 						</div>
 						<div data-uk-margin>
 
-							<button class="uk-button uk-button-primary" v-on="click: save">{{ 'Save' | trans }}</button>
+							<button class="uk-button uk-button-primary" @click="save">{{ 'Save' | trans }}</button>
 
 						</div>
 					</div>
 					<div class="uk-grid uk-grid-width-large-1-2 uk-form-horizontal" data-uk-grid-margin="">
 						<div>
 
-							<fields config="{{ $options.fields.category }}" model="{{@ config }}"
-									template="formrow"></fields>
+							<fields :config="$options.fields.category" :model.sync="config" template="formrow"></fields>
 						</div>
 						<div>
 							<div class="uk-form-row">
@@ -153,7 +150,7 @@
 
 								<div class="uk-form-controls uk-form-controls-text">
 
-									<fields config="{{ $options.fields.category_show }}" model="{{@ config }}" template="raw"></fields>
+									<fields :config="$options.fields.category_show" :model.sync="config" template="raw"></fields>
 
 								</div>
 							</div>
@@ -171,27 +168,27 @@
 						</div>
 						<div data-uk-margin>
 
-							<button class="uk-button uk-button-primary" v-on="click: save">{{ 'Save' | trans }}</button>
+							<button class="uk-button uk-button-primary" @click="save">{{ 'Save' | trans }}</button>
 
 						</div>
 					</div>
 
 					<div class="uk-form-horizontal">
 
-						<fields config="{{ $options.fields.general }}" model="{{@ config }}" template="formrow"></fields>
+						<fields :config="$options.fields.general" :model.sync="config" template="formrow"></fields>
 
 						<div class="uk-form-row">
 							<span class="uk-form-label">{{ 'File extensions' | trans }}</span>
 							<div class="uk-form-controls">
-								<input-tags tags="{{@ config.file_extensions}}"
-											existing="{{ ['zip', 'rar', 'tar.gz', 'exe', 'jp?g', 'png'] }}"></input-tags>
+								<input-tags :tags.sync="config.file_extensions"
+											:existing="['zip', 'rar', 'tar.gz', 'exe', 'jp?g', 'png']"></input-tags>
 							</div>
 						</div>
 
 						<div class="uk-form-row">
 							<span class="uk-form-label">{{ 'Tags' | trans }}</span>
 							<div class="uk-form-controls">
-								<input-tags tags="{{@ config.tags}}" existing="{{ tags }}"></input-tags>
+								<input-tags :tags.sync="config.tags" :existing="tags"></input-tags>
 							</div>
 						</div>
 					</div>

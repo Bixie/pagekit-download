@@ -46,6 +46,8 @@
 
 	module.exports = {
 
+	    el: '#download-categories',
+
 	    data: function () {
 	        return _.merge({
 	            categories: [],
@@ -59,14 +61,34 @@
 	        this.load();
 	    },
 
+	    ready: function () {
+
+	        var vm = this;
+
+	        UIkit.nestable(this.$els.nestable, {
+	            maxDepth: 20,
+	            group: 'site.nodes'
+	        }).on('change.uk.nestable', function (e, nestable, el, type) {
+
+	            if (type && type !== 'removed') {
+
+	                vm.Categories.save({id: 'updateOrder'}, {
+	                    categories: nestable.list()
+	                }, vm.load).error(function () {
+	                    this.$notify('Reorder failed.', 'danger');
+	                });
+	            }
+	        });
+
+	    },
+
 	    methods: {
 
 	        load: function () {
-	            this.$set('selected', []);
-
+	            var vm = this;
 	            return this.Categories.query({}, function (categories) {
-	                this.$set('categories', categories);
-	                this.$set('tree', _(categories).sortBy('priority').groupBy('parent_id').value());
+	                vm.$set('categories', categories);
+	                vm.$set('selected', []);
 	            });
 	        },
 
@@ -81,16 +103,6 @@
 	            this.Categories.save({id: 'bulk'}, {categories: categories}, function () {
 	                this.load();
 	                this.$notify('Category(ies) saved.');
-	            });
-	        },
-
-	        toggleStatus: function (category) {
-
-	            category.status = category.status === 1 ? 0 : 1;
-
-	            this.Categories.save({id: category.id}, {category: category}, function () {
-	                this.load();
-	                this.$notify('Category saved.');
 	            });
 	        },
 
@@ -155,32 +167,7 @@
 	    watch: {
 
 	        categories: function () {
-
-	            var vm = this;
-
-	            // TODO this is still buggy
-	            UIkit.nestable(this.$$.nestable, {maxDepth: 20, group: 'site.categories'}).off('change.uk.nestable').on('change.uk.nestable', function (e, nestable, el, type) {
-
-	                if (type && type !== 'removed') {
-
-	                    vm.Categories.save({id: 'updateOrder'}, {categories: nestable.list()}, function () {
-
-	                        // @TODO reload everything on reorder really needed?
-	                        this.load().success(function () {
-
-	                            // hack for weird flickr bug
-	                            if (el.parent()[0] === nestable.element[0]) {
-	                                setTimeout(function () {
-	                                    el.remove();
-	                                }, 50);
-	                            }
-	                        });
-
-	                    }).error(function () {
-	                        this.$notify('Reorder failed.', 'danger');
-	                    });
-	                }
-	            });
+	            this.$set('tree', _(this.categories).sortBy('priority').groupBy('parent_id').value());
 	        }
 
 	    },
@@ -193,31 +180,33 @@
 
 	        category: {
 
-	            inherit: true,
+	            name: 'category',
+
+	            props: ['category', 'tree'],
+
 	            template: '#category',
 
-	            computed: {
+	            methods: {
 
-	                isFrontpage: function () {
-	                    return this.category.url === '/';
-	                },
+	                toggleStatus: function () {
 
-	                type: function () {
-	                    return this.getType(this.category);
+	                    this.category.status = this.category.status === 1 ? 0 : 1;
+
+	                    this.$root.Categories.save({id: this.category.id}, {category: this.category}, function () {
+	                        this.$root.load();
+	                        this.$notify('Category saved.');
+	                    });
 	                }
 
 	            }
+
 	        }
 
 	    }
 
 	};
 
-	$(function () {
-
-	    (new Vue(module.exports)).$mount('#download-categories');
-
-	});
+	Vue.ready(module.exports);
 
 
 /***/ }

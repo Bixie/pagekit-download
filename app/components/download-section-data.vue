@@ -5,7 +5,7 @@
         <div class="uk-form-row">
             <span class="uk-form-label">{{ 'Date' | trans }}</span>
             <div class="uk-form-controls">
-                <input-date datetime="{{@ file.date}}"></input-date>
+                <input-date :datetime.sync="file.date"></input-date>
             </div>
         </div>
 
@@ -37,7 +37,7 @@
             priority: 10
         },
 
-        inherit: true
+        props: ['file', 'config', 'form']
 
     };
 

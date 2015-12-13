@@ -7,7 +7,7 @@ use Bixie\Download\Event\FileListener;
 return [
 
 	'name' => 'bixie/download',
-//todo https://github.com/pagekit/pagekit/blob/a236467dcf994816b36c100e6475f7a828199893/app/installer/src/Package/PackageFactory.php#L91
+
 	'type' => 'extension',
 
 	'main' => 'Bixie\\Download\\DownloadModule',
@@ -139,8 +139,8 @@ return [
 			'show_demo' => true,
 			'panel_style' => 'uk-panel-box',
 			'content_align' => 'left',
-			'tags_align' => 'uk-flex-center',
-			'button_align' => 'uk-flex-space-around',
+			'tags_align' => 'center',
+			'button_align' => '',
 			'title_size' => 'uk-h3',
 			'subtitle_size' => 'uk-h4',
 			'title_color' => '',

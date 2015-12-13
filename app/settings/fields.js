@@ -102,7 +102,7 @@ module.exports = {
         },
         'category.filter_items': {
             type: 'checkbox',
-            optionlabel: 'Filter by tags'
+            label: 'Filter by tags'
         },
         'category.columns': {
             type: 'select',

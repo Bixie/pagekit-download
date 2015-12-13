@@ -3,27 +3,23 @@ require('../../components/input-file.vue');
 
 module.exports = {
 
+    el: '#file-edit',
+
     data: function () {
         return _.merge({
             tags: [],
             file: {},
-            config: {}
+            config: {},
+            form: {}
         }, window.$data);
-    },
-
-    created: function () {
     },
 
     ready: function () {
         this.resource = this.$resource('api/download/file/:id');
-        this.tab = UIkit.tab(this.$$.tab, {connect: this.$$.content});
+        this.tab = UIkit.tab(this.$els.tab, {connect: this.$els.content});
     },
 
     computed: {
-
-        statusOptions: function () {
-            return _.map(this.statuses, function (status, id) { return { text: status, value: id }; });
-        },
 
         sections: function () {
 
@@ -47,11 +43,7 @@ module.exports = {
 
     methods: {
 
-        save: function (e) {
-
-            if (e) {
-                e.preventDefault();
-            }
+        save: function () {
 
             var data = {file: this.file};
 
@@ -85,8 +77,4 @@ module.exports = {
 
 };
 
-$(function () {
-
-    new Vue(module.exports).$mount('#file-edit');
-
-});
+Vue.ready(module.exports);

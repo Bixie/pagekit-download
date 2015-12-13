@@ -44,7 +44,9 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = Vue.extend({
+	module.exports = {
+
+	    el: '#download-settings',
 
 	    data: function () {
 	        return window.$data;
@@ -69,19 +71,21 @@
 
 	    }
 
-	});
+	};
 
 	Vue.field.templates.formrow = __webpack_require__(17);
 	Vue.field.templates.raw = __webpack_require__(18);
-	Vue.field.types.checkbox = '<p class="uk-form-controls-condensed"><label><input type="checkbox" v-attr="attrs" v-model="value"> {{ optionlabel | trans }}</label></p>';
-	Vue.field.types.number = '<input type="number" v-attr="attrs" v-model="value" number>';
-	Vue.field.types.title = '<h3 v-attr="attrs">{{ title | trans }}</h3>';
+	Vue.field.types.text = '<input type="text" v-bind="attrs" v-model="value">';
+	Vue.field.types.textarea = '<textarea v-bind="attrs" v-model="value"></textarea>';
+	Vue.field.types.select = '<select v-bind="attrs" v-model="value"><option v-for="option in options" :value="option">{{ $key }}</option></select>';
+	Vue.field.types.radio = '<p class="uk-form-controls-condensed"><label v-for="option in options"><input type="radio" :value="option" v-model="value"> {{ $key | trans }}</label></p>';
+	Vue.field.types.checkbox = '<p class="uk-form-controls-condensed"><label><input type="checkbox" v-bind="attrs" v-model="value" v-bind:true-value="1" v-bind:false-value="0" number> {{ optionlabel | trans }}</label></p>';
+	Vue.field.types.number = '<input type="number" v-bind="attrs" v-model="value" number>';
+	Vue.field.types.title = '<h3 v-bind="attrs">{{ title | trans }}</h3>';
 
-	$(function () {
 
-	    (new module.exports()).$mount('#download-settings');
+	Vue.ready(module.exports);
 
-	});
 
 
 /***/ },
@@ -203,7 +207,7 @@
 	        },
 	        'category.filter_items': {
 	            type: 'checkbox',
-	            optionlabel: 'Filter by tags'
+	            label: 'Filter by tags'
 	        },
 	        'category.columns': {
 	            type: 'select',
@@ -536,9 +540,9 @@
 
 	//     <div class="uk-flex uk-flex-wrap" data-uk-margin="">
 
-	//         <div v-repeat="tag: tags" class="uk-badge uk-margin-small-right">
+	//         <div v-for="tag in tags" class="uk-badge uk-margin-small-right">
 
-	//             <a class="uk-float-right uk-close" v-on="click: removeTag($event, $index)"></a>
+	//             <a class="uk-float-right uk-close" @click.prevent="removeTag(tag)"></a>
 
 	//             {{ tag }}
 
@@ -558,9 +562,7 @@
 
 	//                     <ul class="uk-nav uk-nav-dropdown">
 
-	//                         <li v-repeat="tag: existing"><a
-
-	//                                 v-on="click: addTag($event, tag)">{{ tag }}</a></li>
+	//                         <li v-for="tag in existing"><a @click.prevent="addTag(tag)">{{ tag }}</a></li>
 
 	//                     </ul>
 
@@ -574,9 +576,9 @@
 
 	//             <div class="uk-form-password">
 
-	//                 <input type="text" class="uk-width-1-1" v-model="newtag" v-on="keyup:addTag | key 'enter'">
+	//                 <input type="text" class="uk-width-1-1" v-model="newtag">
 
-	//                 <a class="uk-form-password-toggle" v-on="click: addTag()"><i class="uk-icon-check uk-icon-hover"></i></a>
+	//                 <a class="uk-form-password-toggle" @click.prevent="addTag()"><i class="uk-icon-check uk-icon-hover"></i></a>
 
 	//             </div>
 
@@ -594,19 +596,14 @@
 
 	    data: function data() {
 	        return {
-	            'newtag': '',
-	            'tags': '',
-	            'existing': ''
+	            'newtag': ''
 	        };
 	    },
 
 	    methods: {
 
-	        addTag: function addTag(e, tag) {
-	            if (e) {
-	                e.stopPropagation();
-	                e.preventDefault();
-	            }
+	        addTag: function addTag(tag) {
+	            if (!tag) return;
 	            this.tags.push(tag || this.newtag);
 	            this.$nextTick(function () {
 	                UIkit.$html.trigger('resize'); //todo why no check.display or changed.dom???
@@ -614,11 +611,8 @@
 	            this.newtag = '';
 	        },
 
-	        removeTag: function removeTag(e, idx) {
-	            if (e) {
-	                e.preventDefault();
-	            }
-	            this.tags.$remove(idx);
+	        removeTag: function removeTag(tag) {
+	            this.tags.$remove(tag);
 	        }
 
 	    }
@@ -631,19 +625,19 @@
 /* 16 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"uk-flex uk-flex-wrap\" data-uk-margin=\"\">\r\n        <div v-repeat=\"tag: tags\" class=\"uk-badge uk-margin-small-right\">\r\n            <a class=\"uk-float-right uk-close\" v-on=\"click: removeTag($event, $index)\"></a>\r\n            {{ tag }}\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"uk-flex uk-flex-middle uk-margin\">\r\n        <div>\r\n            <div class=\"uk-position-relative\" data-uk-dropdown=\"\">\r\n                <button type=\"button\" class=\"uk-button uk-button-small\">{{ 'Existing' | trans }}</button>\r\n\r\n                <div class=\"uk-dropdown uk-dropdown-small\">\r\n                    <ul class=\"uk-nav uk-nav-dropdown\">\r\n                        <li v-repeat=\"tag: existing\"><a\r\n                                v-on=\"click: addTag($event, tag)\">{{ tag }}</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <div class=\"uk-flex-item-1 uk-margin-small-left\">\r\n            <div class=\"uk-form-password\">\r\n                <input type=\"text\" class=\"uk-width-1-1\" v-model=\"newtag\" v-on=\"keyup:addTag | key 'enter'\">\r\n                <a class=\"uk-form-password-toggle\" v-on=\"click: addTag()\"><i class=\"uk-icon-check uk-icon-hover\"></i></a>\r\n            </div>\r\n        </div>\r\n\r\n    </div>";
+	module.exports = "<div class=\"uk-flex uk-flex-wrap\" data-uk-margin=\"\">\r\n        <div v-for=\"tag in tags\" class=\"uk-badge uk-margin-small-right\">\r\n            <a class=\"uk-float-right uk-close\" @click.prevent=\"removeTag(tag)\"></a>\r\n            {{ tag }}\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"uk-flex uk-flex-middle uk-margin\">\r\n        <div>\r\n            <div class=\"uk-position-relative\" data-uk-dropdown=\"\">\r\n                <button type=\"button\" class=\"uk-button uk-button-small\">{{ 'Existing' | trans }}</button>\r\n\r\n                <div class=\"uk-dropdown uk-dropdown-small\">\r\n                    <ul class=\"uk-nav uk-nav-dropdown\">\r\n                        <li v-for=\"tag in existing\"><a @click.prevent=\"addTag(tag)\">{{ tag }}</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <div class=\"uk-flex-item-1 uk-margin-small-left\">\r\n            <div class=\"uk-form-password\">\r\n                <input type=\"text\" class=\"uk-width-1-1\" v-model=\"newtag\">\r\n                <a class=\"uk-form-password-toggle\" @click.prevent=\"addTag()\"><i class=\"uk-icon-check uk-icon-hover\"></i></a>\r\n            </div>\r\n        </div>\r\n\r\n    </div>";
 
 /***/ },
 /* 17 */
 /***/ function(module, exports) {
 
-	module.exports = "<div v-repeat=\"field in fields\" v-class=\"uk-form-row: !field.raw\">\r\n    <label v-if=\"field.label\" class=\"uk-form-label\">{{ field.label | trans }}</label>\r\n    <div v-if=\"!field.raw\" class=\"uk-form-controls\" v-class=\"uk-form-controls-text: ['checkbox', 'radio'].indexOf(field.type)>-1\">\r\n        <field config=\"{{ field }}\" values=\"{{@ values }}\"></field>\r\n    </div>\r\n    <field v-if=\"field.raw\" config=\"{{ field }}\" values=\"{{@ values }}\"></field>\r\n</div>\r\n";
+	module.exports = "<div v-for=\"field in fields\" :class=\"{'uk-form-row': !field.raw}\">\r\n    <label v-if=\"field.label\" class=\"uk-form-label\">\r\n        <i v-if=\"field.tip\" class=\"uk-icon-info uk-icon-hover uk-margin-small-right\" data-uk-tooltip=\"{delay: 100}\" :title=\"field.tip\"></i>\r\n        {{ field.label | trans }}\r\n    </label>\r\n    <div v-if=\"!field.raw\" class=\"uk-form-controls\" :class=\"{'uk-form-controls-text': ['checkbox', 'radio'].indexOf(field.type)>-1}\">\r\n        <field :config=\"field\" :values.sync=\"values\"></field>\r\n    </div>\r\n    <field v-else :config=\"field\" :values.sync=\"values\"></field>\r\n</div>\r\n";
 
 /***/ },
 /* 18 */
 /***/ function(module, exports) {
 
-	module.exports = "<template v-repeat=\"field in fields\">\r\n    <field config=\"{{ field }}\" values=\"{{@ values }}\"></field>\r\n</template>\r\n";
+	module.exports = "<template v-for=\"field in fields\">\r\n    <field :config=\"field\" :values.sync=\"values\"></field>\r\n</template>\r\n";
 
 /***/ }
 /******/ ]);
