@@ -119,7 +119,7 @@
 				<div class="uk-form-row">
 					<label for="form-status" class="uk-form-label">{{ 'Status' | trans }}</label>
 					<div class="uk-form-controls">
-						<select id="form-status" class="uk-width-1-1" v-model="file.status" options="statusOptions">
+						<select id="form-status" class="uk-width-1-1" v-model="file.status">
 							<option v-for="status in statuses" :value="$key">{{ status }}</option>
 						</select>
 					</div>

@@ -1,6 +1,4 @@
 
-require('../../components/input-file.vue');
-
 module.exports = {
 
     el: '#category-edit',
