@@ -10,7 +10,7 @@ use Pagekit\User\Model\AccessModelTrait;
 use Pagekit\User\Model\User;
 
 /**
- * @Entity(tableClass="@download_category")
+ * @Entity(tableClass="@download_category",eventPrefix="download")
  */
 class Category implements NodeInterface, \JsonSerializable
 {

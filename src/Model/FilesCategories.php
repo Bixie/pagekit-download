@@ -6,7 +6,7 @@ use Pagekit\Application as App;
 use Pagekit\Database\ORM\ModelTrait;
 
 /**
- * @Entity(tableClass="@download_files_categories")
+ * @Entity(tableClass="@download_files_categories",eventPrefix="download")
  */
 class FilesCategories implements \JsonSerializable
 {

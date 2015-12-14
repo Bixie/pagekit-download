@@ -7,7 +7,7 @@ use Pagekit\System\Model\DataModelTrait;
 use Pagekit\User\Model\AccessModelTrait;
 
 /**
- * @Entity(tableClass="@download_file")
+ * @Entity(tableClass="@download_file",eventPrefix="download")
  */
 class File implements \JsonSerializable
 {
