@@ -67,7 +67,7 @@
 
 	        UIkit.nestable(this.$els.nestable, {
 	            maxDepth: 20,
-	            group: 'site.nodes'
+	            group: 'download.categories'
 	        }).on('change.uk.nestable', function (e, nestable, el, type) {
 
 	            if (type && type !== 'removed') {
