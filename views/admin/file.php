@@ -38,7 +38,7 @@
 
 						<div class="uk-form-controls">
 							<input id="form-title" class="uk-width-1-1 uk-form-large" type="text" name="title"
-								   v-model="file.title" v-validate="required">
+								   v-model="file.title" v-validate:required>
 						</div>
 						<p class="uk-form-help-block uk-text-danger" v-show="form.title.invalid">
 							{{ 'Please enter a title' | trans }}</p>
@@ -102,7 +102,7 @@
 
 					<div class="uk-form-controls">
 						<input-file :file.sync="file.path" :ext="config.file_extensions"></input-file>
-						<input type="hidden" name="path" v-model="file.path" v-validate="required">
+						<input type="hidden" name="path" v-model="file.path" v-validate:required>
 					</div>
 					<p class="uk-form-help-block uk-text-danger" v-show="form.path.invalid">
 						{{ 'Please select a file' | trans }}</p>

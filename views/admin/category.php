@@ -33,7 +33,7 @@ $view->script('dl-admin-category', 'bixie/download:app/bundle/admin-category.js'
 
 			<div class="uk-form-row">
 				<input class="uk-width-1-1 uk-form-large" type="text" name="category[title]"
-					   placeholder="{{ 'Enter Title' | trans }}" v-model="category.title" v-validate="required" lazy>
+					   placeholder="{{ 'Enter Title' | trans }}" v-model="category.title" v-validate:required lazy>
 
 				<div class="uk-form-help-block uk-text-danger" v-show="form['category[title]'].invalid">{{ 'Title cannot be blank.' | trans }}</div>
 			</div>
