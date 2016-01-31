@@ -45,7 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	__webpack_require__(6);
+	__webpack_require__(4);
 
 	module.exports = {
 
@@ -61,7 +61,7 @@
 	    },
 
 	    ready: function () {
-	        this.resource = this.$resource('api/download/file/:id');
+	        this.resource = this.$resource('api/download/file/{id}');
 	        this.tab = UIkit.tab(this.$els.tab, {connect: this.$els.content});
 	    },
 
@@ -95,25 +95,25 @@
 
 	            this.$broadcast('save', data);
 
-	            this.resource.save({id: this.file.id}, data, function (data) {
+	            this.resource.save({id: this.file.id || 0}, data).then(function (res) {
 
 	                if (!this.file.id) {
-	                    window.history.replaceState({}, '', this.$url.route('admin/download/file/edit', {id: data.file.id}));
+	                    window.history.replaceState({}, '', this.$url.route('admin/download/file/edit', {id: res.data.file.id}));
 	                }
 
-	                this.$set('file', data.file);
+	                this.$set('file', res.data.file);
 
-	                this.$broadcast('saved', data);
+	                this.$broadcast('saved', res.data);
 
 	                this.$notify(this.$trans('Download %title% saved.', {title: this.file.title}));
 
-	            }, function (data) {
-	                this.$notify(data, 'danger');
+	            }, function (res) {
+	                this.$notify(res.data, 'danger');
 	            });
 	        },
 
 	        resetDownloads: function () {
-	            this.file.downloads = 0;
+	            this.$set('file.downloads', 0);
 	            this.save();
 	        }
 
@@ -130,15 +130,13 @@
 /* 1 */,
 /* 2 */,
 /* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(7)
+	module.exports = __webpack_require__(5)
 
 	if (module.exports.__esModule) module.exports = module.exports.default
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(8)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(6)
 	if (false) {(function () {  module.hot.accept()
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
@@ -152,7 +150,7 @@
 	})()}
 
 /***/ },
-/* 7 */
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -255,7 +253,7 @@
 	// </script>
 
 /***/ },
-/* 8 */
+/* 6 */
 /***/ function(module, exports) {
 
 	module.exports = "<div @click=\" pick\" class=\"{{ class }}\">\r\n        <ul class=\"uk-float-right uk-subnav pk-subnav-icon\">\r\n            <li><a class=\"pk-icon-delete pk-icon-hover\" title=\"{{ 'Delete' | trans }}\" data-uk-tooltip=\"{delay: 500, 'pos': 'left'}\" @click.prevent=\"remove\"></a></li>\r\n        </ul>\r\n        <a class=\"pk-icon-folder-circle uk-margin-right\"></a>\r\n        <a v-if=\"!file\" class=\"uk-text-muted\">{{ 'Select file' | trans }}</a>\r\n        <a v-else data-uk-tooltip=\"\" title=\"{{ file }}\">{{ fileName }}</a>\r\n    </div>\r\n\r\n    <v-modal v-ref:modal large>\r\n\r\n        <panel-finder :root=\"storage\" v-ref:finder :modal=\"true\"></panel-finder>\r\n\r\n        <div v-show=\"!hasSelection()\" class=\"uk-alert\">{{ 'Select one file of the following types' | trans }}: {{ this.ext.join(', ') }}</div>\r\n\r\n        <div class=\"uk-modal-footer uk-text-right\">\r\n            <button class=\"uk-button uk-button-link uk-modal-close\" type=\"button\">{{ 'Cancel' | trans }}</button>\r\n            <button class=\"uk-button uk-button-primary\" type=\"button\" :disabled=\"!hasSelection()\" @click=\"select()\">{{ 'Select' | trans }}</button>\r\n        </div>\r\n\r\n    </v-modal>";

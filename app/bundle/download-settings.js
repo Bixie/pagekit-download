@@ -40,8 +40,9 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
@@ -52,58 +53,116 @@
 	        return window.$data;
 	    },
 
-	    fields: __webpack_require__(11),
+	    fields: __webpack_require__(9),
+
+	    ready: function () {
+	        var vm = this;
+	        UIkit.nestable(this.$els.datafieldsNestable, {
+	            maxDepth: 1,
+	            handleClass: 'uk-nestable-handle',
+	            group: 'portfolio.datafields'
+	        }).on('change.uk.nestable', function (e, nestable, el, type) {
+	            if (type && type !== 'removed') {
+	                var datafields = [];
+	                _.forEach(nestable.list(), function (option) {
+	                    datafields.push(_.find(vm.config.datafields, 'name', option.name));
+	                });
+	                vm.$set('config.datafields', datafields);
+	            }
+	        });
+
+	    },
 
 	    methods: {
 
 	        save: function () {
-	            this.$http.post('admin/system/settings/config', { name: 'bixie/download', config: this.config }, function () {
+	            this.$http.post('admin/system/settings/config', { name: 'bixie/download', config: this.config }).then(function () {
 	                this.$notify('Settings saved.');
-	            }).error(function (data) {
+	            }, function (data) {
 	                this.$notify(data, 'danger');
+	            });
+	        },
+
+	        addDatafield: function () {
+	            this.config.datafields.push({
+	                name: '',
+	                label: '',
+	                attachValue: true,
+	                invalid: false
+	            });
+	            this.$nextTick(function () {
+	                UIkit.$(this.$els.datafieldsNestable).find('input:last').focus();
+	            });
+	        },
+
+	        deleteDatafield: function (field) {
+	            this.config.datafields.$remove(field);
+	            this.checkDuplicates();
+	        },
+
+	        clearCache: function () {
+	            this.imageApi.query({task: 'clearcache'}, function (data) {
+	                this.$notify(data.message);
+	            });
+	        },
+
+	        checkDuplicates: function () {
+	            var current, dups = [];
+	            _.sortBy(this.config.datafields, 'name').forEach(function (datafield) {
+	                if (current && current === datafield.name) {
+	                    dups.push(datafield.name);
+	                }
+	                current = datafield.name;
+	            });
+	            this.config.datafields.forEach(function (datafield) {
+	                datafield.invalid = dups.indexOf(datafield.name) > -1 ? 'Duplicate name' : false;
 	            });
 	        }
 	    },
 
 	    components: {
 
-	        'input-tags': __webpack_require__(13)
+	        datafield: {
+
+	            template: '<li class="uk-nestable-item" data-name="{{ datafield.name }}">\n    <div class="uk-nestable-panel uk-visible-hover uk-form uk-flex uk-flex-middle">\n        <div class="uk-flex-item-1">\n            <div class="uk-form-row">\n                <small class="uk-form-label uk-text-muted uk-text-truncate" style="text-transform: none"\n                       v-show="datafield.attachValue"\n                       :class="{\'uk-text-danger\': datafield.invalid}">{{ datafield.name }}</small>\n                <span class="uk-form-label" v-show="!datafield.attachValue">\n                    <input type="text" class="uk-form-small"\n                           @keyup="safeValue(true)"\n                           :class="{\'uk-text-danger\': datafield.invalid}"\n                           v-model="datafield.name"/></span>\n                <div class="uk-form-controls">\n                    <input type="text" class="uk-form-width-large" v-model="datafield.label"/></div>\n                <p class="uk-form-help-block uk-text-danger" v-show="datafield.invalid">{{ datafield.invalid | trans }}</p>\n\n            </div>\n        </div>\n        <div class="">\n            <ul class="uk-subnav pk-subnav-icon">\n                <li><a class="uk-icon uk-margin-small-top pk-icon-hover uk-invisible"\n                       data-uk-tooltip="{delay: 500}" :title="\'Link/Unlink name from label\' | trans"\n                       :class="{\'uk-icon-link\': !datafield.attachValue, \'uk-icon-chain-broken\': datafield.attachValue}"\n                       @click="datafield.attachValue = !datafield.attachValue"></a></li>\n                <li><a class="pk-icon-delete pk-icon-hover uk-invisible" @click="$parent.deleteDatafield(datafield)"></a></li>\n                <li><a class="pk-icon-move pk-icon-hover uk-invisible uk-nestable-handle"></a></li>\n            </ul>\n        </div>\n    </div>\n</li>   \n',
+
+	            props: ['datafield'],
+
+	            methods: {
+	                safeValue: function (checkDups) {
+	                    this.datafield.name = _.escape(_.snakeCase(this.datafield.name));
+	                    if (checkDups) {
+	                        this.$parent.checkDuplicates();
+	                    }
+	                }
+	            },
+
+	            watch: {
+	                "datafield.label": function (name) {
+	                    if (this.datafield.attachValue) {
+	                        this.datafield.name = _.escape(_.snakeCase(name));
+	                    }
+	                    this.$parent.checkDuplicates();
+	                }
+
+	            }
+	        }
 
 	    }
 
 	};
-
-	Vue.field.templates.formrow = __webpack_require__(16);
-	Vue.field.templates.raw = __webpack_require__(17);
-	Vue.field.types.text = '<input type="text" v-bind="attrs" v-model="value">';
-	Vue.field.types.textarea = '<textarea v-bind="attrs" v-model="value"></textarea>';
-	Vue.field.types.select = '<select v-bind="attrs" v-model="value"><option v-for="option in options" :value="option">{{ $key }}</option></select>';
-	Vue.field.types.radio = '<p class="uk-form-controls-condensed"><label v-for="option in options"><input type="radio" :value="option" v-model="value"> {{ $key | trans }}</label></p>';
-	Vue.field.types.checkbox = '<p class="uk-form-controls-condensed"><label><input type="checkbox" v-bind="attrs" v-model="value" v-bind:true-value="1" v-bind:false-value="0" number> {{ optionlabel | trans }}</label></p>';
-	Vue.field.types.number = '<input type="number" v-bind="attrs" v-model="value" number>';
-	Vue.field.types.title = '<h3 v-bind="attrs">{{ title | trans }}</h3>';
-
 
 	Vue.ready(module.exports);
 
 
 
 /***/ },
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */
+
+/***/ 9:
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	var options = __webpack_require__(12);
+	var options = __webpack_require__(10);
 
 	module.exports = {
 	    portfolio: {
@@ -433,7 +492,8 @@
 	};
 
 /***/ },
-/* 12 */
+
+/***/ 10:
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -509,134 +569,6 @@
 
 	};
 
-/***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(14)
-
-	if (module.exports.__esModule) module.exports = module.exports.default
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(15)
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), true)
-	  if (!hotAPI.compatible) return
-	  var id = "C:\\BixieProjects\\pagekit\\pagekit\\packages\\bixie\\download\\app\\components\\input-tags.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
-	  }
-	})()}
-
-/***/ },
-/* 14 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	// <template>
-
-	//     <div class="uk-flex uk-flex-wrap" data-uk-margin="">
-
-	//         <div v-for="tag in tags" class="uk-badge uk-margin-small-right">
-
-	//             <a class="uk-float-right uk-close" @click.prevent="removeTag(tag)"></a>
-
-	//             {{ tag }}
-
-	//         </div>
-
-	//     </div>
-
-	//     <div class="uk-flex uk-flex-middle uk-margin">
-
-	//         <div>
-
-	//             <div class="uk-position-relative" data-uk-dropdown="">
-
-	//                 <button type="button" class="uk-button uk-button-small">{{ 'Existing' | trans }}</button>
-
-	//                 <div class="uk-dropdown uk-dropdown-small">
-
-	//                     <ul class="uk-nav uk-nav-dropdown">
-
-	//                         <li v-for="tag in existing"><a @click.prevent="addTag(tag)">{{ tag }}</a></li>
-
-	//                     </ul>
-
-	//                 </div>
-
-	//             </div>
-
-	//         </div>
-
-	//         <div class="uk-flex-item-1 uk-margin-small-left">
-
-	//             <div class="uk-form-password">
-
-	//                 <input type="text" class="uk-width-1-1" v-model="newtag">
-
-	//                 <a class="uk-form-password-toggle" @click.prevent="addTag()"><i class="uk-icon-check uk-icon-hover"></i></a>
-
-	//             </div>
-
-	//         </div>
-
-	//     </div>
-
-	// </template>
-
-	// <script>
-
-	module.exports = {
-
-	    props: ['tags', 'existing'],
-
-	    data: function data() {
-	        return {
-	            'newtag': ''
-	        };
-	    },
-
-	    methods: {
-
-	        addTag: function addTag(tag) {
-	            if (!tag) return;
-	            this.tags.push(tag || this.newtag);
-	            this.$nextTick(function () {
-	                UIkit.$html.trigger('resize'); //todo why no check.display or changed.dom???
-	            });
-	            this.newtag = '';
-	        },
-
-	        removeTag: function removeTag(tag) {
-	            this.tags.$remove(tag);
-	        }
-
-	    }
-
-	};
-
-	// </script>
-
-/***/ },
-/* 15 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"uk-flex uk-flex-wrap\" data-uk-margin=\"\">\r\n        <div v-for=\"tag in tags\" class=\"uk-badge uk-margin-small-right\">\r\n            <a class=\"uk-float-right uk-close\" @click.prevent=\"removeTag(tag)\"></a>\r\n            {{ tag }}\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"uk-flex uk-flex-middle uk-margin\">\r\n        <div>\r\n            <div class=\"uk-position-relative\" data-uk-dropdown=\"\">\r\n                <button type=\"button\" class=\"uk-button uk-button-small\">{{ 'Existing' | trans }}</button>\r\n\r\n                <div class=\"uk-dropdown uk-dropdown-small\">\r\n                    <ul class=\"uk-nav uk-nav-dropdown\">\r\n                        <li v-for=\"tag in existing\"><a @click.prevent=\"addTag(tag)\">{{ tag }}</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <div class=\"uk-flex-item-1 uk-margin-small-left\">\r\n            <div class=\"uk-form-password\">\r\n                <input type=\"text\" class=\"uk-width-1-1\" v-model=\"newtag\">\r\n                <a class=\"uk-form-password-toggle\" @click.prevent=\"addTag()\"><i class=\"uk-icon-check uk-icon-hover\"></i></a>\r\n            </div>\r\n        </div>\r\n\r\n    </div>";
-
-/***/ },
-/* 16 */
-/***/ function(module, exports) {
-
-	module.exports = "<div v-for=\"field in fields\" :class=\"{'uk-form-row': !field.raw}\">\r\n    <label v-if=\"field.label\" class=\"uk-form-label\">\r\n        <i v-if=\"field.tip\" class=\"uk-icon-info uk-icon-hover uk-margin-small-right\" data-uk-tooltip=\"{delay: 100}\" :title=\"field.tip\"></i>\r\n        {{ field.label | trans }}\r\n    </label>\r\n    <div v-if=\"!field.raw\" class=\"uk-form-controls\" :class=\"{'uk-form-controls-text': ['checkbox', 'radio'].indexOf(field.type)>-1}\">\r\n        <field :config=\"field\" :values.sync=\"values\"></field>\r\n    </div>\r\n    <field v-else :config=\"field\" :values.sync=\"values\"></field>\r\n</div>\r\n";
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-	module.exports = "<template v-for=\"field in fields\">\r\n    <field :config=\"field\" :values.sync=\"values\"></field>\r\n</template>\r\n";
-
 /***/ }
-/******/ ]);
+
+/******/ });

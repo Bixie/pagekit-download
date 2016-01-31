@@ -68,7 +68,7 @@
 	                catordering += 1;
 	            });
 	        });
-	        this.resource = this.$resource('api/download/category/:id');
+	        this.resource = this.$resource('api/download/category/{id}');
 
 	    },
 
@@ -88,20 +88,20 @@
 
 	            this.$broadcast('save', data);
 
-	            this.resource.save({id: this.category.id}, data, function (data) {
+	            this.resource.save({id: this.category.id || 0}, data).then(function (res) {
 
 	                if (!this.category.id) {
-	                    window.history.replaceState({}, '', this.$url.route('admin/download/category/edit', {id: data.category.id}));
+	                    window.history.replaceState({}, '', this.$url.route('admin/download/category/edit', {id: res.data.category.id}));
 	                }
 
-	                this.$set('category', data.category);
+	                this.$set('category', res.data.category);
 
-	                this.$broadcast('saved', data);
+	                this.$broadcast('saved', res.data);
 
 	                this.$notify(this.$trans('Category %title% saved.', {title: this.category.title}));
 
-	            }, function (data) {
-	                this.$notify(data, 'danger');
+	            }, function (res) {
+	                this.$notify(res.data, 'danger');
 	            });
 	        }
 

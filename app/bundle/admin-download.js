@@ -58,7 +58,7 @@
 	    },
 
 	    created: function () {
-	        this.resource = this.$resource('api/download/file/:id');
+	        this.resource = this.$resource('api/download/file/{id}');
 	        this.config.filter = _.extend({
 	            status: '',
 	            category_id: '',
@@ -91,24 +91,24 @@
 	    methods: {
 
 	        active: function (portfolio) {
-	            return this.selected.indexOf(portfolio.id) != -1;
+	            return this.selected.indexOf(portfolio.id) !== -1;
 	        },
 
 	        load: function (page) {
 
 	            page = page !== undefined ? page : this.config.page;
 
-	            return this.resource.query({ filter: this.config.filter, page: page }, function (data) {
-	                this.$set('files', data.files);
-	                this.$set('pages', data.pages);
-	                this.$set('count', data.count);
+	            return this.resource.query({ filter: this.config.filter, page: page }).then(function (res) {
+	                this.$set('files', res.data.files);
+	                this.$set('pages', res.data.pages);
+	                this.$set('count', res.data.count);
 	                this.$set('config.page', page);
 	                this.$set('selected', []);
 	            });
 	        },
 
 	        save: function (file) {
-	            this.resource.save({ id: file.id }, { file: file }, function (data) {
+	            this.resource.save({ id: file.id }, { file: file }).then(function () {
 	                this.load();
 	                this.$notify('File saved.');
 	            });
@@ -122,7 +122,7 @@
 	                file.status = status;
 	            });
 
-	            this.resource.save({ id: 'bulk' }, { files: files }, function (data) {
+	            this.resource.save({ id: 'bulk' }, { files: files }).then(function () {
 	                this.load();
 	                this.$notify('Files saved.');
 	            });
@@ -141,13 +141,13 @@
 
 	        removeFiles: function () {
 
-	            this.resource.delete({id: 'bulk'}, {ids: this.selected}, function () {
+	            this.resource.delete({id: 'bulk'}, {ids: this.selected}).then(function () {
 	                this.load();
 	                this.$notify('File(s) deleted.');
 	            });
 	        },
 
-	        getStatusText: function(file) {
+	        getStatusText: function (file) {
 	            return this.statuses[file.status];
 	        }
 
