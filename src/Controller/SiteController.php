@@ -150,7 +150,30 @@ class SiteController
 		$previous = File::getPrevious($file);
 		$next = File::getNext($file);
 
-        return [
+		/** @var Category $category */
+		if ($category_id && !$category = Category::where(['id = ?', 'status = ?'], [$category_id, '1'])->where(function ($query) {
+			return $query->where('roles IS NULL')->whereInSet('roles', App::user()->roles, false, 'OR');
+		})->related('files')->first()) {
+			App::abort(404, __('Category not found.'));
+		}
+		if ($breadcrumbs = App::module('bixie/breadcrumbs')) {
+			if ($category_id) {
+				$cat = $category;
+				$crumbs = [['title' => $category->title, 'url' => $category->getUrl()]];
+				while ($parent_id = $cat->parent_id) {
+					if ($cat = $cat->find($parent_id, true)) {
+						$crumbs[] = ['title' => $cat->title, 'url' => $cat->getUrl()];
+					}
+				}
+				foreach (array_reverse($crumbs) as $data) {
+					$breadcrumbs->addUrl($data);
+				}
+			}
+			//add file
+			$breadcrumbs->addUrl(['title' => $file->title, 'url' => $file->getUrl()]);
+		}
+
+		return [
             '$view' => [
                 'title' => __($file->title),
                 'name' => 'bixie/download/file.php'
