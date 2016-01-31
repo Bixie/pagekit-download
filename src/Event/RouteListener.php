@@ -20,7 +20,7 @@ class RouteListener implements EventSubscriberInterface
 			App::routes()->alias(dirname($route->getPath()) . '/{slug}', '@download/id', ['_resolver' => 'Bixie\Download\FileUrlResolver']);
         }
 		if (stripos($name, '@download/category/file/') === 0) {
-			App::routes()->alias($route->getPath().'/{slug}', $name, ['_resolver' => 'Bixie\Download\CategoryUrlResolver']);
+			App::routes()->alias($route->getPath().'/{slug}', $name, ['_resolver' => 'Bixie\Download\FileUrlResolver']);
         }
         if ($name == '@download/file/id') {
             App::routes()->alias(dirname($route->getPath()).'/{slug}', '@download/file/id', ['_resolver' => 'Bixie\Download\FileUrlResolver']);

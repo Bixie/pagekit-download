@@ -1,4 +1,4 @@
-<?php  $view->style('codemirror'); $view->script('admin-file', 'bixie/download:app/bundle/admin-file.js', ['vue', 'editor', 'bixie-downloads']); ?>
+<?php  $view->style('codemirror'); $view->script('admin-file', 'bixie/download:app/bundle/admin-file.js', ['bixie-framework', 'editor', 'bixie-downloads']); ?>
 
 <form id="file-edit" class="uk-form" name="form" v-validator="form" @submit.prevent="save | valid" v-cloak>
 

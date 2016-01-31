@@ -176,4 +176,16 @@ class DownloadController
            ]
         ];
     }
+
+	/**
+	 * @Access("system: manage settings")
+	 * @Request({"config": "array"}, csrf=true)
+	 */
+	public function configAction($config = [])
+	{
+		App::config('bixie/download')->merge($config, true)->set('datafields', $config['datafields']);
+
+		return ['message' => 'success'];
+	}
+
 }

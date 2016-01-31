@@ -11,7 +11,7 @@ module.exports = {
     },
 
     created: function () {
-        this.Categories = this.$resource('api/download/category/:id');
+        this.Categories = this.$resource('api/download/category/{id}');
         this.load();
     },
 
@@ -40,8 +40,8 @@ module.exports = {
 
         load: function () {
             var vm = this;
-            return this.Categories.query({}, function (categories) {
-                vm.$set('categories', categories);
+            return this.Categories.query({}).then(function (res) {
+                vm.$set('categories', res.data);
                 vm.$set('selected', []);
             });
         },
@@ -54,7 +54,7 @@ module.exports = {
                 category.status = status;
             });
 
-            this.Categories.save({id: 'bulk'}, {categories: categories}, function () {
+            this.Categories.save({id: 'bulk'}, {categories: categories}).then(function () {
                 this.load();
                 this.$notify('Category(ies) saved.');
             });
@@ -73,7 +73,7 @@ module.exports = {
                 this.moveNodes('trash');
 
             } else {
-                this.Categories.delete({id: 'bulk'}, {ids: this.selected}, function () {
+                this.Categories.delete({id: 'bulk'}, {ids: this.selected}).then(function () {
                     this.load();
                     this.$notify('Categories deleted.');
                 });
@@ -146,7 +146,7 @@ module.exports = {
 
                     this.category.status = this.category.status === 1 ? 0 : 1;
 
-                    this.$root.Categories.save({id: this.category.id}, {category: this.category}, function () {
+                    this.$root.Categories.save({id: this.category.id}, {category: this.category}).then(function () {
                         this.$root.load();
                         this.$notify('Category saved.');
                     });

@@ -8,15 +8,20 @@ use Bixie\Download\Model\File;
 use Pagekit\Session\Session;
 
 class DownloadModule extends Module {
-	/**
-	 * @var array
-	 */
-	protected $types;
+
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function main (App $app) {
+		if (!in_array('bixie/framework', App::system()->config('extensions'))) {
+			throw new \RuntimeException('Bixie Framework required for Downloads');
+		}
+
+		$app->on('boot', function () {
+			$this->framework = App::module('bixie/framework');
+		});
+
 	}
 
 	public function getDownloadKey (File $file, $purchaseKey = '') {

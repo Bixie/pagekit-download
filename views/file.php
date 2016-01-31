@@ -105,6 +105,16 @@ $config['file_image_class'] = in_array($config['file']['image_align'], ['right',
 					</div>
 				<?php endif; ?>
 
+				<?php if (count($config['datafields'])) : ?>
+					<dl class="uk-description-list">
+						<?php foreach ($config['datafields'] as $datafield) :
+							if (!$value = $file->get($datafield['name'])) continue; ?>
+							<dt><?= $datafield['label'] ?></dt>
+							<dd><?= $value ?></dd>
+						<?php endforeach; ?>
+					</dl>
+				<?php endif; ?>
+
 				<?php if (isset($file->product) && $file->get('cart_active')) : ?>
 					<div class="uk-margin">
 						<addtocart product="{{ products[<?= $file->id ?>] }}" item_id="<?= $file->id ?>"></addtocart>

@@ -1,4 +1,4 @@
-<?php $view->script('dl-admin-categories', 'bixie/download:app/bundle/admin-categories.js', ['vue', 'uikit-nestable']) ?>
+<?php $view->script('dl-admin-categories', 'bixie/download:app/bundle/admin-categories.js', ['bixie-framework', 'uikit-nestable']) ?>
 
 
 <div id="download-categories" class="uk-form" v-cloak>

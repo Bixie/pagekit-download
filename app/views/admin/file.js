@@ -15,7 +15,7 @@ module.exports = {
     },
 
     ready: function () {
-        this.resource = this.$resource('api/download/file/:id');
+        this.resource = this.$resource('api/download/file/{id}');
         this.tab = UIkit.tab(this.$els.tab, {connect: this.$els.content});
     },
 
@@ -49,25 +49,25 @@ module.exports = {
 
             this.$broadcast('save', data);
 
-            this.resource.save({id: this.file.id}, data, function (data) {
+            this.resource.save({id: this.file.id || 0}, data).then(function (res) {
 
                 if (!this.file.id) {
-                    window.history.replaceState({}, '', this.$url.route('admin/download/file/edit', {id: data.file.id}));
+                    window.history.replaceState({}, '', this.$url.route('admin/download/file/edit', {id: res.data.file.id}));
                 }
 
-                this.$set('file', data.file);
+                this.$set('file', res.data.file);
 
-                this.$broadcast('saved', data);
+                this.$broadcast('saved', res.data);
 
                 this.$notify(this.$trans('Download %title% saved.', {title: this.file.title}));
 
-            }, function (data) {
-                this.$notify(data, 'danger');
+            }, function (res) {
+                this.$notify(res.data, 'danger');
             });
         },
 
         resetDownloads: function () {
-            this.file.downloads = 0;
+            this.$set('file.downloads', 0);
             this.save();
         }
 

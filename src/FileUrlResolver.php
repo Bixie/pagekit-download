@@ -35,7 +35,7 @@ class FileUrlResolver implements ParamsResolverInterface
 	public function match(array $parameters = [])
 	{
 		if (isset($parameters['id'])) {
-			return $parameters;
+			$parameters['category_id'] = $parameters['id'];
 		}
 
 		if (!isset($parameters['slug'])) {

@@ -182,7 +182,8 @@ return [
 		'file_extensions' => ['zip', 'rar', 'tar.gz'],
 		'markdown_enabled' => false,
 		'date_format' => 'd F Y',
-		'tags' => []
+		'tags' => [],
+		'datafields' => []
 	],
 
 	'events' => [

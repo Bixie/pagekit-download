@@ -10,7 +10,7 @@ use Pagekit\Site\Model\Node;
 class CategoryListener implements EventSubscriberInterface
 {
     /**
-     * Registers node routes
+     * Registers category routes
      */
     public function onRequest()
     {

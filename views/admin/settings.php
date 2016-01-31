@@ -1,4 +1,5 @@
-<?php $view->style('codemirror'); $view->script('download-settings', 'bixie/download:app/bundle/download-settings.js', ['vue', 'editor']) ?>
+<?php $view->style('codemirror');
+$view->script('download-settings', 'bixie/download:app/bundle/download-settings.js', ['bixie-framework', 'uikit-nestable', 'editor']) ?>
 
 <div id="download-settings" class="uk-form">
 
@@ -12,6 +13,7 @@
 					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'Main page settings' | trans }}</a></li>
 					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'Category page settings' | trans }}</a></li>
 					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'General settings' | trans }}</a></li>
+					<li><a><i class="pk-icon-large-database uk-margin-right"></i> {{ 'Data fields' | trans }}</a></li>
 				</ul>
 
 			</div>
@@ -193,6 +195,34 @@
 						</div>
 					</div>
 
+				</li>
+				<li>
+
+					<div class="uk-margin uk-flex uk-flex-space-between uk-flex-wrap" data-uk-margin>
+						<div data-uk-margin>
+
+							<h2 class="uk-margin-remove">{{ 'Custom data fields' | trans }}</h2>
+
+						</div>
+						<div data-uk-margin>
+
+							<button class="uk-button uk-button-primary" @click="save">{{ 'Save' | trans }}</button>
+
+						</div>
+					</div>
+
+					<div class="uk-form-horizontal">
+
+						<ul class="uk-nestable uk-margin-remove" v-el:datafields-nestable
+							v-show="config.datafields.length">
+							<datafield v-for="datafield in config.datafields" :datafield="datafield"></datafield>
+						</ul>
+
+						<button type="button" class="uk-button uk-button-primary uk-button-small uk-margin"
+								@click="addDatafield">{{ 'Add option' | trans }}
+						</button>
+
+					</div>
 				</li>
 			</ul>
 

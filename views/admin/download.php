@@ -1,4 +1,4 @@
-<?php $view->script('admin-download', 'bixie/download:app/bundle/admin-download.js', ['vue']) ?>
+<?php $view->script('admin-download', 'bixie/download:app/bundle/admin-download.js', ['bixie-framework']) ?>
 
 <div id="download-files" class="uk-form uk-form-horizontal" v-cloak>
 
