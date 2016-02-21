@@ -64,7 +64,6 @@ class CategoryListener implements EventSubscriberInterface
     {
         return [
             'request' => ['onRequest', 120],
-            'enable' => 'onEnable',
             'model.role.deleted' => 'onRoleDelete'
         ];
     }
