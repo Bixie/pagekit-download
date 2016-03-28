@@ -28,7 +28,9 @@ module.exports = {
 
                 vm.Categories.save({id: 'updateOrder'}, {
                     categories: nestable.list()
-                }, vm.load).error(function () {
+                }).then(function () {
+                    vm.load();
+                }, function () {
                     this.$notify('Reorder failed.', 'danger');
                 });
             }

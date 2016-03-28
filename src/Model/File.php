@@ -123,7 +123,7 @@ class File implements \JsonSerializable
 	 * @return array|mixed
 	 */
 	public function getFilters ($filter_type = null) {
-		$filter_type = $filter_type == null ? $filter_type : App::module('bixie/download')->config('filter_items');
+		$filter_type = $filter_type !== null ? $filter_type : App::module('bixie/download')->config('filter_items');
 		if ($filter_type == 'category') {
 			return $this->getCategoryTitles();
 		} elseif ($filter_type == 'tag') {

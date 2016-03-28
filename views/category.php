@@ -70,7 +70,7 @@ $config['image_class'] = in_array($config['category']['image_align'], ['right', 
 
 			<?php foreach ($category->files as $file) : ?>
 
-				<div data-uk-filter="<?= implode(',', $file->getFilters($config['filter_items'])) ?>">
+				<div data-uk-filter="<?= implode(',', $file->getFilters('tag')) ?>">
 					<?= $view->render('bixie/download/templates/file_panel.php', ['config' => $config, 'file' => $file]) ?>
 				</div>
 

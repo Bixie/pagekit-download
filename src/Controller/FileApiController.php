@@ -81,9 +81,9 @@ class FileApiController
             App::abort(400, __('Invalid slug.'));
         }
 
-		$file->saveCategories($data['category_ids']);
-
 		$file->save($data);
+
+		$file->saveCategories($data['category_ids']);
 
         return ['message' => 'success', 'file' => $file];
     }

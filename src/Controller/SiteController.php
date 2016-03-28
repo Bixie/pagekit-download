@@ -45,6 +45,7 @@ class SiteController
 
 		$filters = [];
 		foreach ($files = $query->related('categories')->get() as $file) {
+			$file->loadCategories();
 			App::trigger('bixie.prepare.file', [$file, App::view()]);
 			$file->content = App::content()->applyPlugins($file->content, ['file' => $file, 'markdown' => $file->get('markdown')]);
 
@@ -89,10 +90,10 @@ class SiteController
 
 		$filters = [];
 		foreach ($category->files as &$file) {
+			$file->loadCategories();
 			App::trigger('bixie.prepare.file', [$file, App::view()]);
 			$file->content = App::content()->applyPlugins($file->content, ['file' => $file, 'markdown' => $file->get('markdown')]);
-
-			$filters = array_merge($filters, $file->tags);
+			$filters = array_merge($filters, $file->getFilters('tag'));
 		}
 		$filters = array_unique($filters);
 		natsort($filters);

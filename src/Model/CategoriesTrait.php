@@ -85,9 +85,9 @@ trait CategoriesTrait
 	 * @param array $category_ids
 	 */
 	public function saveCategories (array $category_ids) {
-		$remove = array_diff(array_keys($this->categories), $category_ids);
+		$remove = array_diff(array_keys(($this->categories ? : [])), $category_ids);
 		foreach ($remove as $category_id) {
-			if ($xref = FilesCategories::query(['file_id' => $this->id, 'category_id' => $category_id])->first()) {
+			if ($xref = FilesCategories::where(['file_id' => $this->id, 'category_id' => $category_id])->first()) {
 				$this->removeCategory($this->categories[$category_id]);
 				$xref->delete();
 			}
@@ -103,4 +103,16 @@ trait CategoriesTrait
 		}
 	}
 
+	/**
+	 * Load the category objects
+	 */
+	public function loadCategories () {
+		if ($xrefs = FilesCategories::where(['file_id' => $this->id])->get()) {
+			foreach (array_keys($xrefs) as $category_id) { //loop to use the cache in Category::find
+				if ($category = Category::find($category_id)) {
+					$this->addCategory($category);
+				}
+			}
+		}
+	}
 }
