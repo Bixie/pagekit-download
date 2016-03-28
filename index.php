@@ -91,6 +91,12 @@ return [
 
 	],
 
+	'widgets' => [
+
+		'widgets/downloads.php'
+
+	],
+
 	'permissions' => [
 
 		'download: manage download' => [
@@ -215,6 +221,7 @@ return [
 			$scripts->register('uikit-grid', 'app/assets/uikit/js/components/grid.min.js', 'uikit');
 			$scripts->register('uikit-lightbox', 'app/assets/uikit/js/components/lightbox.min.js', 'uikit');
 			$scripts->register('uikit-sortable', 'app/assets/uikit/js/components/sortable.min.js', 'uikit');
+			$scripts->register('uikit-slider', 'app/assets/uikit/js/components/slider.min.js', 'uikit');
 		},
 
 		'console.init' => function ($event, $console) {
