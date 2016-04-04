@@ -19,7 +19,7 @@ $view->script('download-settings', 'bixie/download:app/bundle/download-settings.
 			</div>
 
 		</div>
-		<div class="uk-flex-item-1">
+		<div class="pk-width-content">
 
 			<ul id="tab-content" class="uk-switcher uk-margin">
 				<li>

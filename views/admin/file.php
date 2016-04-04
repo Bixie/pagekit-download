@@ -30,8 +30,8 @@
 	</ul>
 
 	<div class="uk-switcher uk-margin" v-el:content>
-		<div class="uk-grid pk-grid-large" data-uk-grid-margin>
-			<div class="uk-flex-item-1">
+		<div class="uk-grid pk-grid-large pk-width-sidebar-large" data-uk-grid-margin>
+			<div class="pk-width-content">
 				<div class="uk-form-horizontal uk-margin">
 					<div class="uk-form-row">
 						<label for="form-title" class="uk-form-label">{{ 'Title' | trans }}</label>
@@ -95,7 +95,7 @@
 				</div>
 
 			</div>
-			<div class="pk-width-sidebar pk-width-sidebar-large uk-form-stacked">
+			<div class="pk-width-sidebar uk-form-stacked">
 
 				<div class="uk-form-row">
 					<label class="uk-form-label">{{ 'File' | trans }}</label>

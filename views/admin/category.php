@@ -28,8 +28,8 @@ $view->script('dl-admin-category', 'bixie/download:app/bundle/admin-category.js'
 	</div>
 
 
-	<div class="uk-grid pk-grid-large uk-form-stacked" data-uk-grid-margin>
-		<div class="uk-flex-item-1">
+	<div class="uk-grid pk-grid-large pk-width-sidebar-large uk-form-stacked" data-uk-grid-margin>
+		<div class="pk-width-content">
 
 			<div class="uk-form-row">
 				<input class="uk-width-1-1 uk-form-large" type="text" name="category[title]"
@@ -46,7 +46,7 @@ $view->script('dl-admin-category', 'bixie/download:app/bundle/admin-category.js'
 			</div>
 
 		</div>
-		<div class="pk-width-sidebar pk-width-sidebar-large">
+		<div class="pk-width-sidebar">
 
 			<div class="uk-panel">
 
