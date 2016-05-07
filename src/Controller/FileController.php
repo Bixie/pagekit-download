@@ -54,7 +54,8 @@ class FileController
 		$response = new BinaryFileResponse($file->path);
 		$response->headers->set('Content-Disposition', $response->headers->makeDisposition(
 			ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-			basename($file->path)
+			basename($file->path),
+			mb_convert_encoding(basename($file->path), 'ASCII')
 		));
 
 		return $response;
