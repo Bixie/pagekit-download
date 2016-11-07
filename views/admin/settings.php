@@ -12,6 +12,7 @@ $view->script('download-settings', 'bixie/download:app/bundle/download-settings.
 					<li><a><i class="pk-icon-large-code uk-margin-right"></i> {{ 'Main page content' | trans }}</a></li>
 					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'Main page settings' | trans }}</a></li>
 					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'Category page settings' | trans }}</a></li>
+					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'Detail page settings' | trans }}</a></li>
 					<li><a><i class="pk-icon-large-settings uk-margin-right"></i> {{ 'General settings' | trans }}</a></li>
 					<li><a><i class="pk-icon-large-database uk-margin-right"></i> {{ 'Data fields' | trans }}</a></li>
 				</ul>
@@ -109,7 +110,7 @@ $view->script('download-settings', 'bixie/download:app/bundle/download-settings.
 					<div class="uk-grid uk-grid-width-large-1-2 uk-form-horizontal" data-uk-grid-margin="">
 						<div>
 
-							<fields :config="$options.fields.portfolio" :model.sync="config" template="formrow"></fields>
+							<bixie-fields :config="$options.fields.download" :values.sync="config"></bixie-fields>
 						</div>
 						<div>
 							<h3>{{ 'Teaser settings' | trans }}</h3>
@@ -118,12 +119,12 @@ $view->script('download-settings', 'bixie/download:app/bundle/download-settings.
 
 								<div class="uk-form-controls uk-form-controls-text">
 
-									<fields :config="$options.fields.teaser_show" :model.sync="config" template="raw"></fields>
+									<bixie-fields-raw :config="$options.fields.teaser_show" :values.sync="config"></bixie-fields-raw>
 
 								</div>
 							</div>
 
-							<fields :config="$options.fields.teaser" :model.sync="config" template="formrow"></fields>
+							<bixie-fields :config="$options.fields.teaser" :values.sync="config"></bixie-fields>
 						</div>
 					</div>
 				</li>
@@ -144,7 +145,7 @@ $view->script('download-settings', 'bixie/download:app/bundle/download-settings.
 					<div class="uk-grid uk-grid-width-large-1-2 uk-form-horizontal" data-uk-grid-margin="">
 						<div>
 
-							<fields :config="$options.fields.category" :model.sync="config" template="formrow"></fields>
+							<bixie-fields :config="$options.fields.category" :values.sync="config"></bixie-fields>
 						</div>
 						<div>
 							<div class="uk-form-row">
@@ -152,7 +153,40 @@ $view->script('download-settings', 'bixie/download:app/bundle/download-settings.
 
 								<div class="uk-form-controls uk-form-controls-text">
 
-									<fields :config="$options.fields.category_show" :model.sync="config" template="raw"></fields>
+									<bixie-fields-raw :config="$options.fields.category_show" :values.sync="config"></bixie-fields-raw>
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</li>
+				<li>
+
+					<div class="uk-margin uk-flex uk-flex-space-between uk-flex-wrap" data-uk-margin>
+						<div data-uk-margin>
+
+							<h2 class="uk-margin-remove">{{ 'Detail page settings' | trans }}</h2>
+
+						</div>
+						<div data-uk-margin>
+
+							<button class="uk-button uk-button-primary" @click="save">{{ 'Save' | trans }}</button>
+
+						</div>
+					</div>
+					<div class="uk-grid uk-grid-width-large-1-2 uk-form-horizontal" data-uk-grid-margin="">
+						<div>
+
+							<bixie-fields :config="$options.fields.file" :values.sync="config"></bixie-fields>
+						</div>
+						<div>
+							<div class="uk-form-row">
+								<span class="uk-form-label">{{ 'Show content' | trans }}</span>
+
+								<div class="uk-form-controls uk-form-controls-text">
+
+									<bixie-fields-raw :config="$options.fields.category_show" :values.sync="config"></bixie-fields-raw>
 
 								</div>
 							</div>
@@ -177,7 +211,7 @@ $view->script('download-settings', 'bixie/download:app/bundle/download-settings.
 
 					<div class="uk-form-horizontal">
 
-						<fields :config="$options.fields.general" :model.sync="config" template="formrow"></fields>
+						<bixie-fields :config="$options.fields.general" :values.sync="config"></bixie-fields>
 
 						<div class="uk-form-row">
 							<span class="uk-form-label">{{ 'File extensions' | trans }}</span>

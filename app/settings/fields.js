@@ -2,7 +2,7 @@
 var options = require('./options');
 
 module.exports = {
-    portfolio: {
+    download: {
         'category.show_subcategories': {
             type: 'checkbox',
             label: 'Subcategories',
@@ -84,6 +84,54 @@ module.exports = {
             label: 'Gutter width',
             options: options.gutter,
             attrs: {'class': 'uk-form-width-small'}
+        }
+    },
+    file: {
+        'file.image_align': {
+            type: 'select',
+            label: 'Image alignment',
+            options: options.align.general,
+            attrs: {'class': 'uk-form-width-medium'}
+        },
+        'file.metadata_position': {
+            type: 'select',
+            label: 'Metadata position',
+            options: options.position.page,
+            attrs: {'class': 'uk-form-width-medium'}
+        },
+        'file.tags_align': {
+            type: 'select',
+            label: 'Tags alignment',
+            options: options.align.flex,
+            attrs: {'class': 'uk-form-width-medium'}
+        },
+        'file.tags_position': {
+            type: 'select',
+            label: 'Tags position',
+            options: options.position.page,
+            attrs: {'class': 'uk-form-width-medium'}
+        },
+        'file.show_navigation': {
+            type: 'select',
+            label: 'Position navigation',
+            options: options.position.nav,
+            attrs: {'class': 'uk-form-width-medium'}
+        },
+        'file.download': {
+            label: 'Download text',
+            attrs: {'class': 'uk-form-width-medium'}
+        },
+        'file.download_style': {
+            type: 'select',
+            label: 'Download button style',
+            options: options.button_style,
+            attrs: {'class': 'uk-form-width-medium'}
+        },
+        'file.download_align': {
+            type: 'select',
+            label: 'Download button alignment',
+            options: options.align.general,
+            attrs: {'class': 'uk-form-width-medium'}
         }
     },
     category: {
