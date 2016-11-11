@@ -1,5 +1,5 @@
 <?php $view->style('codemirror');
-$view->script('download-settings', 'bixie/download:app/bundle/download-settings.js', ['bixie-framework', 'uikit-nestable', 'editor']) ?>
+$view->script('download-settings', 'bixie/download:app/bundle/download-settings.js', ['bixie-pkframework', 'uikit-nestable', 'editor']) ?>
 
 <div id="download-settings" class="uk-form">
 

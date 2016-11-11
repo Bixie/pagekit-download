@@ -1,7 +1,7 @@
 <?php
 $view->style('codemirror');
 $view->style('uikit-sortable');
-$view->script('dl-admin-category', 'bixie/download:app/bundle/admin-category.js', ['bixie-framework', 'editor', 'uikit-sortable']); ?>
+$view->script('dl-admin-category', 'bixie/download:app/bundle/admin-category.js', ['bixie-pkframework', 'editor', 'uikit-sortable']); ?>
 
 <form id="category-edit" class="uk-form" name="form" v-validator="form" @submit.prevent="save | valid" v-cloak>
 
