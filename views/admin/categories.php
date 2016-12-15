@@ -60,7 +60,7 @@
 			<div class="pk-table-width-minimum pk-table-collapse">
 				<div class="uk-nestable-toggle" data-nestable-action="toggle"></div>
 			</div>
-			<div class="pk-table-width-minimum"><input type="checkbox" name="id" value="{{ category.id }}"></div>
+			<div class="pk-table-width-minimum"><input type="checkbox" name="id" :value="category.id" number></div>
 			<div class="pk-table-min-width-100">
 				<a :href="$url.route('admin/download/category/edit', { id: category.id })">{{ category.title }}</a>
 			</div>

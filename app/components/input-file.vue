@@ -11,7 +11,7 @@
 
     <v-modal v-ref:modal large>
 
-        <panel-finder :root="storage" v-ref:finder :modal="true"></panel-finder>
+        <panel-finder :root="root" v-ref:finder :modal="true"></panel-finder>
 
         <div v-show="!hasSelection()" class="uk-alert">{{ 'Select one file of the following types' | trans }}: {{ this.ext.join(', ') }}</div>
 
@@ -32,7 +32,9 @@
             'file': {default: ''},
             'ext': {type: Array, default: []},
             'multiple': {type: Boolean, default: false},
-            'class': {default: ''}},
+            'root': {default: 'storage'},
+            'class': {default: ''}
+        },
 
         data: function () {
             return _.merge({}, $pagekit);
@@ -51,7 +53,7 @@
             },
 
             select: function() {
-                this.$set('file', this.$refs.finder.getSelected()[0]);
+                this.$set('file', this.root + this.getSelected()[0]);
                 this.$dispatch('file-selected', this.file);
                 this.$refs.finder.removeSelection();
                 this.$refs.modal.close();
@@ -60,6 +62,13 @@
             remove: function(e) {
                 e.stopPropagation();
                 this.file = ''
+            },
+
+            //get path instead of url from selected
+            getSelected: function () {
+                return this.$refs.finder.selected.map(function (name) {
+                    return _.find(this.$refs.finder.items, 'name', name).path;
+                }, this);
             },
 
             hasSelection: function() {

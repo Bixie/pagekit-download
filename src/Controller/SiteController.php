@@ -80,12 +80,15 @@ class SiteController
     public function categoryAction($id = 0)
     {
 		/** @var Category $category */
-		if (!$category = Category::where(['id = ?', 'status = ?'], [$id, '1'])->where(function ($query) {
+		if (!$category = Category::where(['id = ?', 'status = ?'], [$id, 1])->where(function ($query) {
 			return $query->where('roles IS NULL')->whereInSet('roles', App::user()->roles, false, 'OR');
 		})->related('files')->first()) {
 			App::abort(404, __('Category not found.'));
 		}
-
+		//todo filter in query
+		$category->files = array_filter($category->files, function ($file) {
+		    return $file->status == 1;
+		});
 		$category->set('description', App::content()->applyPlugins($category->get('description'), ['category' => $category, 'markdown' => $category->get('markdown')]));
 
 		$filters = [];

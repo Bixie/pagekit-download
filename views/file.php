@@ -10,7 +10,11 @@
 
 //$view->script('download', 'bixie/download:app/bundle/download.js', ['uikit-lightbox']);
 
-$config['file_image_class'] = in_array($config['file']['image_align'], ['right', 'left']) ? 'uk-align-' . $config['file']['image_align'] : 'uk-text-center'
+$config['file_image_class'] = in_array($config['file']['image_align'], ['right', 'left']) ? 'uk-align-' . $config['file']['image_align'] : 'uk-text-center';
+$config['button_align_class'] = in_array($config['file']['download_align'], ['right', 'left']) ? 'uk-text-' . $config['file']['image_align'] : 'uk-text-center';;
+if ($config['file']['download_align'] == 'justify') {
+	$config['file']['download_style'] .= ' uk-width-1-1';
+}
 ?>
 <article class="bixie-addtocart" id="download-file">
 
@@ -43,12 +47,12 @@ $config['file_image_class'] = in_array($config['file']['image_align'], ['right',
 					<?= $file->date->format($config['date_format']) ?>
 				<?php endif; ?>
 			</p>
-		<?php endif; ?>
-		<?php if ($file->get('version')) : ?>
-			<dl class="uk-description-list uk-description-list-horizontal">
-				<dt><?= __('Version') ?></dt>
-				<dd><?= $file->get('version') ?></dd>
-			</dl>
+			<?php if ($file->get('version')) : ?>
+				<dl class="uk-description-list uk-description-list-horizontal">
+					<dt><?= __('Version') ?></dt>
+					<dd><?= $file->get('version') ?></dd>
+				</dl>
+			<?php endif; ?>
 		<?php endif; ?>
 
 		<div class="uk-clearfix">
@@ -121,7 +125,7 @@ $config['file_image_class'] = in_array($config['file']['image_align'], ['right',
 					</div>
 				<?php endif; ?>
 
-				<div class="<?= $config['file']['download_align']; ?> uk-margin">
+				<div class="uk-text-<?= $config['file']['download_align']; ?> uk-margin">
 					<a class="<?= $config['file']['download_style'] ?>"
 					   href="<?= $app->url($file->getDownloadLink()) ?>">
 						<?php if (!empty($file->image['icon']['src'])): ?>

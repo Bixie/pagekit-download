@@ -11,14 +11,19 @@ $view->script('uikit-slider');
 <div class="uk-slidenav-position" data-uk-slider="autoplay:true,pauseOnHover:false,autoplayInterval:8000,center:true">
 
 	<div class="uk-slider-container">
-		<ul class="uk-slider uk-grid-width-medium-1-3">
+		<ul class="uk-slider uk-grid uk-grid-width-medium-1-3">
 			<?php foreach ($files as $file) : ?>
-				<li class="uk-flex uk-flex-center">
 					<?php if (!empty($file->image['main']['src'])) : ?>
-						<img src="<?= $file->image['main']['src'] ?>" alt="<?= $file->image['main']['alt'] ?>">
-					<?php endif; ?>
-					<a class="uk-position-cover" href="<?= $file->getUrl() ?>"></a>
-				</li>
+					<li class="">
+						<figure class="uk-overlay">
+							<img src="<?= $file->image['main']['src'] ?>" alt="<?= $file->image['main']['alt'] ?>">
+							<div class="uk-overlay-panel uk-overlay-background uk-overlay-bottom uk-text-center">
+								<h3><?= $file->title ?></h3>
+							</div>
+							<a class="uk-position-cover" href="<?= $file->getUrl() ?>"></a>
+						</figure>
+					</li>
+				<?php endif; ?>
 			<?php endforeach; ?>
 		</ul>
 	</div>

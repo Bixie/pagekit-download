@@ -28,7 +28,8 @@ module.exports = {
         general: {
             'Left': 'left',
             'Right': 'right',
-            'Center': 'center'
+            'Center': 'center',
+            'Justify': 'justify'
         },
         flex: {
             'Left': '',
@@ -67,6 +68,19 @@ module.exports = {
         'Panel box primary': 'uk-panel-box uk-panel-box-primary',
         'Panel box secondary': 'uk-panel-box uk-panel-box-secondary',
         'Panel space': 'uk-panel-space'
+    },
+    position: {
+        page:  {
+            'Don\'t show': '', /*trans*/
+            'Content top': 'content-top', /*trans*/
+            'Sidebar': 'sidebar' /*trans*/
+        },
+        nav:  {
+            'Don\'t show': '', /*trans*/
+            'Top': 'top', /*trans*/
+            'Bottom': 'bottom', /*trans*/
+            'Both': 'both' /*trans*/
+        }
     }
 
 };

@@ -171,14 +171,14 @@ return [
 			'columns_gutter' => 20,
 		],
 		'file' => [
-			'image_align' => 'left',
+			'image_align' => 'center',
 			'metadata_position' => 'content-top',
 			'tags_align' => 'uk-flex-center',
 			'tags_position' => 'sidebar',
 			'show_navigation' => 'bottom',
 			'download' => 'Download',
 			'download_style' => 'uk-button',
-			'download_align' => 'uk-text-center'
+			'download_align' => 'center'
 		],
 		'routing' => 'category',
 		'ordering' => 'title',

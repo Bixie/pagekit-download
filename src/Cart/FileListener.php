@@ -109,7 +109,7 @@ class FileListener implements EventSubscriberInterface, ProductListenerInterface
 			$orderValid = $this->validateOrder($order, $cartItem, $file);
 
 			$event->addParameters([
-				'bixie.admin.order' => App::view('bixie/download/templates/file_admin.php', compact('order', 'cartItem', 'file', 'orderValid')),
+				'bixie.cart.admin.order' => App::view('bixie/download/templates/file_admin.php', compact('order', 'cartItem', 'file', 'orderValid')),
 				'bixie.cart.order_item' => App::view('bixie/download/templates/file_cart_order_item.php', compact('order', 'cartItem', 'file', 'orderValid'))
 			]);
 
@@ -132,12 +132,12 @@ class FileListener implements EventSubscriberInterface, ProductListenerInterface
 	}
 
 	/**
-	 * CartItem calculated on checkout
+	 * CartItem on checkout
 	 * @param Event    $event
 	 * @param Order    $order
 	 * @param CartItem $cartItem
 	 */
-	public function onCalculateOrder (Event $event, Order $order, CartItem $cartItem) {
+	public function onItemOrdered (Event $event, Order $order, CartItem $cartItem) {
 		if ($validity_period = $cartItem->get('validity_period')) {
 			$date = (new \DateTime($order->created->format(\DateTime::ATOM)))->add(new \DateInterval($validity_period));
 			$cartItem->set('valid_until', $date->format(\DateTime::ATOM));
@@ -182,7 +182,17 @@ class FileListener implements EventSubscriberInterface, ProductListenerInterface
 		}
 	}
 
-	/**
+    /**
+     * CartItem calculated on checkout
+     * @param Event    $event
+     * @param Order    $order
+     * @param CartItem $cartItem
+     */
+    function onCalculateOrder (Event $event, Order $order, CartItem $cartItem) {
+        // TODO: Implement onCalculateOrder() method.
+    }
+
+    /**
 	 * @param Order    $order
 	 * @param CartItem $cartItem
 	 * @param File     $file
@@ -211,7 +221,7 @@ class FileListener implements EventSubscriberInterface, ProductListenerInterface
 		return false;
 	}
 
-	/**
+    /**
 	 * {@inheritdoc}
 	 */
 	public function subscribe () {
@@ -219,9 +229,9 @@ class FileListener implements EventSubscriberInterface, ProductListenerInterface
 			'view.scripts' => 'onViewScripts',
 			'view.bixie/download/admin/file' => 'onProductView',
 			'bixie.prepare.file' => 'onProductPrepare',
-			'bixie.calculate.order' => 'onCalculateOrder',
+			'bixie.cartitem.ordered' => 'onItemOrdered',
 			'bixie.cart.purchaseKey' => 'onCartPurchaseKey',
-			'bixie.admin.orderitem' => 'onOrderitem',
+			'bixie.cart.admin.orderitem' => 'onOrderitem',
 			'bixie.cart.orderitem' => 'onOrderitem',
 			'model.file.saved' => 'onProductChange',
 			'model.file.deleted' => 'onProductDeleted'

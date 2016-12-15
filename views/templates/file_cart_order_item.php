@@ -11,6 +11,10 @@
 use Pagekit\Application as App;
 
 ?>
+<dl class="uk-description-list uk-description-list-horizontal">
+	<dt><?= __('Purchase key') ?></dt>
+	<dd><em><?= $cartItem->purchaseKey($order) ?></em></dd>
+</dl>
 
 <?php if ($orderValid) : ?>
 	<div class="uk-margin">
