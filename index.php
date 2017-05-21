@@ -200,7 +200,7 @@ return [
 				new CategoryListener,
 				new FileListener
 			);
-			if (class_exists('Bixie\Cart\CartModule')) {
+			if (class_exists('Bixie\Cart\CartModule')) {//todo problem when installing cart after download!
 				$app->subscribe(
 					new Bixie\Download\Cart\FileListener
 				);
